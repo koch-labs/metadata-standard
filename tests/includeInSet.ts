@@ -7,6 +7,7 @@ import { NftStandard } from "../sdk/src/idl/nft_standard";
 import { expect } from "chai";
 import { expectRevert } from "./utils";
 import { TOKEN_2022_PROGRAM_ID } from "@solana/spl-token";
+import { includeInSet, mintNft } from "../sdk/src";
 
 const suiteName = "Nft Standard: Include in set";
 describe(suiteName, () => {
@@ -59,45 +60,34 @@ describe(suiteName, () => {
       })
       .rpc({ skipPreflight: true });
 
-    await program.methods
-      .createMetadata(values.metadataData)
-      .accounts({
-        creator: values.holder.publicKey,
-        authoritiesGroup: values.authoritiesGroupKey,
-        tokenAccount: values.holderMintAccount2022,
-        mint: values.mintKeypair2022.publicKey,
-        metadata: values.metadata2022Key,
-        tokenProgram: TOKEN_2022_PROGRAM_ID,
-      })
-      .signers([values.holder, values.mintKeypair2022])
-      .rpc({ skipPreflight: true });
+    await mintNft({
+      provider,
+      authoritiesGroup: values.authoritiesGroupKey,
+      data: values.metadataData,
+      creator: values.holder.publicKey,
+      keypair: values.mintKeypair2022,
+      signers: [values.holder],
+    });
 
-    await program.methods
-      .createMetadata(values.metadataData)
-      .accounts({
-        creator: values.holder.publicKey,
-        authoritiesGroup: values.parentAuthoritiesGroupKey,
-        tokenAccount: values.holderParentMintAccount2022,
-        mint: values.parentMintKeypair2022.publicKey,
-        metadata: values.parentMetadata2022Key,
-        tokenProgram: TOKEN_2022_PROGRAM_ID,
-      })
-      .signers([values.holder, values.parentMintKeypair2022])
-      .rpc({ skipPreflight: true });
+    await mintNft({
+      provider,
+      authoritiesGroup: values.parentAuthoritiesGroupKey,
+      data: values.metadataData,
+      creator: values.holder.publicKey,
+      keypair: values.parentMintKeypair2022,
+      signers: [values.holder],
+    });
   });
 
   it("includes", async () => {
-    await program.methods
-      .includeInSet()
-      .accounts({
-        inclusionAuthority: values.inclusionAuthority.publicKey,
-        authoritiesGroup: values.parentAuthoritiesGroupKey,
-        parentMetadata: values.parentMetadata2022Key,
-        childMetadata: values.metadata2022Key,
-        inclusion: values.inclusionKey,
-      })
-      .signers([values.inclusionAuthority])
-      .rpc({ skipPreflight: true });
+    await includeInSet({
+      provider,
+      authoritiesGroup: values.parentAuthoritiesGroupKey,
+      parentMint: values.parentMintKeypair2022.publicKey,
+      childMint: values.mintKeypair2022.publicKey,
+      inclusionAuthority: values.inclusionAuthority.publicKey,
+      signers: [values.inclusionAuthority],
+    });
 
     const inclusion = await program.account.inclusion.fetch(
       values.inclusionKey
@@ -107,17 +97,14 @@ describe(suiteName, () => {
 
   it("requires inclusion authority", async () => {
     await expectRevert(
-      program.methods
-        .includeInSet()
-        .accounts({
-          inclusionAuthority: values.holder.publicKey,
-          authoritiesGroup: values.parentAuthoritiesGroupKey,
-          parentMetadata: values.parentMetadata2022Key,
-          childMetadata: values.metadata2022Key,
-          inclusion: values.inclusionKey,
-        })
-        .signers([values.holder])
-        .rpc({ skipPreflight: true })
+      includeInSet({
+        provider,
+        authoritiesGroup: values.parentAuthoritiesGroupKey,
+        parentMint: values.parentMintKeypair2022.publicKey,
+        childMint: values.mintKeypair2022.publicKey,
+        inclusionAuthority: values.inclusionAuthority.publicKey,
+        signers: [values.holder],
+      })
     );
   });
 });

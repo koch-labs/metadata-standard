@@ -71,12 +71,16 @@ export const includeInSet = async ({
   authoritiesGroup,
   childMint,
   inclusionAuthority,
+  signers,
+  confirmOptions,
 }: {
   provider: Provider;
   authoritiesGroup: PublicKey;
   parentMint: PublicKey;
   childMint: PublicKey;
   inclusionAuthority?: PublicKey;
+  signers?: Signer[];
+  confirmOptions?: ConfirmOptions;
 }) => {
   const program = new Program<NftStandard>(
     IDL as any,
@@ -85,17 +89,19 @@ export const includeInSet = async ({
   );
   const inclusion = getInclusionKey(parentMint, childMint);
 
+  await program.methods
+    .includeInSet()
+    .accounts({
+      inclusionAuthority: inclusionAuthority || provider.publicKey,
+      parentMetadata: getMetadataKey(parentMint),
+      authoritiesGroup,
+      childMetadata: getMetadataKey(childMint),
+      inclusion,
+    })
+    .signers([...(signers || [])])
+    .rpc(confirmOptions);
+
   return {
     inclusion,
-    ix: await program.methods
-      .includeInSet()
-      .accounts({
-        inclusionAuthority: inclusionAuthority || provider.publicKey,
-        parentMetadata: getMetadataKey(parentMint),
-        authoritiesGroup,
-        childMetadata: getMetadataKey(parentMint),
-        inclusion,
-      })
-      .instruction(),
   };
 };
