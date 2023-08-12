@@ -1,41 +1,14 @@
-import { Provider, Program } from "@coral-xyz/anchor";
-import {
-  ConfirmOptions,
-  Keypair,
-  PublicKey,
-  Signer,
-  Transaction,
-} from "@solana/web3.js";
-import {
-  TOKEN_2022_PROGRAM_ID,
-  getAssociatedTokenAddressSync,
-} from "@solana/spl-token";
-
-import { NftStandard } from "./idl/nft_standard";
-import IDL from "./idl/nft_standard.json";
-import { NFT_STANDARD_PROGRAM_ID } from "./constants";
+import { Provider } from "@coral-xyz/anchor";
+import { ConfirmOptions, Keypair, PublicKey, Signer } from "@solana/web3.js";
 import { MetadataData } from "./metadataData";
-import { getInclusionKey, getMetadataKey } from "./pdas";
+import {
+  IncludeInSetInput,
+  IncludeInSupersetInput,
+  MintNftInput,
+  builders,
+} from "./builders";
 
-type MintNftInput = {
-  provider: Provider;
-  authoritiesGroup: PublicKey;
-  data: MetadataData;
-  creator?: PublicKey;
-  tokenProgram?: PublicKey;
-  keypair?: Keypair;
-  signers?: Signer[];
-};
-type IncludeInSetInput = {
-  provider: Provider;
-  authoritiesGroup: PublicKey;
-  parentMint: PublicKey;
-  childMint: PublicKey;
-  inclusionAuthority?: PublicKey;
-  signers?: Signer[];
-  confirmOptions?: ConfirmOptions;
-};
-type MintSetElementInput = {
+export type MintSetElementInput = {
   provider: Provider;
   data: MetadataData;
   authoritiesGroup: PublicKey;
@@ -47,81 +20,8 @@ type MintSetElementInput = {
   confirmOptions?: ConfirmOptions;
 };
 
-type TransactionSender = {
+export type TransactionSender = {
   confirmOptions?: ConfirmOptions;
-};
-
-export const builders = {
-  mintNft: ({
-    provider,
-    authoritiesGroup,
-    data,
-    creator,
-    tokenProgram,
-    keypair,
-    signers,
-  }: MintNftInput) => {
-    const program = new Program<NftStandard>(
-      IDL as any,
-      NFT_STANDARD_PROGRAM_ID,
-      provider
-    );
-    const mintKeypair = keypair || Keypair.generate();
-    const metadata = getMetadataKey(mintKeypair.publicKey);
-    const tokenAccount = getAssociatedTokenAddressSync(
-      mintKeypair.publicKey,
-      creator || provider.publicKey,
-      true,
-      tokenProgram || TOKEN_2022_PROGRAM_ID
-    );
-
-    return {
-      mint: mintKeypair.publicKey,
-      tokenAccount,
-      metadata,
-      authoritiesGroup,
-      builder: program.methods
-        .createMetadata(data)
-        .accounts({
-          creator: creator || provider.publicKey,
-          authoritiesGroup,
-          mint: mintKeypair.publicKey,
-          tokenAccount,
-          metadata,
-          tokenProgram: tokenProgram || TOKEN_2022_PROGRAM_ID,
-        })
-        .signers([...(signers || []), mintKeypair]),
-    };
-  },
-  includeInSet: ({
-    provider,
-    authoritiesGroup,
-    parentMint,
-    childMint,
-    inclusionAuthority,
-    signers,
-  }: IncludeInSetInput) => {
-    const program = new Program<NftStandard>(
-      IDL as any,
-      NFT_STANDARD_PROGRAM_ID,
-      provider
-    );
-    const inclusion = getInclusionKey(parentMint, childMint);
-
-    return {
-      inclusion,
-      builder: program.methods
-        .includeInSet()
-        .accounts({
-          inclusionAuthority: inclusionAuthority || provider.publicKey,
-          parentMetadata: getMetadataKey(parentMint),
-          authoritiesGroup,
-          childMetadata: getMetadataKey(childMint),
-          inclusion,
-        })
-        .signers([...(signers || [])]),
-    };
-  },
 };
 
 export const mintNft = async ({
@@ -193,6 +93,18 @@ export const mintSetElement = async ({
     mint,
     tokenAccount,
     metadata,
+    inclusion,
+  };
+};
+
+export const includeInSuperset = async ({
+  confirmOptions,
+  ...inputs
+}: IncludeInSupersetInput & TransactionSender) => {
+  const { builder, inclusion } = builders.includeInSuperset(inputs);
+  await builder.rpc(confirmOptions);
+
+  return {
     inclusion,
   };
 };

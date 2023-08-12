@@ -6,7 +6,12 @@ import { TOKEN_2022_PROGRAM_ID } from "@solana/spl-token";
 import { TestValues, createValues } from "./values";
 import { NftStandard } from "../sdk/src/idl/nft_standard";
 import { expect } from "chai";
-import { includeInSet, mintNft, mintSetElement } from "../sdk/src";
+import {
+  includeInSet,
+  includeInSuperset,
+  mintNft,
+  mintSetElement,
+} from "../sdk/src";
 
 const suiteName = "Nft Standard: Include in superset";
 describe(suiteName, () => {
@@ -82,34 +87,17 @@ describe(suiteName, () => {
   });
 
   it("includes", async () => {
-    await program.methods
-      .includeInSuperset(values.pathBumps)
-      .accounts({
-        parentMetadata: values.parentMetadata2022Key,
-        childMetadata: values.metadata2022Key,
-        inclusion: values.supersetInclusionKey,
-      })
-      .remainingAccounts([
-        {
-          pubkey: values.parentMetadata2022Key,
-          isSigner: false,
-          isWritable: false,
-        },
-        {
-          pubkey: values.inclusionKey,
-          isSigner: false,
-          isWritable: false,
-        },
-        {
-          pubkey: values.metadata2022Key,
-          isSigner: false,
-          isWritable: false,
-        },
-      ])
-      .rpc({ skipPreflight: true });
+    const { inclusion: inclusionKey } = await includeInSuperset({
+      provider,
+      mints: [
+        values.parentMintKeypair2022.publicKey,
+        values.mintKeypair2022.publicKey,
+      ],
+      confirmOptions: { skipPreflight: true },
+    });
 
     const inclusion = await program.account.supersetInclusion.fetch(
-      values.supersetInclusionKey
+      inclusionKey
     );
     expect(inclusion).not.to.be.undefined;
   });

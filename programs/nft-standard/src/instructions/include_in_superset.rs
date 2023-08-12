@@ -7,7 +7,6 @@ use crate::{
 };
 
 pub fn include_in_superset(ctx: Context<IncludeInSuperset>, bumps: &[u8]) -> Result<()> {
-    msg!("{} {}", bumps.len(), ctx.remaining_accounts.len());
     if bumps.len() * 2 + 1 != ctx.remaining_accounts.len() {
         return err!(NftStandardError::InvalidBumps);
     }
