@@ -9,6 +9,7 @@ use anchor_spl::{
 
 use crate::{
     constants::*,
+    errors::*,
     state::{AuthoritiesGroup, Metadata, MetadataData},
 };
 
@@ -65,11 +66,12 @@ pub struct CreateMetadata<'info> {
     pub authorities_group: Account<'info, AuthoritiesGroup>,
 
     #[account(
-        init,
+        init_if_needed,
         payer = payer,
         mint::authority = creator,
         mint::decimals = 0,
         mint::token_program = token_program,
+        constraint = mint.supply == 0 @ NftStandardError::InvalidMintInitialization,
     )]
     pub mint: InterfaceAccount<'info, Mint>,
 

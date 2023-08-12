@@ -1,5 +1,11 @@
 import { Provider } from "@coral-xyz/anchor";
-import { ConfirmOptions, Keypair, PublicKey, Signer } from "@solana/web3.js";
+import {
+  ConfirmOptions,
+  Keypair,
+  PublicKey,
+  Signer,
+  SystemProgram,
+} from "@solana/web3.js";
 import { MetadataData } from "./metadataData";
 import {
   IncludeInSetInput,
@@ -7,6 +13,13 @@ import {
   MintNftInput,
   builders,
 } from "./builders";
+import {
+  ExtensionType,
+  TOKEN_2022_PROGRAM_ID,
+  createInitializeMintInstruction,
+  createInitializePermanentDelegateInstruction,
+  getMintLen,
+} from "@solana/spl-token";
 
 export type MintSetElementInput = {
   provider: Provider;
@@ -31,7 +44,37 @@ export const mintNft = async ({
   const { builder, mint, tokenAccount, metadata, authoritiesGroup } =
     builders.mintNft(inputs);
 
-  await builder.rpc(confirmOptions);
+  if (inputs.permanentDelegate) {
+    const mintLen = getMintLen([ExtensionType.PermanentDelegate]);
+    await builder
+      .preInstructions([
+        SystemProgram.createAccount({
+          fromPubkey: inputs.provider.publicKey,
+          newAccountPubkey: mint,
+          space: mintLen,
+          lamports:
+            await inputs.provider.connection.getMinimumBalanceForRentExemption(
+              mintLen
+            ),
+          programId: TOKEN_2022_PROGRAM_ID,
+        }),
+        createInitializePermanentDelegateInstruction(
+          mint,
+          inputs.permanentDelegate,
+          TOKEN_2022_PROGRAM_ID
+        ),
+        createInitializeMintInstruction(
+          mint,
+          0,
+          inputs.creator || inputs.provider.publicKey,
+          null,
+          TOKEN_2022_PROGRAM_ID
+        ),
+      ])
+      .rpc(confirmOptions);
+  } else {
+    await builder.rpc(confirmOptions);
+  }
 
   return {
     mint,

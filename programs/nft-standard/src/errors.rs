@@ -2,6 +2,8 @@ use anchor_lang::prelude::*;
 
 #[error_code]
 pub enum NftStandardError {
+    #[msg("Pre initialized mint has non zero supply")]
+    InvalidMintInitialization,
     #[msg("Bumps do not match remaining accounts")]
     InvalidBumps,
     #[msg("Invalid validation path")]

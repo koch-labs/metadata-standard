@@ -1,8 +1,17 @@
 import { Provider, Program } from "@coral-xyz/anchor";
-import { ConfirmOptions, Keypair, PublicKey, Signer } from "@solana/web3.js";
 import {
+  ConfirmOptions,
+  Keypair,
+  PublicKey,
+  Signer,
+  SystemProgram,
+} from "@solana/web3.js";
+import {
+  ExtensionType,
   TOKEN_2022_PROGRAM_ID,
+  createInitializePermanentDelegateInstruction,
   getAssociatedTokenAddressSync,
+  getMintLen,
 } from "@solana/spl-token";
 
 import { NftStandard } from "./idl/nft_standard";
@@ -21,8 +30,9 @@ export type MintNftInput = {
   authoritiesGroup: PublicKey;
   data: MetadataData;
   creator?: PublicKey;
-  tokenProgram?: PublicKey;
   keypair?: Keypair;
+  permanentDelegate?: PublicKey;
+  tokenProgram?: PublicKey;
   signers?: Signer[];
 };
 export type IncludeInSetInput = {
@@ -44,8 +54,9 @@ export const builders = {
     authoritiesGroup,
     data,
     creator,
-    tokenProgram,
     keypair,
+    permanentDelegate,
+    tokenProgram,
     signers,
   }: MintNftInput) => {
     const program = new Program<NftStandard>(

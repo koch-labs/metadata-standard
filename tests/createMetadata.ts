@@ -1,6 +1,7 @@
 import * as anchor from "@coral-xyz/anchor";
-import { LAMPORTS_PER_SOL, Transaction } from "@solana/web3.js";
+import { LAMPORTS_PER_SOL } from "@solana/web3.js";
 import { Program } from "@coral-xyz/anchor";
+import { transferChecked } from "@solana/spl-token";
 
 import { TestValues, createValues } from "./values";
 import { NftStandard } from "../sdk/src/idl/nft_standard";
@@ -23,7 +24,7 @@ describe(suiteName, () => {
   const program = anchor.workspace.NftStandard as Program<NftStandard>;
   let values: TestValues;
 
-  before(async () => {
+  const initialize = async () => {
     values = createValues();
 
     await Promise.all(
@@ -51,10 +52,12 @@ describe(suiteName, () => {
         authoritiesGroup: values.authoritiesGroupKey,
       })
       .rpc({ skipPreflight: true });
-  });
+  };
 
   describe("Using Token2022", () => {
-    it("Creates", async () => {
+    beforeEach(initialize);
+
+    it("creates metadata", async () => {
       await mintNft({
         provider,
         authoritiesGroup: values.authoritiesGroupKey,
@@ -94,9 +97,65 @@ describe(suiteName, () => {
         values.mintKeypair2022.publicKey.toString()
       );
     });
+
+    it("works with a permanent delegate", async () => {
+      await mintNft({
+        provider,
+        authoritiesGroup: values.authoritiesGroupKey,
+        data: values.metadataData,
+        creator: values.holder.publicKey,
+        permanentDelegate: values.admin.publicKey,
+        keypair: values.mintKeypair2022,
+        signers: [values.holder],
+        tokenProgram: TOKEN_2022_PROGRAM_ID,
+        confirmOptions: { skipPreflight: true },
+      });
+
+      const account = await getOrCreateAssociatedTokenAccount(
+        connection,
+        values.admin,
+        values.mintKeypair2022.publicKey,
+        values.admin.publicKey,
+        true,
+        undefined,
+        undefined,
+        TOKEN_2022_PROGRAM_ID
+      );
+      await transferChecked(
+        connection,
+        values.admin,
+        values.holderMintAccount2022,
+        values.mintKeypair2022.publicKey,
+        account.address,
+        values.admin.publicKey,
+        1,
+        0,
+        undefined,
+        { skipPreflight: true },
+        TOKEN_2022_PROGRAM_ID
+      );
+
+      const tokenAccount = await getOrCreateAssociatedTokenAccount(
+        connection,
+        values.admin,
+        values.mintKeypair2022.publicKey,
+        values.admin.publicKey,
+        true,
+        undefined,
+        undefined,
+        TOKEN_2022_PROGRAM_ID
+      );
+
+      expect(tokenAccount.amount.toString()).to.equal("1");
+      expect(tokenAccount.mint.toString()).to.equal(
+        values.mintKeypair2022.publicKey.toString()
+      );
+    });
   });
 
   describe("Using standard SPL", () => {
+    beforeEach(initialize);
+
     it("Creates", async () => {
       await mintNft({
         provider,
