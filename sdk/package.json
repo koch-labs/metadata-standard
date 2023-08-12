@@ -1,5 +1,5 @@
 {
-  "name": "harberger-nft-sdk",
+  "name": "@koch-labs/nft-standard",
   "version": "0.0.1",
   "main": "dist/index.js",
   "license": "MIT"
