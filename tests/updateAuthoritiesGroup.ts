@@ -3,9 +3,9 @@ import { LAMPORTS_PER_SOL } from "@solana/web3.js";
 import { Program } from "@coral-xyz/anchor";
 
 import { TestValues, createValues } from "./values";
-import { NftStandard } from "../../target/types/nft_standard";
+import { NftStandard } from "../target/types/nft_standard";
 import { expect } from "chai";
-import { expectRevert } from "../utils";
+import { expectRevert } from "./utils";
 
 const suiteName = "Nft Standard: Update authorities group";
 describe(suiteName, () => {

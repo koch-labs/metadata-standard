@@ -4,7 +4,7 @@ import {
   getSupersetInclusionKey,
   getInclusionKey,
   getMetadataKey,
-} from "../../sdk/src";
+} from "../sdk/src";
 import {
   TOKEN_2022_PROGRAM_ID,
   TOKEN_PROGRAM_ID,
@@ -13,8 +13,8 @@ import {
 import {
   MetadataData,
   createExternalMetadataData,
-} from "../../sdk/src/metadataData";
-import { getPathBumpsFromMints } from "../../sdk/src/superset";
+} from "../sdk/src/metadataData";
+import { getPathBumpsFromMints } from "../sdk/src/superset";
 
 export interface TestValues {
   admin: Keypair;
