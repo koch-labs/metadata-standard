@@ -1,19 +1,17 @@
 import * as anchor from "@coral-xyz/anchor";
-import { LAMPORTS_PER_SOL } from "@solana/web3.js";
+import { LAMPORTS_PER_SOL, Transaction } from "@solana/web3.js";
 import { Program } from "@coral-xyz/anchor";
 
 import { TestValues, createValues } from "./values";
-import { NftStandard } from "../target/types/nft_standard";
+import { NftStandard } from "../sdk/src/idl/nft_standard";
 import { expect } from "chai";
 import { expectRevert } from "./utils";
 import {
   TOKEN_2022_PROGRAM_ID,
   TOKEN_PROGRAM_ID,
-  createAssociatedTokenAccountIdempotent,
-  createMint,
-  getAccount,
   getOrCreateAssociatedTokenAccount,
 } from "@solana/spl-token";
+import { mintNft } from "../sdk/src";
 
 const suiteName = "Nft Standard: Create metadata";
 describe(suiteName, () => {
@@ -57,18 +55,15 @@ describe(suiteName, () => {
 
   describe("Using Token2022", () => {
     it("Creates", async () => {
-      await program.methods
-        .createMetadata(values.metadataData)
-        .accounts({
-          creator: values.holder.publicKey,
-          authoritiesGroup: values.authoritiesGroupKey,
-          tokenAccount: values.holderMintAccount2022,
-          mint: values.mintKeypair2022.publicKey,
-          metadata: values.metadata2022Key,
-          tokenProgram: TOKEN_2022_PROGRAM_ID,
-        })
-        .signers([values.holder, values.mintKeypair2022])
-        .rpc({ skipPreflight: true });
+      await mintNft({
+        provider,
+        authoritiesGroup: values.authoritiesGroupKey,
+        data: values.metadataData,
+        creator: values.holder.publicKey,
+        keypair: values.mintKeypair2022,
+        signers: [values.holder],
+        tokenProgram: TOKEN_2022_PROGRAM_ID,
+      });
 
       const metadata = await program.account.metadata.fetch(
         values.metadata2022Key
@@ -103,18 +98,15 @@ describe(suiteName, () => {
 
   describe("Using standard SPL", () => {
     it("Creates", async () => {
-      await program.methods
-        .createMetadata(values.metadataData)
-        .accounts({
-          creator: values.holder.publicKey,
-          authoritiesGroup: values.authoritiesGroupKey,
-          tokenAccount: values.holderMintAccount,
-          mint: values.mintKeypair.publicKey,
-          metadata: values.metadataKey,
-          tokenProgram: TOKEN_PROGRAM_ID,
-        })
-        .signers([values.holder, values.mintKeypair])
-        .rpc({ skipPreflight: true });
+      await mintNft({
+        provider,
+        authoritiesGroup: values.authoritiesGroupKey,
+        data: values.metadataData,
+        creator: values.holder.publicKey,
+        keypair: values.mintKeypair,
+        signers: [values.holder],
+        tokenProgram: TOKEN_PROGRAM_ID,
+      });
 
       const metadata = await program.account.metadata.fetch(values.metadataKey);
 

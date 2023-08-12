@@ -4,7 +4,7 @@ import { Program } from "@coral-xyz/anchor";
 import { TOKEN_2022_PROGRAM_ID } from "@solana/spl-token";
 
 import { TestValues, createValues } from "./values";
-import { NftStandard } from "../target/types/nft_standard";
+import { NftStandard } from "../sdk/src/idl/nft_standard";
 import { expect } from "chai";
 
 const suiteName = "Nft Standard: Include in superset";

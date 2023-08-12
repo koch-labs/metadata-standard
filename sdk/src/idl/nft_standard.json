@@ -437,5 +437,8 @@
       "name": "InvalidPathEnd",
       "msg": "Remaining accounts path end does not match the child"
     }
-  ]
+  ],
+  "metadata": {
+    "address": "9msweUGitRR1ELUe4XZi6xhecPCko54kSqSnfWH7LLiZ"
+  }
 }

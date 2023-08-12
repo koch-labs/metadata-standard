@@ -17,6 +17,7 @@ import {
 import { getPathBumpsFromMints } from "../sdk/src/superset";
 
 export interface TestValues {
+  tokenProgram: PublicKey;
   admin: Keypair;
   transferAuthority: Keypair;
   updateAuthority: Keypair;
@@ -43,6 +44,7 @@ export interface TestValues {
 }
 
 export const createValues = (): TestValues => {
+  const tokenProgram = TOKEN_2022_PROGRAM_ID;
   const admin = Keypair.generate();
   const transferAuthority = Keypair.generate();
   const updateAuthority = Keypair.generate();
@@ -72,13 +74,13 @@ export const createValues = (): TestValues => {
     mintKeypair2022.publicKey,
     holder.publicKey,
     true,
-    TOKEN_2022_PROGRAM_ID
+    tokenProgram
   );
   const holderParentMintAccount2022 = getAssociatedTokenAddressSync(
     parentMintKeypair2022.publicKey,
     holder.publicKey,
     true,
-    TOKEN_2022_PROGRAM_ID
+    tokenProgram
   );
   const inclusionKey = getInclusionKey(
     parentMintKeypair2022.publicKey,
@@ -116,5 +118,6 @@ export const createValues = (): TestValues => {
     inclusionKey,
     supersetInclusionKey,
     pathBumps,
+    tokenProgram,
   };
 };
