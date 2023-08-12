@@ -80,7 +80,7 @@ describe(suiteName, () => {
   });
 
   it("includes", async () => {
-    await includeInSet({
+    const { inclusion: inclusionKey } = await includeInSet({
       provider,
       authoritiesGroup: values.parentAuthoritiesGroupKey,
       parentMint: values.parentMintKeypair2022.publicKey,
@@ -89,9 +89,7 @@ describe(suiteName, () => {
       signers: [values.inclusionAuthority],
     });
 
-    const inclusion = await program.account.inclusion.fetch(
-      values.inclusionKey
-    );
+    const inclusion = await program.account.inclusion.fetch(inclusionKey);
     expect(inclusion).not.to.be.undefined;
   });
 

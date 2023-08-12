@@ -6,7 +6,7 @@ import { TOKEN_2022_PROGRAM_ID } from "@solana/spl-token";
 import { TestValues, createValues } from "./values";
 import { NftStandard } from "../sdk/src/idl/nft_standard";
 import { expect } from "chai";
-import { includeInSet, mintNft } from "../sdk/src";
+import { includeInSet, mintNft, mintSetElement } from "../sdk/src";
 
 const suiteName = "Nft Standard: Include in superset";
 describe(suiteName, () => {
@@ -61,15 +61,6 @@ describe(suiteName, () => {
 
     await mintNft({
       provider,
-      authoritiesGroup: values.authoritiesGroupKey,
-      data: values.metadataData,
-      creator: values.holder.publicKey,
-      keypair: values.mintKeypair2022,
-      signers: [values.holder],
-    });
-
-    await mintNft({
-      provider,
       authoritiesGroup: values.parentAuthoritiesGroupKey,
       data: values.metadataData,
       creator: values.holder.publicKey,
@@ -77,13 +68,16 @@ describe(suiteName, () => {
       signers: [values.holder],
     });
 
-    await includeInSet({
+    await mintSetElement({
       provider,
       authoritiesGroup: values.parentAuthoritiesGroupKey,
+      data: values.metadataData,
+      creator: values.holder.publicKey,
+      keypair: values.mintKeypair2022,
       parentMint: values.parentMintKeypair2022.publicKey,
-      childMint: values.mintKeypair2022.publicKey,
       inclusionAuthority: values.inclusionAuthority.publicKey,
-      signers: [values.inclusionAuthority],
+      signers: [values.inclusionAuthority, values.holder],
+      confirmOptions: { skipPreflight: true },
     });
   });
 
