@@ -2,5 +2,15 @@
   "name": "@koch-labs/nft-standard",
   "version": "0.0.1",
   "main": "dist/index.js",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "build": "cp ../target/idl/nft_standard.json ./src/idl/ && cp ../target/types/nft_standard.ts ./src/idl/ && rm -rf build && tsc"
+  },
+  "devDependencies": {
+    "typescript": "^5.1.6"
+  },
+  "dependencies": {
+    "@coral-xyz/anchor": "0.28.0",
+    "@solana/web3.js": "^1.78.4"
+  }
 }
