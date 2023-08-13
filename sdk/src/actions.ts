@@ -8,6 +8,7 @@ import {
 } from "@solana/web3.js";
 import { MetadataData } from "./metadataData";
 import {
+  ExcludeFromSupersetInput,
   IncludeInSetInput,
   IncludeInSupersetInput,
   MintNftInput,
@@ -19,6 +20,7 @@ import {
   createInitializeMintInstruction,
   createInitializePermanentDelegateInstruction,
   getMintLen,
+  getOrCreateAssociatedTokenAccount,
 } from "@solana/spl-token";
 
 export type MintSetElementInput = {
@@ -155,6 +157,18 @@ export const includeInSuperset = async ({
   ...inputs
 }: IncludeInSupersetInput & TransactionSender) => {
   const { builder, inclusion } = builders.includeInSuperset(inputs);
+  await builder.rpc(confirmOptions);
+
+  return {
+    inclusion,
+  };
+};
+
+export const excludeFromSuperset = async ({
+  confirmOptions,
+  ...inputs
+}: ExcludeFromSupersetInput & TransactionSender) => {
+  const { builder, inclusion } = builders.excludeFromSuperset(inputs);
   await builder.rpc(confirmOptions);
 
   return {

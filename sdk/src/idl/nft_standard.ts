@@ -282,6 +282,57 @@ export type NftStandard = {
           "type": "bytes"
         }
       ]
+    },
+    {
+      "name": "excludeFromSuperset",
+      "accounts": [
+        {
+          "name": "holder",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "parentMetadata",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "childMetadata",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "inclusion",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "mint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenAccount",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "associatedTokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": []
     }
   ],
   "accounts": [
@@ -441,6 +492,11 @@ export type NftStandard = {
       "code": 6004,
       "name": "InvalidPathEnd",
       "msg": "Remaining accounts path end does not match the child"
+    },
+    {
+      "code": 6005,
+      "name": "NotHolder",
+      "msg": "The holder does not own a token"
     }
   ]
 };
@@ -729,6 +785,57 @@ export const IDL: NftStandard = {
           "type": "bytes"
         }
       ]
+    },
+    {
+      "name": "excludeFromSuperset",
+      "accounts": [
+        {
+          "name": "holder",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "parentMetadata",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "childMetadata",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "inclusion",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "mint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenAccount",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "associatedTokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": []
     }
   ],
   "accounts": [
@@ -888,6 +995,11 @@ export const IDL: NftStandard = {
       "code": 6004,
       "name": "InvalidPathEnd",
       "msg": "Remaining accounts path end does not match the child"
+    },
+    {
+      "code": 6005,
+      "name": "NotHolder",
+      "msg": "The holder does not own a token"
     }
   ]
 };

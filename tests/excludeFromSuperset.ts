@@ -7,12 +7,20 @@ import { NftStandard } from "../sdk/src/idl/nft_standard";
 import { expectRevert } from "./utils";
 import {
   excludeFromSet,
+  excludeFromSuperset,
   includeInSet,
+  includeInSuperset,
   mintNft,
   mintSetElement,
 } from "../sdk/src";
+import {
+  TOKEN_2022_PROGRAM_ID,
+  TOKEN_PROGRAM_ID,
+  getAssociatedTokenAddressSync,
+  getOrCreateAssociatedTokenAccount,
+} from "@solana/spl-token";
 
-const suiteName = "Nft Standard: Exclude from set";
+const suiteName = "Nft Standard: Exclude from superset";
 describe(suiteName, () => {
   // Configure the client to use the local cluster.
   const provider = anchor.AnchorProvider.local();
@@ -83,33 +91,26 @@ describe(suiteName, () => {
       signers: [values.inclusionAuthority, values.holder],
       confirmOptions: { skipPreflight: true },
     });
+
+    await includeInSuperset({
+      provider,
+      mints: [
+        values.parentMintKeypair2022.publicKey,
+        values.mintKeypair2022.publicKey,
+      ],
+      confirmOptions: { skipPreflight: true },
+    });
   });
 
   it("excludes", async () => {
-    const { inclusion: inclusionKey } = await excludeFromSet({
+    const { inclusion: inclusionKey } = await excludeFromSuperset({
       provider,
-      authoritiesGroup: values.parentAuthoritiesGroupKey,
       parentMint: values.parentMintKeypair2022.publicKey,
       childMint: values.mintKeypair2022.publicKey,
-      inclusionAuthority: values.inclusionAuthority.publicKey,
-      signers: [values.inclusionAuthority],
+      holder: values.holder.publicKey,
       confirmOptions: { skipPreflight: true },
     });
 
-    await expectRevert(program.account.inclusion.fetch(inclusionKey));
-  });
-
-  it("requires inclusion authority", async () => {
-    await expectRevert(
-      excludeFromSet({
-        provider,
-        authoritiesGroup: values.parentAuthoritiesGroupKey,
-        parentMint: values.parentMintKeypair2022.publicKey,
-        childMint: values.mintKeypair2022.publicKey,
-        inclusionAuthority: values.inclusionAuthority.publicKey,
-        signers: [values.holder],
-        confirmOptions: { skipPreflight: true },
-      })
-    );
+    await expectRevert(program.account.supersetInclusion.fetch(inclusionKey));
   });
 });

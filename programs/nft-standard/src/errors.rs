@@ -12,4 +12,8 @@ pub enum NftStandardError {
     InvalidPathStart,
     #[msg("Remaining accounts path end does not match the child")]
     InvalidPathEnd,
+
+    /// Exclude from superset
+    #[msg("The holder does not own a token")]
+    NotHolder,
 }

@@ -47,6 +47,13 @@ export type IncludeInSupersetInput = {
   provider: Provider;
   mints: PublicKey[];
 };
+export type ExcludeFromSupersetInput = {
+  provider: Provider;
+  parentMint: PublicKey;
+  childMint: PublicKey;
+  holder: PublicKey;
+  tokenProgram?: PublicKey;
+};
 
 export const builders = {
   mintNft: ({
@@ -196,6 +203,40 @@ export const builders = {
           inclusion,
         })
         .remainingAccounts(accounts),
+    };
+  },
+  excludeFromSuperset: ({
+    provider,
+    parentMint,
+    childMint,
+    holder,
+    tokenProgram = TOKEN_2022_PROGRAM_ID,
+  }: ExcludeFromSupersetInput) => {
+    const program = new Program<NftStandard>(
+      IDL as any,
+      NFT_STANDARD_PROGRAM_ID,
+      provider
+    );
+    const parentMetadata = getMetadataKey(parentMint);
+    const childMetadata = getMetadataKey(childMint);
+    const inclusion = getSupersetInclusionKey(parentMint, childMint);
+
+    return {
+      inclusion,
+      builder: program.methods.excludeFromSuperset().accounts({
+        parentMetadata,
+        childMetadata,
+        inclusion,
+        holder,
+        mint: childMint,
+        tokenAccount: getAssociatedTokenAddressSync(
+          childMint,
+          holder,
+          true,
+          tokenProgram
+        ),
+        tokenProgram,
+      }),
     };
   },
 };

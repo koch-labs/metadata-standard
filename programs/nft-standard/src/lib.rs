@@ -62,4 +62,8 @@ pub mod nft_standard {
     pub fn include_in_superset(ctx: Context<IncludeInSuperset>, bumps: Vec<u8>) -> Result<()> {
         instructions::include_in_superset(ctx, &bumps)
     }
+
+    pub fn exclude_from_superset(ctx: Context<ExcludeFromSuperset>) -> Result<()> {
+        instructions::exclude_from_superset(ctx)
+    }
 }
