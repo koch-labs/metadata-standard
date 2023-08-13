@@ -120,7 +120,7 @@ export const builders = {
         .signers([...(signers || [])]),
     };
   },
-  excludeInSet: ({
+  excludeFromSet: ({
     provider,
     authoritiesGroup,
     parentMint,

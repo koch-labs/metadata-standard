@@ -5,7 +5,7 @@ import { Program } from "@coral-xyz/anchor";
 import { TestValues, createValues } from "./values";
 import { NftStandard } from "../sdk/src/idl/nft_standard";
 import { expectRevert } from "./utils";
-import { includeInSet, mintNft } from "../sdk/src";
+import { excludeFromSet, includeInSet, mintNft } from "../sdk/src";
 
 const suiteName = "Nft Standard: Exclude from set";
 describe(suiteName, () => {
@@ -17,7 +17,7 @@ describe(suiteName, () => {
   const program = anchor.workspace.NftStandard as Program<NftStandard>;
   let values: TestValues;
 
-  before(async () => {
+  beforeEach(async () => {
     values = createValues();
 
     await Promise.all(
@@ -87,34 +87,30 @@ describe(suiteName, () => {
   });
 
   it("excludes", async () => {
-    await program.methods
-      .excludeFromSet()
-      .accounts({
-        inclusionAuthority: values.inclusionAuthority.publicKey,
-        authoritiesGroup: values.parentAuthoritiesGroupKey,
-        parentMetadata: values.parentMetadata2022Key,
-        childMetadata: values.metadata2022Key,
-        inclusion: values.inclusionKey,
-      })
-      .signers([values.inclusionAuthority])
-      .rpc({ skipPreflight: true });
+    const { inclusion: inclusionKey } = await excludeFromSet({
+      provider,
+      authoritiesGroup: values.parentAuthoritiesGroupKey,
+      parentMint: values.parentMintKeypair2022.publicKey,
+      childMint: values.mintKeypair2022.publicKey,
+      inclusionAuthority: values.inclusionAuthority.publicKey,
+      signers: [values.inclusionAuthority],
+      confirmOptions: { skipPreflight: true },
+    });
 
-    await expectRevert(program.account.inclusion.fetch(values.inclusionKey));
+    await expectRevert(program.account.inclusion.fetch(inclusionKey));
   });
 
   it("requires inclusion authority", async () => {
     await expectRevert(
-      program.methods
-        .excludeFromSet()
-        .accounts({
-          inclusionAuthority: values.inclusionAuthority.publicKey,
-          authoritiesGroup: values.parentAuthoritiesGroupKey,
-          parentMetadata: values.parentMetadata2022Key,
-          childMetadata: values.metadata2022Key,
-          inclusion: values.inclusionKey,
-        })
-        .signers([values.inclusionAuthority])
-        .rpc({ skipPreflight: true })
+      excludeFromSet({
+        provider,
+        authoritiesGroup: values.parentAuthoritiesGroupKey,
+        parentMint: values.parentMintKeypair2022.publicKey,
+        childMint: values.mintKeypair2022.publicKey,
+        inclusionAuthority: values.inclusionAuthority.publicKey,
+        signers: [values.holder],
+        confirmOptions: { skipPreflight: true },
+      })
     );
   });
 });

@@ -96,6 +96,16 @@ export const includeInSet = async ({
   };
 };
 
+export const excludeFromSet = async ({
+  confirmOptions,
+  ...inputs
+}: IncludeInSetInput & TransactionSender) => {
+  const { builder, inclusion } = builders.excludeFromSet(inputs);
+  await builder.rpc(confirmOptions);
+
+  return { inclusion };
+};
+
 export const mintSetElement = async ({
   provider,
   data,
