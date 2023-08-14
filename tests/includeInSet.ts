@@ -7,7 +7,7 @@ import { NftStandard } from "../sdk/src/idl/nft_standard";
 import { expect } from "chai";
 import { expectRevert } from "./utils";
 import { TOKEN_2022_PROGRAM_ID } from "@solana/spl-token";
-import { includeInSet, mintNft } from "../sdk/src";
+import { createAuthoritiesGroup, includeInSet, mintNft } from "../sdk/src";
 
 const suiteName = "Nft Standard: Include in set";
 describe(suiteName, () => {
@@ -36,17 +36,12 @@ describe(suiteName, () => {
       })
     );
 
-    await program.methods
-      .createAuthoritiesGroup(
-        values.authoritiesGroupId,
-        values.transferAuthority.publicKey,
-        values.updateAuthority.publicKey,
-        values.inclusionAuthority.publicKey
-      )
-      .accounts({
-        authoritiesGroup: values.authoritiesGroupKey,
-      })
-      .rpc({ skipPreflight: true });
+    await createAuthoritiesGroup({
+      provider,
+      id: values.authoritiesGroupId,
+      updateAuthority: values.updateAuthority.publicKey,
+      inclusionAuthority: values.inclusionAuthority.publicKey,
+    });
 
     await mintNft({
       provider,

@@ -5,6 +5,7 @@ import { Program } from "@coral-xyz/anchor";
 import { TestValues, createValues } from "./values";
 import { NftStandard } from "../target/types/nft_standard";
 import { expect } from "chai";
+import { createAuthoritiesGroup } from "../sdk/src";
 
 const suiteName = "Nft Standard: Create authorities group";
 describe(suiteName, () => {
@@ -35,17 +36,12 @@ describe(suiteName, () => {
   });
 
   it("Create a group", async () => {
-    await program.methods
-      .createAuthoritiesGroup(
-        values.authoritiesGroupId,
-        values.transferAuthority.publicKey,
-        values.updateAuthority.publicKey,
-        values.inclusionAuthority.publicKey
-      )
-      .accounts({
-        authoritiesGroup: values.authoritiesGroupKey,
-      })
-      .rpc({ skipPreflight: true });
+    await createAuthoritiesGroup({
+      provider,
+      id: values.authoritiesGroupId,
+      updateAuthority: values.updateAuthority.publicKey,
+      inclusionAuthority: values.inclusionAuthority.publicKey,
+    });
 
     const authoritiesGroup = await program.account.authoritiesGroup.fetch(
       values.authoritiesGroupKey
@@ -53,9 +49,6 @@ describe(suiteName, () => {
 
     expect(authoritiesGroup.id.toString()).to.equal(
       values.authoritiesGroupId.toString()
-    );
-    expect(authoritiesGroup.transferAuthority.toString()).to.equal(
-      values.transferAuthority.publicKey.toString()
     );
     expect(authoritiesGroup.updateAuthority.toString()).to.equal(
       values.updateAuthority.publicKey.toString()

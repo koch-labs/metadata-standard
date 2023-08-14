@@ -56,10 +56,6 @@
           "type": "publicKey"
         },
         {
-          "name": "transferAuthority",
-          "type": "publicKey"
-        },
-        {
           "name": "updateAuthority",
           "type": "publicKey"
         },
@@ -89,10 +85,6 @@
         }
       ],
       "args": [
-        {
-          "name": "transferAuthority",
-          "type": "publicKey"
-        },
         {
           "name": "updateAuthority",
           "type": "publicKey"
@@ -333,10 +325,6 @@
         "fields": [
           {
             "name": "id",
-            "type": "publicKey"
-          },
-          {
-            "name": "transferAuthority",
             "type": "publicKey"
           },
           {

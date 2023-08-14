@@ -19,12 +19,19 @@ import IDL from "./idl/nft_standard.json";
 import { NFT_STANDARD_PROGRAM_ID } from "./constants";
 import { MetadataData } from "./metadataData";
 import {
+  getAuthoritiesGroupKey,
   getInclusionKey,
   getMetadataKey,
   getSupersetInclusionKey,
 } from "./pdas";
 import { getPathBumpsFromMints } from "./superset";
 
+export type CreateAuthoritiesGroupInput = {
+  provider: Provider;
+  id?: PublicKey;
+  inclusionAuthority?: PublicKey;
+  updateAuthority?: PublicKey;
+};
 export type MintNftInput = {
   provider: Provider;
   authoritiesGroup: PublicKey;
@@ -52,6 +59,28 @@ export type ExcludeFromSupersetInput = {
 };
 
 export const builders = {
+  createAuthoritiesGroup: ({
+    provider,
+    id = Keypair.generate().publicKey,
+    inclusionAuthority,
+    updateAuthority,
+  }: CreateAuthoritiesGroupInput) => {
+    const program = new Program<NftStandard>(
+      IDL as any,
+      NFT_STANDARD_PROGRAM_ID,
+      provider
+    );
+    const authoritiesGroup = getAuthoritiesGroupKey(id);
+
+    return {
+      authoritiesGroup,
+      builder: program.methods
+        .createAuthoritiesGroup(id, updateAuthority, inclusionAuthority)
+        .accounts({
+          authoritiesGroup,
+        }),
+    };
+  },
   createMetadata: ({
     provider,
     authoritiesGroup,

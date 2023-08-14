@@ -56,10 +56,6 @@ export type NftStandard = {
           "type": "publicKey"
         },
         {
-          "name": "transferAuthority",
-          "type": "publicKey"
-        },
-        {
           "name": "updateAuthority",
           "type": "publicKey"
         },
@@ -89,10 +85,6 @@ export type NftStandard = {
         }
       ],
       "args": [
-        {
-          "name": "transferAuthority",
-          "type": "publicKey"
-        },
         {
           "name": "updateAuthority",
           "type": "publicKey"
@@ -333,10 +325,6 @@ export type NftStandard = {
         "fields": [
           {
             "name": "id",
-            "type": "publicKey"
-          },
-          {
-            "name": "transferAuthority",
             "type": "publicKey"
           },
           {
@@ -549,10 +537,6 @@ export const IDL: NftStandard = {
           "type": "publicKey"
         },
         {
-          "name": "transferAuthority",
-          "type": "publicKey"
-        },
-        {
           "name": "updateAuthority",
           "type": "publicKey"
         },
@@ -582,10 +566,6 @@ export const IDL: NftStandard = {
         }
       ],
       "args": [
-        {
-          "name": "transferAuthority",
-          "type": "publicKey"
-        },
         {
           "name": "updateAuthority",
           "type": "publicKey"
@@ -826,10 +806,6 @@ export const IDL: NftStandard = {
         "fields": [
           {
             "name": "id",
-            "type": "publicKey"
-          },
-          {
-            "name": "transferAuthority",
             "type": "publicKey"
           },
           {

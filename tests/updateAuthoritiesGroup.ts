@@ -6,6 +6,7 @@ import { TestValues, createValues } from "./values";
 import { NftStandard } from "../sdk/src/idl/nft_standard";
 import { expect } from "chai";
 import { expectRevert } from "./utils";
+import { createAuthoritiesGroup } from "../sdk/src";
 
 const suiteName = "Nft Standard: Update authorities group";
 describe(suiteName, () => {
@@ -34,23 +35,17 @@ describe(suiteName, () => {
       })
     );
 
-    await program.methods
-      .createAuthoritiesGroup(
-        values.authoritiesGroupId,
-        values.transferAuthority.publicKey,
-        values.updateAuthority.publicKey,
-        values.inclusionAuthority.publicKey
-      )
-      .accounts({
-        authoritiesGroup: values.authoritiesGroupKey,
-      })
-      .rpc({ skipPreflight: true });
+    await createAuthoritiesGroup({
+      provider,
+      id: values.authoritiesGroupId,
+      updateAuthority: values.updateAuthority.publicKey,
+      inclusionAuthority: values.inclusionAuthority.publicKey,
+    });
   });
 
   it("Updates", async () => {
     await program.methods
       .updateAuthoritiesGroup(
-        values.updateAuthority.publicKey,
         values.updateAuthority.publicKey,
         values.updateAuthority.publicKey
       )
@@ -68,9 +63,6 @@ describe(suiteName, () => {
     expect(authoritiesGroup.id.toString()).to.equal(
       values.authoritiesGroupId.toString()
     );
-    expect(authoritiesGroup.transferAuthority.toString()).to.equal(
-      values.updateAuthority.publicKey.toString()
-    );
     expect(authoritiesGroup.updateAuthority.toString()).to.equal(
       values.updateAuthority.publicKey.toString()
     );
@@ -83,7 +75,6 @@ describe(suiteName, () => {
     await expectRevert(
       program.methods
         .updateAuthoritiesGroup(
-          values.transferAuthority.publicKey,
           values.transferAuthority.publicKey,
           values.transferAuthority.publicKey
         )

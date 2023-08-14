@@ -6,8 +6,6 @@ use crate::constants::{MAX_URI_LENGTH, METADATA_SEED};
 pub struct AuthoritiesGroup {
     pub id: Pubkey,
 
-    pub transfer_authority: Pubkey,
-
     pub update_authority: Pubkey,
 
     pub inclusion_authority: Pubkey,

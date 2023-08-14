@@ -6,6 +6,7 @@ import { TestValues, createValues } from "./values";
 import { NftStandard } from "../sdk/src/idl/nft_standard";
 import { expectRevert } from "./utils";
 import {
+  createAuthoritiesGroup,
   excludeFromSet,
   excludeFromSuperset,
   includeInSet,
@@ -47,17 +48,12 @@ describe(suiteName, () => {
       })
     );
 
-    await program.methods
-      .createAuthoritiesGroup(
-        values.authoritiesGroupId,
-        values.transferAuthority.publicKey,
-        values.updateAuthority.publicKey,
-        values.inclusionAuthority.publicKey
-      )
-      .accounts({
-        authoritiesGroup: values.authoritiesGroupKey,
-      })
-      .rpc({ skipPreflight: true });
+    await createAuthoritiesGroup({
+      provider,
+      id: values.authoritiesGroupId,
+      updateAuthority: values.updateAuthority.publicKey,
+      inclusionAuthority: values.inclusionAuthority.publicKey,
+    });
 
     await mintNft({
       provider,

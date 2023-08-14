@@ -12,7 +12,7 @@ import {
   TOKEN_PROGRAM_ID,
   getOrCreateAssociatedTokenAccount,
 } from "@solana/spl-token";
-import { mintNft } from "../sdk/src";
+import { createAuthoritiesGroup, mintNft } from "../sdk/src";
 
 const suiteName = "Nft Standard: Create metadata";
 describe(suiteName, () => {
@@ -41,17 +41,12 @@ describe(suiteName, () => {
       })
     );
 
-    await program.methods
-      .createAuthoritiesGroup(
-        values.authoritiesGroupId,
-        values.transferAuthority.publicKey,
-        values.updateAuthority.publicKey,
-        values.inclusionAuthority.publicKey
-      )
-      .accounts({
-        authoritiesGroup: values.authoritiesGroupKey,
-      })
-      .rpc({ skipPreflight: true });
+    await createAuthoritiesGroup({
+      provider,
+      id: values.authoritiesGroupId,
+      updateAuthority: values.updateAuthority.publicKey,
+      inclusionAuthority: values.inclusionAuthority.publicKey,
+    });
   };
 
   describe("Using Token2022", () => {

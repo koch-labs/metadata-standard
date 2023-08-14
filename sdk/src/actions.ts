@@ -2,6 +2,7 @@ import { Provider } from "@coral-xyz/anchor";
 import { ConfirmOptions, Keypair, PublicKey, Signer } from "@solana/web3.js";
 import { MetadataData } from "./metadataData";
 import {
+  CreateAuthoritiesGroupInput,
   ExcludeFromSupersetInput,
   IncludeInSetInput,
   IncludeInSupersetInput,
@@ -16,6 +17,27 @@ import { mintTokenInstructions } from "./utils";
 
 export type TransactionSender = {
   confirmOptions?: ConfirmOptions;
+};
+
+export type CreateAuthoritiesGroupActionInput = CreateAuthoritiesGroupInput &
+  TransactionSender;
+export const createAuthoritiesGroup = async ({
+  provider,
+  id,
+  inclusionAuthority,
+  updateAuthority,
+  confirmOptions,
+}: CreateAuthoritiesGroupActionInput) => {
+  const { builder, authoritiesGroup } = builders.createAuthoritiesGroup({
+    provider,
+    id,
+    inclusionAuthority,
+    updateAuthority,
+  });
+
+  await builder.rpc(confirmOptions);
+
+  return { authoritiesGroup };
 };
 
 export type MintConfig = {
