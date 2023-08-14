@@ -96,7 +96,7 @@ export type NftStandard = {
       ]
     },
     {
-      "name": "createMetadata",
+      "name": "createExternalMetadata",
       "accounts": [
         {
           "name": "payer",
@@ -136,10 +136,104 @@ export type NftStandard = {
       ],
       "args": [
         {
-          "name": "data",
-          "type": {
-            "defined": "MetadataData"
-          }
+          "name": "uri",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "createReferenceMetadata",
+      "accounts": [
+        {
+          "name": "payer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "authoritiesGroup",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "mint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "metadata",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "associatedTokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "metadataAccount",
+          "type": "publicKey"
+        }
+      ]
+    },
+    {
+      "name": "createOnchainMetadata",
+      "accounts": [
+        {
+          "name": "payer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "authoritiesGroup",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "mint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "metadata",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "associatedTokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "dataType",
+          "type": "u8"
+        },
+        {
+          "name": "dataAccount",
+          "type": "publicKey"
         }
       ]
     },
@@ -577,7 +671,7 @@ export const IDL: NftStandard = {
       ]
     },
     {
-      "name": "createMetadata",
+      "name": "createExternalMetadata",
       "accounts": [
         {
           "name": "payer",
@@ -617,10 +711,104 @@ export const IDL: NftStandard = {
       ],
       "args": [
         {
-          "name": "data",
-          "type": {
-            "defined": "MetadataData"
-          }
+          "name": "uri",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "createReferenceMetadata",
+      "accounts": [
+        {
+          "name": "payer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "authoritiesGroup",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "mint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "metadata",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "associatedTokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "metadataAccount",
+          "type": "publicKey"
+        }
+      ]
+    },
+    {
+      "name": "createOnchainMetadata",
+      "accounts": [
+        {
+          "name": "payer",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "authoritiesGroup",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "mint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "metadata",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "associatedTokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "dataType",
+          "type": "u8"
+        },
+        {
+          "name": "dataAccount",
+          "type": "publicKey"
         }
       ]
     },

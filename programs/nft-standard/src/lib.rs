@@ -4,7 +4,6 @@ pub mod instructions;
 pub mod state;
 
 use instructions::*;
-use state::*;
 
 use anchor_lang::prelude::*;
 
@@ -32,8 +31,23 @@ pub mod nft_standard {
         instructions::update_authorities_group(ctx, update_authority, inclusion_authority)
     }
 
-    pub fn create_metadata(ctx: Context<CreateMetadata>, data: MetadataData) -> Result<()> {
-        instructions::create_metadata(ctx, data)
+    pub fn create_external_metadata(ctx: Context<CreateMetadata>, uri: String) -> Result<()> {
+        instructions::create_external_metadata(ctx, uri)
+    }
+
+    pub fn create_reference_metadata(
+        ctx: Context<CreateMetadata>,
+        metadata_account: Pubkey,
+    ) -> Result<()> {
+        instructions::create_reference_metadata(ctx, metadata_account)
+    }
+
+    pub fn create_onchain_metadata(
+        ctx: Context<CreateMetadata>,
+        data_type: u8,
+        data_account: Pubkey,
+    ) -> Result<()> {
+        instructions::create_onchain_metadata(ctx, data_type, data_account)
     }
 
     pub fn include_in_set(ctx: Context<IncludeInSet>) -> Result<()> {

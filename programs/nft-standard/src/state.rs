@@ -22,9 +22,19 @@ impl AuthoritiesGroup {
 /// Onchain Data Type describes the format of the onchain data
 #[derive(AnchorSerialize, AnchorDeserialize, Clone)]
 pub enum OnchainDataType {
-    Bytes,
-    Hex,
-    Base64,
+    Bytes = 0,
+    Hex = 1,
+    Base64 = 2,
+}
+
+impl From<u8> for OnchainDataType {
+    fn from(value: u8) -> Self {
+        match value {
+            0 => Self::Bytes,
+            1 => Self::Hex,
+            _ => Self::Base64,
+        }
+    }
 }
 
 /// Metadata type describes how the actual token data is stored

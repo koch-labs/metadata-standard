@@ -7,14 +7,42 @@ use anchor_spl::{
 use crate::{
     constants::*,
     errors::*,
-    state::{AuthoritiesGroup, Metadata, MetadataData},
+    state::{AuthoritiesGroup, Metadata, MetadataData, OnchainDataType},
 };
 
-pub fn create_metadata(ctx: Context<CreateMetadata>, data: MetadataData) -> Result<()> {
+pub fn create_external_metadata(ctx: Context<CreateMetadata>, uri: String) -> Result<()> {
     let metadata = &mut ctx.accounts.metadata;
     metadata.mint = ctx.accounts.mint.key();
     metadata.authorities_group = ctx.accounts.authorities_group.key();
-    metadata.data = data;
+    metadata.data = MetadataData::External { uri };
+
+    Ok(())
+}
+
+pub fn create_reference_metadata(
+    ctx: Context<CreateMetadata>,
+    metadata_account: Pubkey,
+) -> Result<()> {
+    let metadata = &mut ctx.accounts.metadata;
+    metadata.mint = ctx.accounts.mint.key();
+    metadata.authorities_group = ctx.accounts.authorities_group.key();
+    metadata.data = MetadataData::Reference { metadata_account };
+
+    Ok(())
+}
+
+pub fn create_onchain_metadata(
+    ctx: Context<CreateMetadata>,
+    data_type: u8,
+    data_account: Pubkey,
+) -> Result<()> {
+    let metadata = &mut ctx.accounts.metadata;
+    metadata.mint = ctx.accounts.mint.key();
+    metadata.authorities_group = ctx.accounts.authorities_group.key();
+    metadata.data = MetadataData::Onchain {
+        data_type: OnchainDataType::from(data_type),
+        data_account,
+    };
 
     Ok(())
 }

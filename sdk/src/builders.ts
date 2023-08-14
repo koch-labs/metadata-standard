@@ -95,16 +95,49 @@ export const builders = {
     );
     const metadata = getMetadataKey(mint);
 
+    let builder;
+    if (data.external) {
+      builder = program.methods
+        .createExternalMetadata(data.external.uri)
+        .accounts({
+          authoritiesGroup,
+          mint,
+          metadata,
+          tokenProgram: tokenProgram || TOKEN_2022_PROGRAM_ID,
+        });
+    } else if (data.reference) {
+      builder = program.methods
+        .createReferenceMetadata(data.reference.metadataAccount)
+        .accounts({
+          authoritiesGroup,
+          mint,
+          metadata,
+          tokenProgram: tokenProgram || TOKEN_2022_PROGRAM_ID,
+        });
+    } else {
+      let t;
+      if (data.onchain.dataType.bytes) {
+        t = 0;
+      } else if (data.onchain.dataType.hex) {
+        t = 1;
+      } else {
+        t = 2;
+      }
+      builder = program.methods
+        .createOnchainMetadata(t, data.onchain.dataAccount)
+        .accounts({
+          authoritiesGroup,
+          mint,
+          metadata,
+          tokenProgram: tokenProgram || TOKEN_2022_PROGRAM_ID,
+        });
+    }
+
     return {
       mint,
       metadata,
       authoritiesGroup,
-      builder: program.methods.createMetadata(data).accounts({
-        authoritiesGroup,
-        mint,
-        metadata,
-        tokenProgram: tokenProgram || TOKEN_2022_PROGRAM_ID,
-      }),
+      builder,
     };
   },
   includeInSet: ({
