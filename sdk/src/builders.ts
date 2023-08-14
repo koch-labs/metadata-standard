@@ -29,9 +29,7 @@ export type MintNftInput = {
   provider: Provider;
   authoritiesGroup: PublicKey;
   data: MetadataData;
-  creator?: PublicKey;
-  keypair?: Keypair;
-  permanentDelegate?: PublicKey;
+  mint?: PublicKey;
   tokenProgram?: PublicKey;
   signers?: Signer[];
 };
@@ -56,46 +54,30 @@ export type ExcludeFromSupersetInput = {
 };
 
 export const builders = {
-  mintNft: ({
+  createMetadata: ({
     provider,
     authoritiesGroup,
     data,
-    creator,
-    keypair,
-    permanentDelegate,
-    tokenProgram,
-    signers,
+    mint = Keypair.generate().publicKey,
+    tokenProgram = TOKEN_2022_PROGRAM_ID,
   }: MintNftInput) => {
     const program = new Program<NftStandard>(
       IDL as any,
       NFT_STANDARD_PROGRAM_ID,
       provider
     );
-    const mintKeypair = keypair || Keypair.generate();
-    const metadata = getMetadataKey(mintKeypair.publicKey);
-    const tokenAccount = getAssociatedTokenAddressSync(
-      mintKeypair.publicKey,
-      creator || provider.publicKey,
-      true,
-      tokenProgram || TOKEN_2022_PROGRAM_ID
-    );
+    const metadata = getMetadataKey(mint);
 
     return {
-      mint: mintKeypair.publicKey,
-      tokenAccount,
+      mint,
       metadata,
       authoritiesGroup,
-      builder: program.methods
-        .createMetadata(data)
-        .accounts({
-          creator: creator || provider.publicKey,
-          authoritiesGroup,
-          mint: mintKeypair.publicKey,
-          tokenAccount,
-          metadata,
-          tokenProgram: tokenProgram || TOKEN_2022_PROGRAM_ID,
-        })
-        .signers([...(signers || []), mintKeypair]),
+      builder: program.methods.createMetadata(data).accounts({
+        authoritiesGroup,
+        mint,
+        metadata,
+        tokenProgram: tokenProgram || TOKEN_2022_PROGRAM_ID,
+      }),
     };
   },
   includeInSet: ({
@@ -104,7 +86,6 @@ export const builders = {
     parentMint,
     childMint,
     inclusionAuthority,
-    signers,
   }: IncludeInSetInput) => {
     const program = new Program<NftStandard>(
       IDL as any,
@@ -115,16 +96,13 @@ export const builders = {
 
     return {
       inclusion,
-      builder: program.methods
-        .includeInSet()
-        .accounts({
-          inclusionAuthority: inclusionAuthority || provider.publicKey,
-          parentMetadata: getMetadataKey(parentMint),
-          authoritiesGroup,
-          childMetadata: getMetadataKey(childMint),
-          inclusion,
-        })
-        .signers([...(signers || [])]),
+      builder: program.methods.includeInSet().accounts({
+        inclusionAuthority: inclusionAuthority || provider.publicKey,
+        parentMetadata: getMetadataKey(parentMint),
+        authoritiesGroup,
+        childMetadata: getMetadataKey(childMint),
+        inclusion,
+      }),
     };
   },
   excludeFromSet: ({

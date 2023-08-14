@@ -75,20 +75,19 @@ describe(suiteName, () => {
       provider,
       authoritiesGroup: values.parentAuthoritiesGroupKey,
       data: values.metadataData,
-      creator: values.holder.publicKey,
-      keypair: values.parentMintKeypair2022,
-      signers: [values.holder],
+      mintConfig: { keypair: values.parentMintKeypair2022 },
     });
 
     await mintSetElement({
       provider,
       authoritiesGroup: values.parentAuthoritiesGroupKey,
       data: values.metadataData,
-      creator: values.holder.publicKey,
-      keypair: values.mintKeypair2022,
       parentMint: values.parentMintKeypair2022.publicKey,
-      inclusionAuthority: values.inclusionAuthority.publicKey,
-      signers: [values.inclusionAuthority, values.holder],
+      mintConfig: {
+        keypair: values.mintKeypair2022,
+        receiver: values.holder.publicKey,
+      },
+      signers: { inclusionAuthority: values.inclusionAuthority },
       confirmOptions: { skipPreflight: true },
     });
 

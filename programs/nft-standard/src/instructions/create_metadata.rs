@@ -1,10 +1,7 @@
 use anchor_lang::prelude::*;
 use anchor_spl::{
     associated_token::AssociatedToken,
-    token_interface::{
-        mint_to, set_authority, spl_token_2022::instruction::AuthorityType, Mint, MintTo,
-        SetAuthority, TokenAccount, TokenInterface,
-    },
+    token_interface::{Mint, TokenInterface},
 };
 
 use crate::{
@@ -19,32 +16,6 @@ pub fn create_metadata(ctx: Context<CreateMetadata>, data: MetadataData) -> Resu
     metadata.authorities_group = ctx.accounts.authorities_group.key();
     metadata.data = data;
 
-    // Mint one token
-    mint_to(
-        CpiContext::new(
-            ctx.accounts.token_program.to_account_info(),
-            MintTo {
-                mint: ctx.accounts.mint.to_account_info(),
-                authority: ctx.accounts.creator.to_account_info(),
-                to: ctx.accounts.token_account.to_account_info(),
-            },
-        ),
-        1,
-    )?;
-
-    // Transfer ownership to the nft standard program
-    set_authority(
-        CpiContext::new(
-            ctx.accounts.token_program.to_account_info(),
-            SetAuthority {
-                current_authority: ctx.accounts.creator.to_account_info(),
-                account_or_mint: ctx.accounts.mint.to_account_info(),
-            },
-        ),
-        AuthorityType::MintTokens,
-        Some(ctx.accounts.authorities_group.key()),
-    )?;
-
     Ok(())
 }
 
@@ -52,9 +23,6 @@ pub fn create_metadata(ctx: Context<CreateMetadata>, data: MetadataData) -> Resu
 pub struct CreateMetadata<'info> {
     #[account(mut)]
     pub payer: Signer<'info>,
-
-    #[account(mut)]
-    pub creator: Signer<'info>,
 
     #[account(
         seeds = [
@@ -66,23 +34,10 @@ pub struct CreateMetadata<'info> {
     pub authorities_group: Account<'info, AuthoritiesGroup>,
 
     #[account(
-        init_if_needed,
-        payer = payer,
-        mint::authority = creator,
-        mint::decimals = 0,
         mint::token_program = token_program,
-        constraint = mint.supply == 0 @ NftStandardError::InvalidMintInitialization,
+        constraint = mint.decimals == 0 @ NftStandardError::InvalidMint,
     )]
     pub mint: InterfaceAccount<'info, Mint>,
-
-    #[account(
-        init,
-        payer = payer,
-        associated_token::mint = mint,
-        associated_token::authority = creator,
-        associated_token::token_program = token_program,
-    )]
-    pub token_account: InterfaceAccount<'info, TokenAccount>,
 
     #[account(
         init,

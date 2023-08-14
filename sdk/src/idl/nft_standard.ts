@@ -112,23 +112,13 @@ export type NftStandard = {
           "isSigner": true
         },
         {
-          "name": "creator",
-          "isMut": true,
-          "isSigner": true
-        },
-        {
           "name": "authoritiesGroup",
           "isMut": false,
           "isSigner": false
         },
         {
           "name": "mint",
-          "isMut": true,
-          "isSigner": true
-        },
-        {
-          "name": "tokenAccount",
-          "isMut": true,
+          "isMut": false,
           "isSigner": false
         },
         {
@@ -470,8 +460,8 @@ export type NftStandard = {
   "errors": [
     {
       "code": 6000,
-      "name": "InvalidMintInitialization",
-      "msg": "Pre initialized mint has non zero supply"
+      "name": "InvalidMint",
+      "msg": "Mint provided is invalid"
     },
     {
       "code": 6001,
@@ -615,23 +605,13 @@ export const IDL: NftStandard = {
           "isSigner": true
         },
         {
-          "name": "creator",
-          "isMut": true,
-          "isSigner": true
-        },
-        {
           "name": "authoritiesGroup",
           "isMut": false,
           "isSigner": false
         },
         {
           "name": "mint",
-          "isMut": true,
-          "isSigner": true
-        },
-        {
-          "name": "tokenAccount",
-          "isMut": true,
+          "isMut": false,
           "isSigner": false
         },
         {
@@ -973,8 +953,8 @@ export const IDL: NftStandard = {
   "errors": [
     {
       "code": 6000,
-      "name": "InvalidMintInitialization",
-      "msg": "Pre initialized mint has non zero supply"
+      "name": "InvalidMint",
+      "msg": "Mint provided is invalid"
     },
     {
       "code": 6001,

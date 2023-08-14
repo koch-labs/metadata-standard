@@ -19,7 +19,7 @@ describe(suiteName, () => {
   const program = anchor.workspace.NftStandard as Program<NftStandard>;
   let values: TestValues;
 
-  before(async () => {
+  beforeEach(async () => {
     values = createValues();
 
     await Promise.all(
@@ -62,20 +62,16 @@ describe(suiteName, () => {
 
     await mintNft({
       provider,
-      authoritiesGroup: values.authoritiesGroupKey,
+      authoritiesGroup: values.parentAuthoritiesGroupKey,
       data: values.metadataData,
-      creator: values.holder.publicKey,
-      keypair: values.mintKeypair2022,
-      signers: [values.holder],
+      mintConfig: { keypair: values.parentMintKeypair2022 },
     });
 
     await mintNft({
       provider,
-      authoritiesGroup: values.parentAuthoritiesGroupKey,
+      authoritiesGroup: values.authoritiesGroupKey,
       data: values.metadataData,
-      creator: values.holder.publicKey,
-      keypair: values.parentMintKeypair2022,
-      signers: [values.holder],
+      mintConfig: { keypair: values.mintKeypair2022 },
     });
   });
 

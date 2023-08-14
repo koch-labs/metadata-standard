@@ -62,10 +62,11 @@ describe(suiteName, () => {
         provider,
         authoritiesGroup: values.authoritiesGroupKey,
         data: values.metadataData,
-        creator: values.holder.publicKey,
-        keypair: values.mintKeypair2022,
-        signers: [values.holder],
-        tokenProgram: TOKEN_2022_PROGRAM_ID,
+        mintConfig: {
+          keypair: values.mintKeypair2022,
+          receiver: values.holder.publicKey,
+        },
+        confirmOptions: { skipPreflight: true },
       });
 
       const metadata = await program.account.metadata.fetch(
@@ -103,15 +104,15 @@ describe(suiteName, () => {
         provider,
         authoritiesGroup: values.authoritiesGroupKey,
         data: values.metadataData,
-        creator: values.holder.publicKey,
-        permanentDelegate: values.admin.publicKey,
-        keypair: values.mintKeypair2022,
-        signers: [values.holder],
-        tokenProgram: TOKEN_2022_PROGRAM_ID,
+        mintConfig: {
+          permanentDelegate: values.admin.publicKey,
+          keypair: values.mintKeypair2022,
+          receiver: values.holder.publicKey,
+        },
         confirmOptions: { skipPreflight: true },
       });
 
-      const account = await getOrCreateAssociatedTokenAccount(
+      let tokenAccount = await getOrCreateAssociatedTokenAccount(
         connection,
         values.admin,
         values.mintKeypair2022.publicKey,
@@ -126,8 +127,8 @@ describe(suiteName, () => {
         values.admin,
         values.holderMintAccount2022,
         values.mintKeypair2022.publicKey,
-        account.address,
-        values.admin.publicKey,
+        tokenAccount.address,
+        values.admin,
         1,
         0,
         undefined,
@@ -135,7 +136,7 @@ describe(suiteName, () => {
         TOKEN_2022_PROGRAM_ID
       );
 
-      const tokenAccount = await getOrCreateAssociatedTokenAccount(
+      tokenAccount = await getOrCreateAssociatedTokenAccount(
         connection,
         values.admin,
         values.mintKeypair2022.publicKey,
@@ -161,9 +162,10 @@ describe(suiteName, () => {
         provider,
         authoritiesGroup: values.authoritiesGroupKey,
         data: values.metadataData,
-        creator: values.holder.publicKey,
-        keypair: values.mintKeypair,
-        signers: [values.holder],
+        mintConfig: {
+          keypair: values.mintKeypair,
+          receiver: values.holder.publicKey,
+        },
         tokenProgram: TOKEN_PROGRAM_ID,
       });
 
