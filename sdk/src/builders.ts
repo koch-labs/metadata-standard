@@ -29,17 +29,15 @@ export type MintNftInput = {
   provider: Provider;
   authoritiesGroup: PublicKey;
   data: MetadataData;
-  mint?: PublicKey;
-  tokenProgram?: PublicKey;
-  signers?: Signer[];
+  mint: PublicKey;
+  tokenProgram: PublicKey;
 };
 export type IncludeInSetInput = {
   provider: Provider;
   authoritiesGroup: PublicKey;
   parentMint: PublicKey;
   childMint: PublicKey;
-  inclusionAuthority?: PublicKey;
-  signers?: Signer[];
+  inclusionAuthority: PublicKey;
 };
 export type IncludeInSupersetInput = {
   provider: Provider;
@@ -58,7 +56,7 @@ export const builders = {
     provider,
     authoritiesGroup,
     data,
-    mint = Keypair.generate().publicKey,
+    mint,
     tokenProgram = TOKEN_2022_PROGRAM_ID,
   }: MintNftInput) => {
     const program = new Program<NftStandard>(
@@ -111,7 +109,6 @@ export const builders = {
     parentMint,
     childMint,
     inclusionAuthority,
-    signers,
   }: IncludeInSetInput) => {
     const program = new Program<NftStandard>(
       IDL as any,
@@ -124,16 +121,13 @@ export const builders = {
 
     return {
       inclusion,
-      builder: program.methods
-        .excludeFromSet()
-        .accounts({
-          inclusionAuthority,
-          authoritiesGroup,
-          parentMetadata,
-          childMetadata,
-          inclusion,
-        })
-        .signers([...(signers || [])]),
+      builder: program.methods.excludeFromSet().accounts({
+        inclusionAuthority,
+        authoritiesGroup,
+        parentMetadata,
+        childMetadata,
+        inclusion,
+      }),
     };
   },
   includeInSuperset: ({ provider, mints }: IncludeInSupersetInput) => {

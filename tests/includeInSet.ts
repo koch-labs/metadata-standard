@@ -39,30 +39,18 @@ describe(suiteName, () => {
     await program.methods
       .createAuthoritiesGroup(
         values.authoritiesGroupId,
-        values.holder.publicKey,
-        values.holder.publicKey,
-        values.holder.publicKey
+        values.transferAuthority.publicKey,
+        values.updateAuthority.publicKey,
+        values.inclusionAuthority.publicKey
       )
       .accounts({
         authoritiesGroup: values.authoritiesGroupKey,
       })
       .rpc({ skipPreflight: true });
 
-    await program.methods
-      .createAuthoritiesGroup(
-        values.parentAuthoritiesGroupId,
-        values.transferAuthority.publicKey,
-        values.updateAuthority.publicKey,
-        values.inclusionAuthority.publicKey
-      )
-      .accounts({
-        authoritiesGroup: values.parentAuthoritiesGroupKey,
-      })
-      .rpc({ skipPreflight: true });
-
     await mintNft({
       provider,
-      authoritiesGroup: values.parentAuthoritiesGroupKey,
+      authoritiesGroup: values.authoritiesGroupKey,
       data: values.metadataData,
       mintConfig: { keypair: values.parentMintKeypair2022 },
     });
@@ -78,11 +66,10 @@ describe(suiteName, () => {
   it("includes", async () => {
     const { inclusion: inclusionKey } = await includeInSet({
       provider,
-      authoritiesGroup: values.parentAuthoritiesGroupKey,
+      authoritiesGroup: values.authoritiesGroupKey,
       parentMint: values.parentMintKeypair2022.publicKey,
       childMint: values.mintKeypair2022.publicKey,
-      inclusionAuthority: values.inclusionAuthority.publicKey,
-      signers: [values.inclusionAuthority],
+      signers: { inclusionAuthority: values.inclusionAuthority },
     });
 
     const inclusion = await program.account.inclusion.fetch(inclusionKey);
@@ -93,11 +80,10 @@ describe(suiteName, () => {
     await expectRevert(
       includeInSet({
         provider,
-        authoritiesGroup: values.parentAuthoritiesGroupKey,
+        authoritiesGroup: values.authoritiesGroupKey,
         parentMint: values.parentMintKeypair2022.publicKey,
         childMint: values.mintKeypair2022.publicKey,
-        inclusionAuthority: values.inclusionAuthority.publicKey,
-        signers: [values.holder],
+        signers: { inclusionAuthority: values.holder },
       })
     );
   });

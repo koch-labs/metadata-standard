@@ -86,12 +86,33 @@ export const mintNft = async ({
   };
 };
 
+export type IncludeInSetActionInput = {
+  provider: Provider;
+  authoritiesGroup: PublicKey;
+  parentMint: PublicKey;
+  childMint: PublicKey;
+  signers?: { inclusionAuthority?: Signer };
+  confirmOptions?: ConfirmOptions;
+};
 export const includeInSet = async ({
+  provider,
+  authoritiesGroup,
+  parentMint,
+  childMint,
+  signers,
   confirmOptions,
-  ...inputs
-}: IncludeInSetInput & TransactionSender) => {
-  const { builder, inclusion } = builders.includeInSet(inputs);
-  await builder.signers(inputs.signers).rpc(confirmOptions);
+}: IncludeInSetActionInput) => {
+  const { builder, inclusion } = builders.includeInSet({
+    provider,
+    authoritiesGroup,
+    parentMint,
+    childMint,
+    inclusionAuthority:
+      signers?.inclusionAuthority?.publicKey || provider.publicKey,
+  });
+  await builder
+    .signers(signers?.inclusionAuthority ? [signers.inclusionAuthority] : [])
+    .rpc(confirmOptions);
 
   return {
     inclusion,
@@ -100,10 +121,22 @@ export const includeInSet = async ({
 
 export const excludeFromSet = async ({
   confirmOptions,
-  ...inputs
-}: IncludeInSetInput & TransactionSender) => {
-  const { builder, inclusion } = builders.excludeFromSet(inputs);
-  await builder.rpc(confirmOptions);
+  provider,
+  parentMint,
+  childMint,
+  authoritiesGroup,
+  signers,
+}: IncludeInSetActionInput) => {
+  const { builder, inclusion } = builders.excludeFromSet({
+    provider,
+    parentMint,
+    childMint,
+    authoritiesGroup,
+    inclusionAuthority: signers?.inclusionAuthority?.publicKey,
+  });
+  await builder
+    .signers(signers?.inclusionAuthority ? [signers.inclusionAuthority] : [])
+    .rpc(confirmOptions);
 
   return { inclusion };
 };
@@ -152,6 +185,7 @@ export const mintSetElement = async ({
     authoritiesGroup,
     data,
     mint: mintConfig.keypair.publicKey,
+    tokenProgram,
   });
 
   const { ixs, signers: additionalSigners } = await mintTokenInstructions({
@@ -166,14 +200,15 @@ export const mintSetElement = async ({
     childMint: mint,
     authoritiesGroup,
     parentMint,
-    inclusionAuthority:
-      signers?.inclusionAuthority?.publicKey || provider.publicKey,
+    inclusionAuthority: signers?.inclusionAuthority?.publicKey,
   });
 
   await mintBuilder
-    .signers([signers.inclusionAuthority, ...additionalSigners].filter(Boolean))
     .preInstructions(ixs)
     .postInstructions([await builder.instruction()])
+    .signers(
+      [signers?.inclusionAuthority, ...additionalSigners].filter(Boolean)
+    )
     .rpc(confirmOptions);
 
   return {
