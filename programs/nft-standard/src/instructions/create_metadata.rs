@@ -1,8 +1,5 @@
 use anchor_lang::prelude::*;
-use anchor_spl::{
-    associated_token::AssociatedToken,
-    token_interface::{Mint, TokenInterface},
-};
+use anchor_spl::token_interface::{Mint, TokenInterface};
 
 use crate::{
     constants::*,
@@ -80,6 +77,5 @@ pub struct CreateMetadata<'info> {
     pub metadata: Account<'info, Metadata>,
 
     pub token_program: Interface<'info, TokenInterface>,
-    pub associated_token_program: Program<'info, AssociatedToken>,
     pub system_program: Program<'info, System>,
 }

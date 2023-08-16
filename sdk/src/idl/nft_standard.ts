@@ -124,11 +124,6 @@ export type NftStandard = {
           "isSigner": false
         },
         {
-          "name": "associatedTokenProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
           "name": "systemProgram",
           "isMut": false,
           "isSigner": false
@@ -166,11 +161,6 @@ export type NftStandard = {
         },
         {
           "name": "tokenProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "associatedTokenProgram",
           "isMut": false,
           "isSigner": false
         },
@@ -216,11 +206,6 @@ export type NftStandard = {
           "isSigner": false
         },
         {
-          "name": "associatedTokenProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
           "name": "systemProgram",
           "isMut": false,
           "isSigner": false
@@ -257,12 +242,12 @@ export type NftStandard = {
         },
         {
           "name": "parentMetadata",
-          "isMut": true,
+          "isMut": false,
           "isSigner": false
         },
         {
           "name": "childMetadata",
-          "isMut": true,
+          "isMut": false,
           "isSigner": false
         },
         {
@@ -298,12 +283,12 @@ export type NftStandard = {
         },
         {
           "name": "parentMetadata",
-          "isMut": true,
+          "isMut": false,
           "isSigner": false
         },
         {
           "name": "childMetadata",
-          "isMut": true,
+          "isMut": false,
           "isSigner": false
         },
         {
@@ -333,12 +318,12 @@ export type NftStandard = {
         },
         {
           "name": "parentMetadata",
-          "isMut": true,
+          "isMut": false,
           "isSigner": false
         },
         {
           "name": "childMetadata",
-          "isMut": true,
+          "isMut": false,
           "isSigner": false
         },
         {
@@ -369,12 +354,12 @@ export type NftStandard = {
         },
         {
           "name": "parentMetadata",
-          "isMut": true,
+          "isMut": false,
           "isSigner": false
         },
         {
           "name": "childMetadata",
-          "isMut": true,
+          "isMut": false,
           "isSigner": false
         },
         {
@@ -699,11 +684,6 @@ export const IDL: NftStandard = {
           "isSigner": false
         },
         {
-          "name": "associatedTokenProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
           "name": "systemProgram",
           "isMut": false,
           "isSigner": false
@@ -741,11 +721,6 @@ export const IDL: NftStandard = {
         },
         {
           "name": "tokenProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "associatedTokenProgram",
           "isMut": false,
           "isSigner": false
         },
@@ -791,11 +766,6 @@ export const IDL: NftStandard = {
           "isSigner": false
         },
         {
-          "name": "associatedTokenProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
           "name": "systemProgram",
           "isMut": false,
           "isSigner": false
@@ -832,12 +802,12 @@ export const IDL: NftStandard = {
         },
         {
           "name": "parentMetadata",
-          "isMut": true,
+          "isMut": false,
           "isSigner": false
         },
         {
           "name": "childMetadata",
-          "isMut": true,
+          "isMut": false,
           "isSigner": false
         },
         {
@@ -873,12 +843,12 @@ export const IDL: NftStandard = {
         },
         {
           "name": "parentMetadata",
-          "isMut": true,
+          "isMut": false,
           "isSigner": false
         },
         {
           "name": "childMetadata",
-          "isMut": true,
+          "isMut": false,
           "isSigner": false
         },
         {
@@ -908,12 +878,12 @@ export const IDL: NftStandard = {
         },
         {
           "name": "parentMetadata",
-          "isMut": true,
+          "isMut": false,
           "isSigner": false
         },
         {
           "name": "childMetadata",
-          "isMut": true,
+          "isMut": false,
           "isSigner": false
         },
         {
@@ -944,12 +914,12 @@ export const IDL: NftStandard = {
         },
         {
           "name": "parentMetadata",
-          "isMut": true,
+          "isMut": false,
           "isSigner": false
         },
         {
           "name": "childMetadata",
-          "isMut": true,
+          "isMut": false,
           "isSigner": false
         },
         {

@@ -27,7 +27,6 @@ pub struct ExcludeFromSet<'info> {
     pub authorities_group: Account<'info, AuthoritiesGroup>,
 
     #[account(
-        mut,
         seeds = [
             METADATA_SEED.as_ref(),
             parent_metadata.mint.as_ref()
@@ -38,7 +37,6 @@ pub struct ExcludeFromSet<'info> {
     pub parent_metadata: Account<'info, Metadata>,
 
     #[account(
-        mut,
         seeds = [
             METADATA_SEED.as_ref(),
             child_metadata.mint.as_ref()

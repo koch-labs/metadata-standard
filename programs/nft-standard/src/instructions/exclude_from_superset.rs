@@ -21,7 +21,6 @@ pub struct ExcludeFromSuperset<'info> {
     pub holder: AccountInfo<'info>,
 
     #[account(
-        mut,
         seeds = [
             METADATA_SEED.as_ref(),
             parent_metadata.mint.as_ref()
@@ -31,7 +30,6 @@ pub struct ExcludeFromSuperset<'info> {
     pub parent_metadata: Account<'info, Metadata>,
 
     #[account(
-        mut,
         seeds = [
             METADATA_SEED.as_ref(),
             child_metadata.mint.as_ref()
