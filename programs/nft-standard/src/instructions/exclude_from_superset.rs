@@ -1,6 +1,6 @@
 use anchor_lang::prelude::*;
 use anchor_spl::{
-    associated_token::AssociatedToken,
+    associated_token::get_associated_token_address_with_program_id,
     token_interface::{Mint, TokenAccount, TokenInterface},
 };
 
@@ -58,18 +58,16 @@ pub struct ExcludeFromSuperset<'info> {
     pub mint: InterfaceAccount<'info, Mint>,
 
     #[account(
-        seeds = [
-            holder.key().as_ref(),
-            token_program.key().as_ref(),
-            mint.key().as_ref(),
-        ],
-        bump,
-        seeds::program = associated_token_program.key(),
+        mut,
+        address = get_associated_token_address_with_program_id(
+            &holder.key(),
+            &mint.key(),
+            &token_program.key(),
+        ),
         constraint = token_account.amount == 1 @ NftStandardError::NotHolder,
     )]
     pub token_account: InterfaceAccount<'info, TokenAccount>,
 
     pub token_program: Interface<'info, TokenInterface>,
-    pub associated_token_program: Program<'info, AssociatedToken>,
     pub system_program: Program<'info, System>,
 }
