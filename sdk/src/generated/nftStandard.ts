@@ -60,6 +60,10 @@ export type NftStandard = {
           "type": "publicKey"
         },
         {
+          "name": "metadataAuthority",
+          "type": "publicKey"
+        },
+        {
           "name": "inclusionAuthority",
           "type": "publicKey"
         }
@@ -87,6 +91,10 @@ export type NftStandard = {
       "args": [
         {
           "name": "updateAuthority",
+          "type": "publicKey"
+        },
+        {
+          "name": "metadataAuthority",
           "type": "publicKey"
         },
         {
@@ -403,10 +411,23 @@ export type NftStandard = {
           },
           {
             "name": "updateAuthority",
+            "docs": [
+              "The account that can update the authorities group"
+            ],
+            "type": "publicKey"
+          },
+          {
+            "name": "metadataAuthority",
+            "docs": [
+              "The account that can update metadata"
+            ],
             "type": "publicKey"
           },
           {
             "name": "inclusionAuthority",
+            "docs": [
+              "The account that can include other tokens in the set"
+            ],
             "type": "publicKey"
           }
         ]
@@ -615,6 +636,10 @@ export const IDL: NftStandard = {
           "type": "publicKey"
         },
         {
+          "name": "metadataAuthority",
+          "type": "publicKey"
+        },
+        {
           "name": "inclusionAuthority",
           "type": "publicKey"
         }
@@ -642,6 +667,10 @@ export const IDL: NftStandard = {
       "args": [
         {
           "name": "updateAuthority",
+          "type": "publicKey"
+        },
+        {
+          "name": "metadataAuthority",
           "type": "publicKey"
         },
         {
@@ -958,10 +987,23 @@ export const IDL: NftStandard = {
           },
           {
             "name": "updateAuthority",
+            "docs": [
+              "The account that can update the authorities group"
+            ],
+            "type": "publicKey"
+          },
+          {
+            "name": "metadataAuthority",
+            "docs": [
+              "The account that can update metadata"
+            ],
             "type": "publicKey"
           },
           {
             "name": "inclusionAuthority",
+            "docs": [
+              "The account that can include other tokens in the set"
+            ],
             "type": "publicKey"
           }
         ]

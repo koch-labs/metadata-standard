@@ -1,21 +1,12 @@
 import { Provider, Program } from "@coral-xyz/anchor";
+import { Keypair, PublicKey } from "@solana/web3.js";
 import {
-  ConfirmOptions,
-  Keypair,
-  PublicKey,
-  Signer,
-  SystemProgram,
-} from "@solana/web3.js";
-import {
-  ExtensionType,
   TOKEN_2022_PROGRAM_ID,
-  createInitializePermanentDelegateInstruction,
   getAssociatedTokenAddressSync,
-  getMintLen,
 } from "@solana/spl-token";
 
-import { NftStandard } from "./idl/nft_standard";
-import IDL from "./idl/nft_standard.json";
+import { NftStandard } from "./generated/nftStandard";
+import IDL from "./generated/idl.json";
 import { NFT_STANDARD_PROGRAM_ID } from "./constants";
 import { MetadataData } from "./metadataData";
 import {
@@ -29,8 +20,9 @@ import { getPathBumpsFromMints } from "./superset";
 export type CreateAuthoritiesGroupInput = {
   provider: Provider;
   id?: PublicKey;
-  inclusionAuthority?: PublicKey;
-  updateAuthority?: PublicKey;
+  updateAuthority: PublicKey;
+  metadataAuthority: PublicKey;
+  inclusionAuthority: PublicKey;
 };
 export type MintNftInput = {
   provider: Provider;
@@ -62,8 +54,9 @@ export const builders = {
   createAuthoritiesGroup: ({
     provider,
     id = Keypair.generate().publicKey,
-    inclusionAuthority,
     updateAuthority,
+    metadataAuthority,
+    inclusionAuthority,
   }: CreateAuthoritiesGroupInput) => {
     const program = new Program<NftStandard>(
       IDL as any,
@@ -75,7 +68,12 @@ export const builders = {
     return {
       authoritiesGroup,
       builder: program.methods
-        .createAuthoritiesGroup(id, updateAuthority, inclusionAuthority)
+        .createAuthoritiesGroup(
+          id,
+          updateAuthority,
+          metadataAuthority,
+          inclusionAuthority
+        )
         .accounts({
           authoritiesGroup,
         }),

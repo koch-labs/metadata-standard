@@ -3,7 +3,7 @@ import { LAMPORTS_PER_SOL } from "@solana/web3.js";
 import { Program } from "@coral-xyz/anchor";
 
 import { TestValues, createValues } from "./values";
-import { NftStandard } from "../sdk/src/idl/nft_standard";
+import { NftStandard } from "../sdk/src/generated/nftStandard";
 import { expectRevert } from "./utils";
 import {
   createAuthoritiesGroup,
@@ -44,6 +44,7 @@ describe(suiteName, () => {
       provider,
       id: values.authoritiesGroupId,
       updateAuthority: values.updateAuthority.publicKey,
+      metadataAuthority: values.metadataAuthority.publicKey,
       inclusionAuthority: values.inclusionAuthority.publicKey,
     });
 

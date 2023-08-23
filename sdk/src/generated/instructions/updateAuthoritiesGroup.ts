@@ -6,6 +6,7 @@ import { PROGRAM_ID } from "../programId"
 
 export interface UpdateAuthoritiesGroupArgs {
   updateAuthority: PublicKey
+  metadataAuthority: PublicKey
   inclusionAuthority: PublicKey
 }
 
@@ -17,6 +18,7 @@ export interface UpdateAuthoritiesGroupAccounts {
 
 export const layout = borsh.struct([
   borsh.publicKey("updateAuthority"),
+  borsh.publicKey("metadataAuthority"),
   borsh.publicKey("inclusionAuthority"),
 ])
 
@@ -35,6 +37,7 @@ export function updateAuthoritiesGroup(
   const len = layout.encode(
     {
       updateAuthority: args.updateAuthority,
+      metadataAuthority: args.metadataAuthority,
       inclusionAuthority: args.inclusionAuthority,
     },
     buffer

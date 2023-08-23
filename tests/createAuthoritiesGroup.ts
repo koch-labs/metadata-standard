@@ -25,6 +25,7 @@ describe(suiteName, () => {
         values.admin,
         values.transferAuthority,
         values.updateAuthority,
+        values.metadataAuthority,
         values.inclusionAuthority,
         values.holder,
       ].map(async (kp, i) => {
@@ -40,6 +41,7 @@ describe(suiteName, () => {
       provider,
       id: values.authoritiesGroupId,
       updateAuthority: values.updateAuthority.publicKey,
+      metadataAuthority: values.metadataAuthority.publicKey,
       inclusionAuthority: values.inclusionAuthority.publicKey,
     });
 
@@ -52,6 +54,9 @@ describe(suiteName, () => {
     );
     expect(authoritiesGroup.updateAuthority.toString()).to.equal(
       values.updateAuthority.publicKey.toString()
+    );
+    expect(authoritiesGroup.metadataAuthority.toString()).to.equal(
+      values.metadataAuthority.publicKey.toString()
     );
     expect(authoritiesGroup.inclusionAuthority.toString()).to.equal(
       values.inclusionAuthority.publicKey.toString()

@@ -6,19 +6,31 @@ import { PROGRAM_ID } from "../programId"
 
 export interface AuthoritiesGroupFields {
   id: PublicKey
+  /** The account that can update the authorities group */
   updateAuthority: PublicKey
+  /** The account that can update metadata */
+  metadataAuthority: PublicKey
+  /** The account that can include other tokens in the set */
   inclusionAuthority: PublicKey
 }
 
 export interface AuthoritiesGroupJSON {
   id: string
+  /** The account that can update the authorities group */
   updateAuthority: string
+  /** The account that can update metadata */
+  metadataAuthority: string
+  /** The account that can include other tokens in the set */
   inclusionAuthority: string
 }
 
 export class AuthoritiesGroup {
   readonly id: PublicKey
+  /** The account that can update the authorities group */
   readonly updateAuthority: PublicKey
+  /** The account that can update metadata */
+  readonly metadataAuthority: PublicKey
+  /** The account that can include other tokens in the set */
   readonly inclusionAuthority: PublicKey
 
   static readonly discriminator = Buffer.from([
@@ -28,12 +40,14 @@ export class AuthoritiesGroup {
   static readonly layout = borsh.struct([
     borsh.publicKey("id"),
     borsh.publicKey("updateAuthority"),
+    borsh.publicKey("metadataAuthority"),
     borsh.publicKey("inclusionAuthority"),
   ])
 
   constructor(fields: AuthoritiesGroupFields) {
     this.id = fields.id
     this.updateAuthority = fields.updateAuthority
+    this.metadataAuthority = fields.metadataAuthority
     this.inclusionAuthority = fields.inclusionAuthority
   }
 
@@ -83,6 +97,7 @@ export class AuthoritiesGroup {
     return new AuthoritiesGroup({
       id: dec.id,
       updateAuthority: dec.updateAuthority,
+      metadataAuthority: dec.metadataAuthority,
       inclusionAuthority: dec.inclusionAuthority,
     })
   }
@@ -91,6 +106,7 @@ export class AuthoritiesGroup {
     return {
       id: this.id.toString(),
       updateAuthority: this.updateAuthority.toString(),
+      metadataAuthority: this.metadataAuthority.toString(),
       inclusionAuthority: this.inclusionAuthority.toString(),
     }
   }
@@ -99,6 +115,7 @@ export class AuthoritiesGroup {
     return new AuthoritiesGroup({
       id: new PublicKey(obj.id),
       updateAuthority: new PublicKey(obj.updateAuthority),
+      metadataAuthority: new PublicKey(obj.metadataAuthority),
       inclusionAuthority: new PublicKey(obj.inclusionAuthority),
     })
   }

@@ -1,10 +1,9 @@
 import * as anchor from "@coral-xyz/anchor";
 import { LAMPORTS_PER_SOL } from "@solana/web3.js";
 import { Program } from "@coral-xyz/anchor";
-import { TOKEN_2022_PROGRAM_ID } from "@solana/spl-token";
 
 import { TestValues, createValues } from "./values";
-import { NftStandard } from "../sdk/src/idl/nft_standard";
+import { NftStandard } from "../sdk/src/generated/nftStandard";
 import { expect } from "chai";
 import {
   createAuthoritiesGroup,
@@ -45,6 +44,7 @@ describe(suiteName, () => {
       provider,
       id: values.authoritiesGroupId,
       updateAuthority: values.updateAuthority.publicKey,
+      metadataAuthority: values.metadataAuthority.publicKey,
       inclusionAuthority: values.inclusionAuthority.publicKey,
     });
 

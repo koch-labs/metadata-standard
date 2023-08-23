@@ -3,7 +3,7 @@ import { LAMPORTS_PER_SOL } from "@solana/web3.js";
 import { Program } from "@coral-xyz/anchor";
 
 import { TestValues, createValues } from "./values";
-import { NftStandard } from "../sdk/src/idl/nft_standard";
+import { NftStandard } from "../sdk/src/generated/nftStandard";
 import { expect } from "chai";
 import { expectRevert } from "./utils";
 import { createAuthoritiesGroup } from "../sdk/src";
@@ -39,6 +39,7 @@ describe(suiteName, () => {
       provider,
       id: values.authoritiesGroupId,
       updateAuthority: values.updateAuthority.publicKey,
+      metadataAuthority: values.updateAuthority.publicKey,
       inclusionAuthority: values.inclusionAuthority.publicKey,
     });
   });
@@ -46,6 +47,7 @@ describe(suiteName, () => {
   it("Updates", async () => {
     await program.methods
       .updateAuthoritiesGroup(
+        values.updateAuthority.publicKey,
         values.updateAuthority.publicKey,
         values.updateAuthority.publicKey
       )
@@ -66,6 +68,9 @@ describe(suiteName, () => {
     expect(authoritiesGroup.updateAuthority.toString()).to.equal(
       values.updateAuthority.publicKey.toString()
     );
+    expect(authoritiesGroup.metadataAuthority.toString()).to.equal(
+      values.updateAuthority.publicKey.toString()
+    );
     expect(authoritiesGroup.inclusionAuthority.toString()).to.equal(
       values.updateAuthority.publicKey.toString()
     );
@@ -75,6 +80,7 @@ describe(suiteName, () => {
     await expectRevert(
       program.methods
         .updateAuthoritiesGroup(
+          values.transferAuthority.publicKey,
           values.transferAuthority.publicKey,
           values.transferAuthority.publicKey
         )

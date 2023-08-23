@@ -21,6 +21,7 @@ export interface TestValues {
   admin: Keypair;
   transferAuthority: Keypair;
   updateAuthority: Keypair;
+  metadataAuthority: Keypair;
   inclusionAuthority: Keypair;
   authoritiesGroupId: PublicKey;
   authoritiesGroupKey: PublicKey;
@@ -47,6 +48,7 @@ export const createValues = (): TestValues => {
   const tokenProgram = TOKEN_2022_PROGRAM_ID;
   const admin = Keypair.generate();
   const transferAuthority = Keypair.generate();
+  const metadataAuthority = Keypair.generate();
   const updateAuthority = Keypair.generate();
   const inclusionAuthority = Keypair.generate();
   const authoritiesGroupId = Keypair.generate().publicKey;
@@ -96,8 +98,9 @@ export const createValues = (): TestValues => {
   ]);
   return {
     admin,
-    transferAuthority,
     updateAuthority,
+    metadataAuthority,
+    transferAuthority,
     inclusionAuthority,
     authoritiesGroupId,
     authoritiesGroupKey,

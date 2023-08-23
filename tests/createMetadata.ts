@@ -4,9 +4,8 @@ import { Program } from "@coral-xyz/anchor";
 import { transferChecked } from "@solana/spl-token";
 
 import { TestValues, createValues } from "./values";
-import { NftStandard } from "../sdk/src/idl/nft_standard";
+import { NftStandard } from "../sdk/src/generated/nftStandard";
 import { expect } from "chai";
-import { expectRevert } from "./utils";
 import {
   TOKEN_2022_PROGRAM_ID,
   TOKEN_PROGRAM_ID,
@@ -45,6 +44,7 @@ describe(suiteName, () => {
       provider,
       id: values.authoritiesGroupId,
       updateAuthority: values.updateAuthority.publicKey,
+      metadataAuthority: values.metadataAuthority.publicKey,
       inclusionAuthority: values.inclusionAuthority.publicKey,
     });
   };

@@ -24,15 +24,17 @@ export type CreateAuthoritiesGroupActionInput = CreateAuthoritiesGroupInput &
 export const createAuthoritiesGroup = async ({
   provider,
   id,
-  inclusionAuthority,
   updateAuthority,
+  metadataAuthority,
+  inclusionAuthority,
   confirmOptions,
 }: CreateAuthoritiesGroupActionInput) => {
   const { builder, authoritiesGroup } = builders.createAuthoritiesGroup({
     provider,
     id,
-    inclusionAuthority,
     updateAuthority,
+    metadataAuthority,
+    inclusionAuthority,
   });
 
   await builder.rpc(confirmOptions);

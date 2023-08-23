@@ -1,4 +1,4 @@
-import { NftStandard } from "@/idl/nft_standard";
+import { NftStandard } from "./generated/nftStandard";
 import { IdlTypes } from "@coral-xyz/anchor";
 
 export type MetadataData = IdlTypes<NftStandard>["MetadataData"];

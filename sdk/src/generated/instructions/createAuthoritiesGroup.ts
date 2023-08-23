@@ -7,6 +7,7 @@ import { PROGRAM_ID } from "../programId"
 export interface CreateAuthoritiesGroupArgs {
   id: PublicKey
   updateAuthority: PublicKey
+  metadataAuthority: PublicKey
   inclusionAuthority: PublicKey
 }
 
@@ -19,6 +20,7 @@ export interface CreateAuthoritiesGroupAccounts {
 export const layout = borsh.struct([
   borsh.publicKey("id"),
   borsh.publicKey("updateAuthority"),
+  borsh.publicKey("metadataAuthority"),
   borsh.publicKey("inclusionAuthority"),
 ])
 
@@ -38,6 +40,7 @@ export function createAuthoritiesGroup(
     {
       id: args.id,
       updateAuthority: args.updateAuthority,
+      metadataAuthority: args.metadataAuthority,
       inclusionAuthority: args.inclusionAuthority,
     },
     buffer

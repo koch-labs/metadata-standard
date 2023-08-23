@@ -3,10 +3,9 @@ import { LAMPORTS_PER_SOL } from "@solana/web3.js";
 import { Program } from "@coral-xyz/anchor";
 
 import { TestValues, createValues } from "./values";
-import { NftStandard } from "../sdk/src/idl/nft_standard";
+import { NftStandard } from "../sdk/src/generated/nftStandard";
 import { expect } from "chai";
 import { expectRevert } from "./utils";
-import { TOKEN_2022_PROGRAM_ID } from "@solana/spl-token";
 import { createAuthoritiesGroup, includeInSet, mintNft } from "../sdk/src";
 
 const suiteName = "Nft Standard: Include in set";
@@ -40,6 +39,7 @@ describe(suiteName, () => {
       provider,
       id: values.authoritiesGroupId,
       updateAuthority: values.updateAuthority.publicKey,
+      metadataAuthority: values.metadataAuthority.publicKey,
       inclusionAuthority: values.inclusionAuthority.publicKey,
     });
 

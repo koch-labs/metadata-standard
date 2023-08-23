@@ -1,6 +1,6 @@
 import { Program, Provider } from "@coral-xyz/anchor";
-import { NftStandard } from "./idl/nft_standard";
-import IDL from "./idl/nft_standard.json";
+import { NftStandard } from "./generated/nftStandard";
+import IDL from "./generated/idl.json";
 import { NFT_STANDARD_PROGRAM_ID } from "./constants";
 import { PublicKey } from "@solana/web3.js";
 import {
