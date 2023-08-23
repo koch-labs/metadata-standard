@@ -1,9 +1,11 @@
 pub mod constants;
 pub mod errors;
+pub mod events;
 pub mod instructions;
 pub mod state;
 
 use instructions::*;
+use state::*;
 
 use anchor_lang::prelude::*;
 
@@ -11,6 +13,8 @@ declare_id!("9msweUGitRR1ELUe4XZi6xhecPCko54kSqSnfWH7LLiZ");
 
 #[program]
 pub mod nft_standard {
+
+    use crate::state::MetadataData;
 
     use super::*;
 
@@ -45,14 +49,14 @@ pub mod nft_standard {
     }
 
     pub fn create_external_metadata(ctx: Context<CreateMetadata>, uri: String) -> Result<()> {
-        instructions::create_external_metadata(ctx, uri)
+        instructions::create_metadata(ctx, MetadataData::External { uri })
     }
 
     pub fn create_reference_metadata(
         ctx: Context<CreateMetadata>,
         metadata_account: Pubkey,
     ) -> Result<()> {
-        instructions::create_reference_metadata(ctx, metadata_account)
+        instructions::create_metadata(ctx, MetadataData::Reference { metadata_account })
     }
 
     pub fn create_onchain_metadata(
@@ -60,7 +64,38 @@ pub mod nft_standard {
         data_type: u8,
         data_account: Pubkey,
     ) -> Result<()> {
-        instructions::create_onchain_metadata(ctx, data_type, data_account)
+        instructions::create_metadata(
+            ctx,
+            MetadataData::Onchain {
+                data_type: OnchainDataType::from(data_type),
+                data_account,
+            },
+        )
+    }
+
+    pub fn update_external_metadata(ctx: Context<UpdateMetadata>, uri: String) -> Result<()> {
+        instructions::update_metadata(ctx, MetadataData::External { uri })
+    }
+
+    pub fn update_reference_metadata(
+        ctx: Context<UpdateMetadata>,
+        metadata_account: Pubkey,
+    ) -> Result<()> {
+        instructions::update_metadata(ctx, MetadataData::Reference { metadata_account })
+    }
+
+    pub fn update_onchain_metadata(
+        ctx: Context<UpdateMetadata>,
+        data_type: u8,
+        data_account: Pubkey,
+    ) -> Result<()> {
+        instructions::update_metadata(
+            ctx,
+            MetadataData::Onchain {
+                data_type: OnchainDataType::from(data_type),
+                data_account,
+            },
+        )
     }
 
     pub fn include_in_set(ctx: Context<IncludeInSet>) -> Result<()> {
