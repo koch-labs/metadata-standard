@@ -18,17 +18,30 @@ pub mod nft_standard {
         ctx: Context<CreateAuthoritiesGroup>,
         id: Pubkey,
         update_authority: Pubkey,
+        metadata_authority: Pubkey,
         inclusion_authority: Pubkey,
     ) -> Result<()> {
-        instructions::create_authorities_group(ctx, id, update_authority, inclusion_authority)
+        instructions::create_authorities_group(
+            ctx,
+            id,
+            update_authority,
+            metadata_authority,
+            inclusion_authority,
+        )
     }
 
     pub fn update_authorities_group(
         ctx: Context<UpdateAuthoritiesGroup>,
         update_authority: Pubkey,
+        metadata_authority: Pubkey,
         inclusion_authority: Pubkey,
     ) -> Result<()> {
-        instructions::update_authorities_group(ctx, update_authority, inclusion_authority)
+        instructions::update_authorities_group(
+            ctx,
+            update_authority,
+            metadata_authority,
+            inclusion_authority,
+        )
     }
 
     pub fn create_external_metadata(ctx: Context<CreateMetadata>, uri: String) -> Result<()> {

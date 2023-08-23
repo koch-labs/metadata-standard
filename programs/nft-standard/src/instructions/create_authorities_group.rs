@@ -6,11 +6,13 @@ pub fn create_authorities_group(
     ctx: Context<CreateAuthoritiesGroup>,
     id: Pubkey,
     update_authority: Pubkey,
+    metadata_authority: Pubkey,
     inclusion_authority: Pubkey,
 ) -> Result<()> {
     let group = &mut ctx.accounts.authorities_group;
     group.id = id;
     group.update_authority = update_authority;
+    group.metadata_authority = metadata_authority;
     group.inclusion_authority = inclusion_authority;
 
     Ok(())

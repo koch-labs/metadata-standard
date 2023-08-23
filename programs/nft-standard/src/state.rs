@@ -6,16 +6,22 @@ use crate::constants::{MAX_URI_LENGTH, METADATA_SEED};
 pub struct AuthoritiesGroup {
     pub id: Pubkey,
 
+    /// The account that can update the authorities group
     pub update_authority: Pubkey,
 
+    /// The account that can update metadata
+    pub metadata_authority: Pubkey,
+
+    /// The account that can include other tokens in the set
     pub inclusion_authority: Pubkey,
 }
 
 impl AuthoritiesGroup {
     pub const LEN: usize = 8 // Discriminator
         + 32 // ID
-        + 32 // Transfer
         + 32 // Update
+        + 32 // Metadata
+        + 32 // Transfer
         + 32; // Inclusion
 }
 
