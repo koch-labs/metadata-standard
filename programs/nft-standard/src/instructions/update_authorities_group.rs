@@ -1,6 +1,8 @@
 use anchor_lang::prelude::*;
 
-use crate::{constants::AUTHORITIES_SEED, state::AuthoritiesGroup};
+use crate::{
+    constants::AUTHORITIES_SEED, events::UpdatedAuthoritiesGroup, state::AuthoritiesGroup,
+};
 
 pub fn update_authorities_group(
     ctx: Context<UpdateAuthoritiesGroup>,
@@ -12,6 +14,10 @@ pub fn update_authorities_group(
     group.update_authority = update_authority;
     group.metadata_authority = metadata_authority;
     group.inclusion_authority = inclusion_authority;
+
+    emit!(UpdatedAuthoritiesGroup {
+        authorities_group: ctx.accounts.authorities_group.key(),
+    });
 
     Ok(())
 }

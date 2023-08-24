@@ -23,6 +23,21 @@ export type {
   CreateOnchainMetadataArgs,
   CreateOnchainMetadataAccounts,
 } from "./createOnchainMetadata"
+export { updateExternalMetadata } from "./updateExternalMetadata"
+export type {
+  UpdateExternalMetadataArgs,
+  UpdateExternalMetadataAccounts,
+} from "./updateExternalMetadata"
+export { updateReferenceMetadata } from "./updateReferenceMetadata"
+export type {
+  UpdateReferenceMetadataArgs,
+  UpdateReferenceMetadataAccounts,
+} from "./updateReferenceMetadata"
+export { updateOnchainMetadata } from "./updateOnchainMetadata"
+export type {
+  UpdateOnchainMetadataArgs,
+  UpdateOnchainMetadataAccounts,
+} from "./updateOnchainMetadata"
 export { includeInSet } from "./includeInSet"
 export type { IncludeInSetAccounts } from "./includeInSet"
 export { excludeFromSet } from "./excludeFromSet"

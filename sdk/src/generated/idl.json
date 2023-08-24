@@ -231,6 +231,88 @@
       ]
     },
     {
+      "name": "updateExternalMetadata",
+      "accounts": [
+        {
+          "name": "updateAuthority",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "authoritiesGroup",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "metadata",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "uri",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "updateReferenceMetadata",
+      "accounts": [
+        {
+          "name": "updateAuthority",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "authoritiesGroup",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "metadata",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "metadataAccount",
+          "type": "publicKey"
+        }
+      ]
+    },
+    {
+      "name": "updateOnchainMetadata",
+      "accounts": [
+        {
+          "name": "updateAuthority",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "authoritiesGroup",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "metadata",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "dataType",
+          "type": "u8"
+        },
+        {
+          "name": "dataAccount",
+          "type": "publicKey"
+        }
+      ]
+    },
+    {
       "name": "includeInSet",
       "accounts": [
         {
@@ -540,6 +622,108 @@
       }
     }
   ],
+  "events": [
+    {
+      "name": "CreatedAuthoritiesGroup",
+      "fields": [
+        {
+          "name": "authoritiesGroup",
+          "type": "publicKey",
+          "index": true
+        }
+      ]
+    },
+    {
+      "name": "UpdatedAuthoritiesGroup",
+      "fields": [
+        {
+          "name": "authoritiesGroup",
+          "type": "publicKey",
+          "index": true
+        }
+      ]
+    },
+    {
+      "name": "CreatedMetadata",
+      "fields": [
+        {
+          "name": "metadata",
+          "type": "publicKey",
+          "index": true
+        }
+      ]
+    },
+    {
+      "name": "UpdatedMetadata",
+      "fields": [
+        {
+          "name": "metadata",
+          "type": "publicKey",
+          "index": true
+        }
+      ]
+    },
+    {
+      "name": "IncludedInSet",
+      "fields": [
+        {
+          "name": "parentMetadata",
+          "type": "publicKey",
+          "index": true
+        },
+        {
+          "name": "childMetadata",
+          "type": "publicKey",
+          "index": false
+        }
+      ]
+    },
+    {
+      "name": "ExcludedFromSet",
+      "fields": [
+        {
+          "name": "parentMetadata",
+          "type": "publicKey",
+          "index": true
+        },
+        {
+          "name": "childMetadata",
+          "type": "publicKey",
+          "index": false
+        }
+      ]
+    },
+    {
+      "name": "IncludedInSuperset",
+      "fields": [
+        {
+          "name": "parentMetadata",
+          "type": "publicKey",
+          "index": true
+        },
+        {
+          "name": "childMetadata",
+          "type": "publicKey",
+          "index": false
+        }
+      ]
+    },
+    {
+      "name": "ExcludedFromSuperset",
+      "fields": [
+        {
+          "name": "parentMetadata",
+          "type": "publicKey",
+          "index": true
+        },
+        {
+          "name": "childMetadata",
+          "type": "publicKey",
+          "index": false
+        }
+      ]
+    }
+  ],
   "errors": [
     {
       "code": 6000,
@@ -571,5 +755,8 @@
       "name": "NotHolder",
       "msg": "The holder does not own a token"
     }
-  ]
+  ],
+  "metadata": {
+    "address": "9msweUGitRR1ELUe4XZi6xhecPCko54kSqSnfWH7LLiZ"
+  }
 }

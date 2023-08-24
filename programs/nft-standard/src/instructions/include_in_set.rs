@@ -2,10 +2,16 @@ use anchor_lang::prelude::*;
 
 use crate::{
     constants::*,
+    events::IncludedInSet,
     state::{AuthoritiesGroup, Inclusion, Metadata},
 };
 
-pub fn include_in_set(_: Context<IncludeInSet>) -> Result<()> {
+pub fn include_in_set(ctx: Context<IncludeInSet>) -> Result<()> {
+    emit!(IncludedInSet {
+        parent_metadata: ctx.accounts.parent_metadata.key(),
+        child_metadata: ctx.accounts.child_metadata.key()
+    });
+
     Ok(())
 }
 

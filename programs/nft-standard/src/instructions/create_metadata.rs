@@ -4,6 +4,7 @@ use anchor_spl::token_interface::{Mint, TokenInterface};
 use crate::{
     constants::*,
     errors::*,
+    events::CreatedMetadata,
     state::{AuthoritiesGroup, Metadata, MetadataData},
 };
 
@@ -12,6 +13,10 @@ pub fn create_metadata(ctx: Context<CreateMetadata>, data: MetadataData) -> Resu
     metadata.mint = ctx.accounts.mint.key();
     metadata.authorities_group = ctx.accounts.authorities_group.key();
     metadata.data = data;
+
+    emit!(CreatedMetadata {
+        metadata: metadata.key()
+    });
 
     Ok(())
 }

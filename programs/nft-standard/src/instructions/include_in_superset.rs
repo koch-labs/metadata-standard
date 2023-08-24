@@ -3,6 +3,7 @@ use anchor_lang::prelude::*;
 use crate::{
     constants::*,
     errors::*,
+    events::IncludedInSuperset,
     state::{validate_inclusion, Inclusion, Metadata, SupersetInclusion},
 };
 
@@ -36,6 +37,11 @@ pub fn include_in_superset(ctx: Context<IncludeInSuperset>, bumps: &[u8]) -> Res
             return err!(NftStandardError::InvalidPath);
         }
     }
+
+    emit!(IncludedInSuperset {
+        parent_metadata: ctx.accounts.parent_metadata.key(),
+        child_metadata: ctx.accounts.child_metadata.key()
+    });
 
     Ok(())
 }

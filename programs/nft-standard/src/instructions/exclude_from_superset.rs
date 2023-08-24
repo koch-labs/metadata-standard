@@ -7,10 +7,16 @@ use anchor_spl::{
 use crate::{
     constants::*,
     errors::*,
+    events::ExcludedFromSuperset,
     state::{Metadata, SupersetInclusion},
 };
 
-pub fn exclude_from_superset(_: Context<ExcludeFromSuperset>) -> Result<()> {
+pub fn exclude_from_superset(ctx: Context<ExcludeFromSuperset>) -> Result<()> {
+    emit!(ExcludedFromSuperset {
+        parent_metadata: ctx.accounts.parent_metadata.key(),
+        child_metadata: ctx.accounts.child_metadata.key()
+    });
+
     Ok(())
 }
 

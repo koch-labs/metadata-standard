@@ -2,10 +2,16 @@ use anchor_lang::prelude::*;
 
 use crate::{
     constants::*,
+    events::ExcludedFromSet,
     state::{AuthoritiesGroup, Inclusion, Metadata},
 };
 
-pub fn exclude_from_set(_: Context<ExcludeFromSet>) -> Result<()> {
+pub fn exclude_from_set(ctx: Context<ExcludeFromSet>) -> Result<()> {
+    emit!(ExcludedFromSet {
+        parent_metadata: ctx.accounts.parent_metadata.key(),
+        child_metadata: ctx.accounts.child_metadata.key()
+    });
+
     Ok(())
 }
 
