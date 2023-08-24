@@ -110,6 +110,39 @@ export const mintNft = async ({
   };
 };
 
+export type UpdateMetadataActionInput = {
+  provider: Provider;
+  authoritiesGroup: PublicKey;
+  mint: PublicKey;
+  data: MetadataData;
+  signers?: { metadataAuthority?: Signer };
+  confirmOptions?: ConfirmOptions;
+};
+export const updateMetadata = async ({
+  provider,
+  authoritiesGroup,
+  mint,
+  data,
+  signers,
+  confirmOptions,
+}: UpdateMetadataActionInput) => {
+  const { builder, metadata } = builders.updateMetadata({
+    provider,
+    authoritiesGroup,
+    mint,
+    data,
+    metadataAuthority:
+      signers?.metadataAuthority?.publicKey || provider.publicKey,
+  });
+  await builder
+    .signers(signers?.metadataAuthority ? [signers.metadataAuthority] : [])
+    .rpc(confirmOptions);
+
+  return {
+    metadata,
+  };
+};
+
 export type IncludeInSetActionInput = {
   provider: Provider;
   authoritiesGroup: PublicKey;

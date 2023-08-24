@@ -234,7 +234,7 @@ export type NftStandard = {
       "name": "updateExternalMetadata",
       "accounts": [
         {
-          "name": "updateAuthority",
+          "name": "metadataAuthority",
           "isMut": true,
           "isSigner": true
         },
@@ -260,7 +260,7 @@ export type NftStandard = {
       "name": "updateReferenceMetadata",
       "accounts": [
         {
-          "name": "updateAuthority",
+          "name": "metadataAuthority",
           "isMut": true,
           "isSigner": true
         },
@@ -286,7 +286,7 @@ export type NftStandard = {
       "name": "updateOnchainMetadata",
       "accounts": [
         {
-          "name": "updateAuthority",
+          "name": "metadataAuthority",
           "isMut": true,
           "isSigner": true
         },
@@ -994,7 +994,7 @@ export const IDL: NftStandard = {
       "name": "updateExternalMetadata",
       "accounts": [
         {
-          "name": "updateAuthority",
+          "name": "metadataAuthority",
           "isMut": true,
           "isSigner": true
         },
@@ -1020,7 +1020,7 @@ export const IDL: NftStandard = {
       "name": "updateReferenceMetadata",
       "accounts": [
         {
-          "name": "updateAuthority",
+          "name": "metadataAuthority",
           "isMut": true,
           "isSigner": true
         },
@@ -1046,7 +1046,7 @@ export const IDL: NftStandard = {
       "name": "updateOnchainMetadata",
       "accounts": [
         {
-          "name": "updateAuthority",
+          "name": "metadataAuthority",
           "isMut": true,
           "isSigner": true
         },

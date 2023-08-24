@@ -138,6 +138,66 @@ export const builders = {
       builder,
     };
   },
+  updateMetadata: ({
+    provider,
+    authoritiesGroup,
+    mint,
+    data,
+    metadataAuthority = provider.publicKey,
+  }: {
+    provider: Provider;
+    authoritiesGroup: PublicKey;
+    mint: PublicKey;
+    data: MetadataData;
+    metadataAuthority: PublicKey;
+  }) => {
+    const program = new Program<NftStandard>(
+      IDL as any,
+      NFT_STANDARD_PROGRAM_ID,
+      provider
+    );
+    const metadata = getMetadataKey(mint);
+
+    let builder;
+    if (data.external) {
+      builder = program.methods
+        .updateExternalMetadata(data.external.uri)
+        .accounts({
+          metadataAuthority,
+          authoritiesGroup,
+          metadata,
+        });
+    } else if (data.reference) {
+      builder = program.methods
+        .updateReferenceMetadata(data.reference.metadataAccount)
+        .accounts({
+          metadataAuthority,
+          authoritiesGroup,
+          metadata,
+        });
+    } else {
+      let t;
+      if (data.onchain.dataType.bytes) {
+        t = 0;
+      } else if (data.onchain.dataType.hex) {
+        t = 1;
+      } else {
+        t = 2;
+      }
+      builder = program.methods
+        .updateOnchainMetadata(t, data.onchain.dataAccount)
+        .accounts({
+          metadataAuthority,
+          authoritiesGroup,
+          metadata,
+        });
+    }
+
+    return {
+      metadata,
+      builder,
+    };
+  },
   includeInSet: ({
     provider,
     authoritiesGroup,

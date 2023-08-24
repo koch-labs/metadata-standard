@@ -9,7 +9,7 @@ export interface UpdateReferenceMetadataArgs {
 }
 
 export interface UpdateReferenceMetadataAccounts {
-  updateAuthority: PublicKey
+  metadataAuthority: PublicKey
   authoritiesGroup: PublicKey
   metadata: PublicKey
 }
@@ -22,7 +22,7 @@ export function updateReferenceMetadata(
   programId: PublicKey = PROGRAM_ID
 ) {
   const keys: Array<AccountMeta> = [
-    { pubkey: accounts.updateAuthority, isSigner: true, isWritable: true },
+    { pubkey: accounts.metadataAuthority, isSigner: true, isWritable: true },
     { pubkey: accounts.authoritiesGroup, isSigner: false, isWritable: false },
     { pubkey: accounts.metadata, isSigner: false, isWritable: true },
   ]

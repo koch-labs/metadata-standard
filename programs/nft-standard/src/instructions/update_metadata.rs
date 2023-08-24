@@ -20,7 +20,7 @@ pub fn update_metadata(ctx: Context<UpdateMetadata>, data: MetadataData) -> Resu
 #[derive(Accounts)]
 pub struct UpdateMetadata<'info> {
     #[account(mut)]
-    pub update_authority: Signer<'info>,
+    pub metadata_authority: Signer<'info>,
 
     #[account(
         seeds = [
@@ -28,7 +28,7 @@ pub struct UpdateMetadata<'info> {
             authorities_group.id.as_ref()
         ],
         bump,
-        has_one = update_authority,
+        has_one = metadata_authority,
     )]
     pub authorities_group: Account<'info, AuthoritiesGroup>,
 
