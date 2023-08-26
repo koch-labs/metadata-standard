@@ -36,6 +36,4 @@ pub struct UpdateAuthoritiesGroup<'info> {
         has_one = update_authority,
     )]
     pub authorities_group: Account<'info, AuthoritiesGroup>,
-
-    pub system_program: Program<'info, System>,
 }
