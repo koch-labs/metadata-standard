@@ -38,6 +38,8 @@ export type {
   UpdateOnchainMetadataArgs,
   UpdateOnchainMetadataAccounts,
 } from "./updateOnchainMetadata"
+export { closeMetadata } from "./closeMetadata"
+export type { CloseMetadataAccounts } from "./closeMetadata"
 export { includeInSet } from "./includeInSet"
 export type { IncludeInSetAccounts } from "./includeInSet"
 export { excludeFromSet } from "./excludeFromSet"

@@ -186,6 +186,37 @@ export const builders = {
       builder,
     };
   },
+  closeMetadata: ({
+    provider,
+    mint,
+    holder = provider.publicKey,
+    tokenProgram = TOKEN_2022_PROGRAM_ID,
+  }: {
+    provider: Provider;
+    mint: PublicKey;
+    holder: PublicKey;
+    tokenProgram: PublicKey;
+  }) => {
+    const program = getProgram(provider);
+    const metadata = getMetadataKey(mint);
+    const mintAccount = getAssociatedTokenAddressSync(
+      mint,
+      holder,
+      true,
+      tokenProgram
+    );
+
+    return {
+      metadata,
+      builder: program.methods.closeMetadata().accounts({
+        holder,
+        mint,
+        mintAccount,
+        metadata,
+        tokenProgram,
+      }),
+    };
+  },
   includeInSet: ({
     provider,
     authoritiesGroup,

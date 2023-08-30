@@ -98,6 +98,10 @@ pub mod metadata_standard {
         )
     }
 
+    pub fn close_metadata(ctx: Context<CloseMetadata>) -> Result<()> {
+        instructions::close_metadata(ctx)
+    }
+
     pub fn include_in_set(ctx: Context<IncludeInSet>) -> Result<()> {
         instructions::include_in_set(ctx)
     }

@@ -9,14 +9,14 @@ use crate::{
 
 pub fn include_in_superset(ctx: Context<IncludeInSuperset>, bumps: &[u8]) -> Result<()> {
     if bumps.len() * 2 + 1 != ctx.remaining_accounts.len() {
-        return err!(NftStandardError::InvalidBumps);
+        return err!(MetadataStandardError::InvalidBumps);
     }
 
     for i in 0..(bumps.len() - 1) {
         let parent_metadata: Account<Metadata> =
             Account::try_from_unchecked(&ctx.remaining_accounts[i]).unwrap();
         if i == 0 && parent_metadata.key() != ctx.accounts.parent_metadata.key() {
-            return err!(NftStandardError::InvalidPathStart);
+            return err!(MetadataStandardError::InvalidPathStart);
         }
 
         let inclusion: Account<Inclusion> =
@@ -25,7 +25,7 @@ pub fn include_in_superset(ctx: Context<IncludeInSuperset>, bumps: &[u8]) -> Res
         let child_metadata: Account<Metadata> =
             Account::try_from_unchecked(&ctx.remaining_accounts[i + 2]).unwrap();
         if i == bumps.len() / 2 && child_metadata.key() != ctx.accounts.child_metadata.key() {
-            return err!(NftStandardError::InvalidPathEnd);
+            return err!(MetadataStandardError::InvalidPathEnd);
         }
 
         if !validate_inclusion(
@@ -34,7 +34,7 @@ pub fn include_in_superset(ctx: Context<IncludeInSuperset>, bumps: &[u8]) -> Res
             &inclusion.to_account_info(),
             bumps[i],
         ) {
-            return err!(NftStandardError::InvalidPath);
+            return err!(MetadataStandardError::InvalidPath);
         }
     }
 

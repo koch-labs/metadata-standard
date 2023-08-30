@@ -70,7 +70,7 @@ pub struct ExcludeFromSuperset<'info> {
             &mint.key(),
             &token_program.key(),
         ),
-        constraint = token_account.amount == 1 @ NftStandardError::NotHolder,
+        constraint = token_account.amount == 1 @ MetadataStandardError::NotHolder,
     )]
     pub token_account: InterfaceAccount<'info, TokenAccount>,
 

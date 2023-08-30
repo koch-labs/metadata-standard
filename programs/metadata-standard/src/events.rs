@@ -25,6 +25,12 @@ pub struct UpdatedMetadata {
 }
 
 #[event]
+pub struct ClosedMetadata {
+    #[index]
+    pub metadata: Pubkey,
+}
+
+#[event]
 pub struct IncludedInSet {
     #[index]
     pub parent_metadata: Pubkey,

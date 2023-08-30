@@ -308,6 +308,42 @@ export type MetadataStandard = {
       ]
     },
     {
+      "name": "closeMetadata",
+      "accounts": [
+        {
+          "name": "holder",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "mint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "mintAccount",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "metadata",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    },
+    {
       "name": "includeInSet",
       "accounts": [
         {
@@ -650,6 +686,16 @@ export type MetadataStandard = {
     },
     {
       "name": "UpdatedMetadata",
+      "fields": [
+        {
+          "name": "metadata",
+          "type": "publicKey",
+          "index": true
+        }
+      ]
+    },
+    {
+      "name": "ClosedMetadata",
       "fields": [
         {
           "name": "metadata",
@@ -1063,6 +1109,42 @@ export const IDL: MetadataStandard = {
       ]
     },
     {
+      "name": "closeMetadata",
+      "accounts": [
+        {
+          "name": "holder",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "mint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "mintAccount",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "metadata",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    },
+    {
       "name": "includeInSet",
       "accounts": [
         {
@@ -1405,6 +1487,16 @@ export const IDL: MetadataStandard = {
     },
     {
       "name": "UpdatedMetadata",
+      "fields": [
+        {
+          "name": "metadata",
+          "type": "publicKey",
+          "index": true
+        }
+      ]
+    },
+    {
+      "name": "ClosedMetadata",
       "fields": [
         {
           "name": "metadata",

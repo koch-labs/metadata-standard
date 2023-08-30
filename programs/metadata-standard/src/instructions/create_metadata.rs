@@ -37,7 +37,7 @@ pub struct CreateMetadata<'info> {
 
     #[account(
         mint::token_program = token_program,
-        constraint = mint.decimals == 0 @ NftStandardError::InvalidMint,
+        constraint = mint.decimals == 0 @ MetadataStandardError::InvalidMint,
     )]
     pub mint: InterfaceAccount<'info, Mint>,
 

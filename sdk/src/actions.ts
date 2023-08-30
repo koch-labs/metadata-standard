@@ -142,6 +142,35 @@ export const updateMetadata = async ({
   };
 };
 
+export type CloseMetadataActionInput = {
+  provider: Provider;
+  mint: PublicKey;
+  tokenProgram?: PublicKey;
+  signers?: { holder?: Signer };
+  confirmOptions?: ConfirmOptions;
+};
+export const closeMetadata = async ({
+  provider,
+  mint,
+  tokenProgram,
+  signers,
+  confirmOptions,
+}: CloseMetadataActionInput) => {
+  const { builder, metadata } = builders.closeMetadata({
+    provider,
+    mint,
+    holder: signers.holder.publicKey || provider.publicKey,
+    tokenProgram,
+  });
+  await builder
+    .signers(signers?.holder ? [signers.holder] : [])
+    .rpc(confirmOptions);
+
+  return {
+    metadata,
+  };
+};
+
 export type IncludeInSetActionInput = {
   provider: Provider;
   authoritiesGroup: PublicKey;

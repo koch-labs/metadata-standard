@@ -1,7 +1,7 @@
 use anchor_lang::prelude::*;
 
 #[error_code]
-pub enum NftStandardError {
+pub enum MetadataStandardError {
     #[msg("Mint provided is invalid")]
     InvalidMint,
     #[msg("Bumps do not match remaining accounts")]
@@ -13,7 +13,6 @@ pub enum NftStandardError {
     #[msg("Remaining accounts path end does not match the child")]
     InvalidPathEnd,
 
-    /// Exclude from superset
     #[msg("The holder does not own a token")]
     NotHolder,
 }
