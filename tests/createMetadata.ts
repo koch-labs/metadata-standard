@@ -4,7 +4,7 @@ import { Program } from "@coral-xyz/anchor";
 import { transferChecked } from "@solana/spl-token";
 
 import { TestValues, createValues } from "./values";
-import { NftStandard } from "../sdk/src/generated/nftStandard";
+import { MetadataStandard } from "../sdk/src/generated/metadataStandard";
 import { expect } from "chai";
 import {
   TOKEN_2022_PROGRAM_ID,
@@ -20,7 +20,8 @@ describe(suiteName, () => {
   anchor.setProvider(provider);
   const connection = provider.connection;
 
-  const program = anchor.workspace.NftStandard as Program<NftStandard>;
+  const program = anchor.workspace
+    .MetadataStandard as Program<MetadataStandard>;
   let values: TestValues;
 
   const initialize = async () => {

@@ -13,7 +13,6 @@ export interface UpdateAuthoritiesGroupArgs {
 export interface UpdateAuthoritiesGroupAccounts {
   updateAuthority: PublicKey
   authoritiesGroup: PublicKey
-  systemProgram: PublicKey
 }
 
 export const layout = borsh.struct([
@@ -30,7 +29,6 @@ export function updateAuthoritiesGroup(
   const keys: Array<AccountMeta> = [
     { pubkey: accounts.updateAuthority, isSigner: true, isWritable: false },
     { pubkey: accounts.authoritiesGroup, isSigner: false, isWritable: true },
-    { pubkey: accounts.systemProgram, isSigner: false, isWritable: false },
   ]
   const identifier = Buffer.from([7, 241, 168, 115, 166, 57, 170, 156])
   const buffer = Buffer.alloc(1000)

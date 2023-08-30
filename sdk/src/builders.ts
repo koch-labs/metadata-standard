@@ -5,9 +5,8 @@ import {
   getAssociatedTokenAddressSync,
 } from "@solana/spl-token";
 
-import { NftStandard } from "./generated/nftStandard";
+import { MetadataStandard } from "./generated/metadataStandard";
 import IDL from "./generated/idl.json";
-import { NFT_STANDARD_PROGRAM_ID } from "./constants";
 import { MetadataData } from "./metadataData";
 import {
   getAuthoritiesGroupKey,
@@ -16,6 +15,7 @@ import {
   getSupersetInclusionKey,
 } from "./pdas";
 import { getPathBumpsFromMints } from "./superset";
+import { getProgram } from "./utils";
 
 export type CreateAuthoritiesGroupInput = {
   provider: Provider;
@@ -58,11 +58,7 @@ export const builders = {
     metadataAuthority,
     inclusionAuthority,
   }: CreateAuthoritiesGroupInput) => {
-    const program = new Program<NftStandard>(
-      IDL as any,
-      NFT_STANDARD_PROGRAM_ID,
-      provider
-    );
+    const program = getProgram(provider);
     const authoritiesGroup = getAuthoritiesGroupKey(id);
 
     return {
@@ -86,11 +82,7 @@ export const builders = {
     mint,
     tokenProgram = TOKEN_2022_PROGRAM_ID,
   }: MintNftInput) => {
-    const program = new Program<NftStandard>(
-      IDL as any,
-      NFT_STANDARD_PROGRAM_ID,
-      provider
-    );
+    const program = getProgram(provider);
     const metadata = getMetadataKey(mint);
 
     let builder;
@@ -151,11 +143,7 @@ export const builders = {
     data: MetadataData;
     metadataAuthority: PublicKey;
   }) => {
-    const program = new Program<NftStandard>(
-      IDL as any,
-      NFT_STANDARD_PROGRAM_ID,
-      provider
-    );
+    const program = getProgram(provider);
     const metadata = getMetadataKey(mint);
 
     let builder;
@@ -205,11 +193,7 @@ export const builders = {
     childMint,
     inclusionAuthority,
   }: IncludeInSetInput) => {
-    const program = new Program<NftStandard>(
-      IDL as any,
-      NFT_STANDARD_PROGRAM_ID,
-      provider
-    );
+    const program = getProgram(provider);
     const inclusion = getInclusionKey(parentMint, childMint);
 
     return {
@@ -230,11 +214,7 @@ export const builders = {
     childMint,
     inclusionAuthority,
   }: IncludeInSetInput) => {
-    const program = new Program<NftStandard>(
-      IDL as any,
-      NFT_STANDARD_PROGRAM_ID,
-      provider
-    );
+    const program = getProgram(provider);
     const parentMetadata = getMetadataKey(parentMint);
     const childMetadata = getMetadataKey(childMint);
     const inclusion = getInclusionKey(parentMint, childMint);
@@ -251,11 +231,7 @@ export const builders = {
     };
   },
   includeInSuperset: ({ provider, mints }: IncludeInSupersetInput) => {
-    const program = new Program<NftStandard>(
-      IDL as any,
-      NFT_STANDARD_PROGRAM_ID,
-      provider
-    );
+    const program = getProgram(provider);
     const pathBumps = getPathBumpsFromMints(mints);
     const accounts = [
       {
@@ -304,11 +280,7 @@ export const builders = {
     holder,
     tokenProgram = TOKEN_2022_PROGRAM_ID,
   }: ExcludeFromSupersetInput) => {
-    const program = new Program<NftStandard>(
-      IDL as any,
-      NFT_STANDARD_PROGRAM_ID,
-      provider
-    );
+    const program = getProgram(provider);
     const parentMetadata = getMetadataKey(parentMint);
     const childMetadata = getMetadataKey(childMint);
     const inclusion = getSupersetInclusionKey(parentMint, childMint);

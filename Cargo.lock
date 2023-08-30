@@ -1239,7 +1239,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "nft-standard"
+name = "metadata-standard"
 version = "0.1.0"
 dependencies = [
  "anchor-lang",

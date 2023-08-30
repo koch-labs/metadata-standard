@@ -10,7 +10,17 @@ import {
 } from "@solana/spl-token";
 import { PublicKey, Signer, SystemProgram } from "@solana/web3.js";
 import { MintConfig } from "./actions";
-import { Provider } from "@coral-xyz/anchor";
+import { Program, Provider } from "@coral-xyz/anchor";
+import { IDL, MetadataStandard } from "./generated/metadataStandard";
+import { METADATA_STANDARD_PROGRAM_ID } from "./constants";
+
+export const getProgram = (provider: Provider) => {
+  return new Program<MetadataStandard>(
+    IDL as any,
+    METADATA_STANDARD_PROGRAM_ID,
+    provider
+  );
+};
 
 export const mintTokenInstructions = async ({
   provider,

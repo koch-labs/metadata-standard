@@ -1,6 +1,6 @@
 {
     "scripts": {
-        "gen": "anchor-client-gen target/idl/nft_standard.json sdk/src/generated && cp target/types/nft_standard.ts sdk/src/generated/nftStandard.ts && cp target/idl/nft_standard.json sdk/src/generated/idl.json",
+        "gen": "anchor-client-gen target/idl/metadata_standard.json sdk/src/generated && cp target/types/metadata_standard.ts sdk/src/generated/metadataStandard.ts && cp target/idl/metadata_standard.json sdk/src/generated/idl.json",
         "lint:fix": "prettier */*.js \"*/**/*{.js,.ts}\" -w",
         "lint": "prettier */*.js \"*/**/*{.js,.ts}\" --check"
     },

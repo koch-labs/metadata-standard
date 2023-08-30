@@ -1,7 +1,7 @@
 import { Program, Provider } from "@coral-xyz/anchor";
-import { NftStandard } from "./generated/nftStandard";
+import { MetadataStandard } from "./generated/metadataStandard";
 import IDL from "./generated/idl.json";
-import { NFT_STANDARD_PROGRAM_ID } from "./constants";
+import { METADATA_STANDARD_PROGRAM_ID } from "./constants";
 import { PublicKey } from "@solana/web3.js";
 import {
   getAuthoritiesGroupKey,
@@ -11,9 +11,9 @@ import {
 } from "./pdas";
 
 const getProgram = (provider: Provider) => {
-  return new Program<NftStandard>(
+  return new Program<MetadataStandard>(
     IDL as any,
-    NFT_STANDARD_PROGRAM_ID,
+    METADATA_STANDARD_PROGRAM_ID,
     provider
   );
 };

@@ -1,21 +1,16 @@
 import { Program, Provider } from "@coral-xyz/anchor";
-import IDL from "./generated/idl.json";
-import { NftStandard } from "./generated/nftStandard";
-import { NFT_STANDARD_PROGRAM_ID } from "./constants";
 import { PublicKey } from "@solana/web3.js";
 import { getMetadataKey } from "./pdas";
+import { getProgram } from "./utils";
+import { MetadataStandard } from "./generated/metadataStandard";
 
 export class KochStandard {
   provider: Provider;
-  program: Program<NftStandard>;
+  program: Program<MetadataStandard>;
 
   constructor(provider: Provider) {
     this.provider = provider;
-    this.program = new Program<NftStandard>(
-      IDL as any,
-      NFT_STANDARD_PROGRAM_ID,
-      provider
-    );
+    this.program = getProgram(provider);
   }
 
   metadata() {

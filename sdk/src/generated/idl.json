@@ -1,6 +1,6 @@
 {
   "version": "0.1.0",
-  "name": "nft_standard",
+  "name": "metadata_standard",
   "constants": [
     {
       "name": "MAX_URI_LENGTH",
@@ -80,11 +80,6 @@
         {
           "name": "authoritiesGroup",
           "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "systemProgram",
-          "isMut": false,
           "isSigner": false
         }
       ],

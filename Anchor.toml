@@ -3,7 +3,7 @@ seeds = false
 skip-lint = false
 
 [programs.localnet]
-nft_standard = "9msweUGitRR1ELUe4XZi6xhecPCko54kSqSnfWH7LLiZ"
+metadata_standard = "9msweUGitRR1ELUe4XZi6xhecPCko54kSqSnfWH7LLiZ"
 
 # Token2022 Loader
 [[test.validator.account]]

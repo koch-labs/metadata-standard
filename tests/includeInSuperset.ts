@@ -3,11 +3,10 @@ import { LAMPORTS_PER_SOL } from "@solana/web3.js";
 import { Program } from "@coral-xyz/anchor";
 
 import { TestValues, createValues } from "./values";
-import { NftStandard } from "../sdk/src/generated/nftStandard";
+import { MetadataStandard } from "../sdk/src/generated/metadataStandard";
 import { expect } from "chai";
 import {
   createAuthoritiesGroup,
-  includeInSet,
   includeInSuperset,
   mintNft,
   mintSetElement,
@@ -20,7 +19,8 @@ describe(suiteName, () => {
   anchor.setProvider(provider);
   const connection = provider.connection;
 
-  const program = anchor.workspace.NftStandard as Program<NftStandard>;
+  const program = anchor.workspace
+    .MetadataStandard as Program<MetadataStandard>;
   let values: TestValues;
 
   before(async () => {

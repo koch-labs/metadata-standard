@@ -12,7 +12,7 @@ use anchor_lang::prelude::*;
 declare_id!("9msweUGitRR1ELUe4XZi6xhecPCko54kSqSnfWH7LLiZ");
 
 #[program]
-pub mod nft_standard {
+pub mod metadata_standard {
 
     use crate::state::MetadataData;
 

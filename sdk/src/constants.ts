@@ -1,6 +1,6 @@
 import { PublicKey } from "@solana/web3.js";
 
-export const NFT_STANDARD_PROGRAM_ID = new PublicKey(
+export const METADATA_STANDARD_PROGRAM_ID = new PublicKey(
   "9msweUGitRR1ELUe4XZi6xhecPCko54kSqSnfWH7LLiZ"
 );
 export const SHADOW_NFT_PROGRAM_ID = new PublicKey(

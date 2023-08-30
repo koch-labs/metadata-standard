@@ -1,11 +1,8 @@
 {
-  "name": "@koch-labs/nft-standard",
+  "name": "@koch-labs/metadata-standard",
   "version": "0.0.8",
   "main": "build/index.js",
   "license": "MIT",
-  "scripts": {
-    "build": "cp ../target/idl/nft_standard.json ./src/idl/ && cp ../target/types/nft_standard.ts ./src/idl/ && rm -rf build && tsc"
-  },
   "devDependencies": {
     "typescript": "^5.1.6"
   },

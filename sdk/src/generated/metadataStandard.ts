@@ -1,6 +1,6 @@
-export type NftStandard = {
+export type MetadataStandard = {
   "version": "0.1.0",
-  "name": "nft_standard",
+  "name": "metadata_standard",
   "constants": [
     {
       "name": "MAX_URI_LENGTH",
@@ -80,11 +80,6 @@ export type NftStandard = {
         {
           "name": "authoritiesGroup",
           "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "systemProgram",
-          "isMut": false,
           "isSigner": false
         }
       ],
@@ -758,9 +753,9 @@ export type NftStandard = {
   ]
 };
 
-export const IDL: NftStandard = {
+export const IDL: MetadataStandard = {
   "version": "0.1.0",
-  "name": "nft_standard",
+  "name": "metadata_standard",
   "constants": [
     {
       "name": "MAX_URI_LENGTH",
@@ -840,11 +835,6 @@ export const IDL: NftStandard = {
         {
           "name": "authoritiesGroup",
           "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "systemProgram",
-          "isMut": false,
           "isSigner": false
         }
       ],
