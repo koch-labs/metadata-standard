@@ -1,8 +1,11 @@
 {
   "name": "@koch-labs/metadata-standard",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "main": "build/index.js",
   "license": "MIT",
+  "scripts": {
+    "build": "rm -rf build && tsc"
+  },
   "devDependencies": {
     "typescript": "^5.1.6"
   },
