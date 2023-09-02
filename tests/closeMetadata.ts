@@ -61,7 +61,7 @@ describe(suiteName, () => {
     });
   });
 
-  it("close metadata", async () => {
+  it("closes metadata", async () => {
     const { metadata: metadataKey } = await closeMetadata({
       provider,
       mint: values.mintKeypair2022.publicKey,
@@ -70,5 +70,29 @@ describe(suiteName, () => {
     });
 
     await expectRevert(program.account.metadata.fetch(metadataKey));
+  });
+
+  it("recreates metadata", async () => {
+    const { metadata: metadataKey } = await closeMetadata({
+      provider,
+      mint: values.mintKeypair2022.publicKey,
+      signers: { holder: values.holder },
+      confirmOptions: { skipPreflight: true },
+    });
+
+    await mintNft({
+      provider,
+      authoritiesGroup: values.authoritiesGroupKey,
+      data: values.metadataData,
+      mintConfig: {
+        keypair: values.mintKeypair2022,
+        mintOne: false,
+        initializeMint: false,
+      },
+      confirmOptions: { skipPreflight: true },
+    });
+
+    const metadata = await program.account.metadata.fetch(metadataKey);
+    expect(metadata).to.not.be.undefined;
   });
 });
