@@ -4,18 +4,26 @@ import * as borsh from "@coral-xyz/borsh" // eslint-disable-line @typescript-esl
 import * as types from "../types" // eslint-disable-line @typescript-eslint/no-unused-vars
 import { PROGRAM_ID } from "../programId"
 
-export interface InclusionFields {}
+export interface InclusionFields {
+  inclusionSlot: BN
+}
 
-export interface InclusionJSON {}
+export interface InclusionJSON {
+  inclusionSlot: string
+}
 
 export class Inclusion {
+  readonly inclusionSlot: BN
+
   static readonly discriminator = Buffer.from([
     99, 28, 31, 144, 117, 46, 199, 39,
   ])
 
-  static readonly layout = borsh.struct([])
+  static readonly layout = borsh.struct([borsh.u64("inclusionSlot")])
 
-  constructor(fields: InclusionFields) {}
+  constructor(fields: InclusionFields) {
+    this.inclusionSlot = fields.inclusionSlot
+  }
 
   static async fetch(
     c: Connection,
@@ -60,14 +68,20 @@ export class Inclusion {
 
     const dec = Inclusion.layout.decode(data.slice(8))
 
-    return new Inclusion({})
+    return new Inclusion({
+      inclusionSlot: dec.inclusionSlot,
+    })
   }
 
   toJSON(): InclusionJSON {
-    return {}
+    return {
+      inclusionSlot: this.inclusionSlot.toString(),
+    }
   }
 
   static fromJSON(obj: InclusionJSON): Inclusion {
-    return new Inclusion({})
+    return new Inclusion({
+      inclusionSlot: new BN(obj.inclusionSlot),
+    })
   }
 }

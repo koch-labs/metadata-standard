@@ -7,6 +7,9 @@ use crate::{
 };
 
 pub fn include_in_set(ctx: Context<IncludeInSet>) -> Result<()> {
+    let inclusion = &mut ctx.accounts.inclusion;
+    inclusion.inclusion_slot = Clock::get()?.slot;
+
     emit!(IncludedInSet {
         parent_metadata: ctx.accounts.parent_metadata.key(),
         child_metadata: ctx.accounts.child_metadata.key()

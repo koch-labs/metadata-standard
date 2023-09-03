@@ -264,33 +264,33 @@ export const builders = {
   includeInSuperset: ({ provider, mints }: IncludeInSupersetInput) => {
     const program = getProgram(provider);
     const pathBumps = getPathBumpsFromMints(mints);
-    const accounts = [
-      {
-        pubkey: mints[mints.length - 1],
-        isSigner: false,
-        isWritable: false,
-      },
-    ];
-    for (let i = mints.length - 1; i > 0; i--) {
-      accounts.unshift(
-        {
-          pubkey: getInclusionKey(mints[i - 1], mints[i]),
-          isSigner: false,
-          isWritable: false,
-        },
-        {
-          pubkey: getMetadataKey(mints[i - 1]),
-          isSigner: false,
-          isWritable: false,
-        }
-      );
-    }
     const parentMetadata = getMetadataKey(mints[0]);
     const childMetadata = getMetadataKey(mints[mints.length - 1]);
     const inclusion = getSupersetInclusionKey(
       mints[0],
       mints[mints.length - 1]
     );
+    const accounts = [
+      {
+        pubkey: parentMetadata,
+        isSigner: false,
+        isWritable: false,
+      },
+    ];
+    for (let i = 0; i < mints.length - 1; i++) {
+      accounts.push(
+        {
+          pubkey: getInclusionKey(mints[i], mints[i + 1]),
+          isSigner: false,
+          isWritable: false,
+        },
+        {
+          pubkey: getMetadataKey(mints[i + 1]),
+          isSigner: false,
+          isWritable: false,
+        }
+      );
+    }
 
     return {
       inclusion,

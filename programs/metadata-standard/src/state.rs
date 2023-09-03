@@ -1,6 +1,6 @@
 use anchor_lang::prelude::*;
 
-use crate::constants::{MAX_URI_LENGTH, METADATA_SEED};
+use crate::constants::{INCLUSION_SEED, MAX_URI_LENGTH};
 
 #[account]
 pub struct AuthoritiesGroup {
@@ -68,7 +68,7 @@ pub struct Metadata {
 
     pub authorities_group: Pubkey,
 
-    pub set_version_counter: u32,
+    pub creation_slot: u64,
 
     pub data: MetadataData,
 }
@@ -77,38 +77,50 @@ impl Metadata {
     pub const LEN: usize = 8 // Discriminator
         + 32 // Mint
         + 32 // Authorities
-        + 4 // SVC
+        + 8 // Slot
         + MetadataData::LEN; // Metadata
 }
 
+// An inclusion is valid if there exist an inclusion between both account
+// It must be older than both metadata
 pub fn validate_inclusion(
     parent: &Account<Metadata>,
     child: &Account<Metadata>,
-    inclusion: &AccountInfo,
+    inclusion: &Account<Inclusion>,
     bump: u8,
 ) -> bool {
     let (_key, _bump) = Pubkey::find_program_address(
         &[
-            METADATA_SEED.as_ref(),
+            INCLUSION_SEED.as_ref(),
             parent.key().as_ref(),
             child.key().as_ref(),
         ],
         &crate::ID,
     );
 
-    inclusion.key() == _key && bump == _bump
+    let valid_account = inclusion.key() == _key && bump == _bump;
+    let valid_slots = inclusion.inclusion_slot >= parent.creation_slot
+        && inclusion.inclusion_slot >= child.creation_slot;
+
+    valid_account && valid_slots
 }
 
 #[account]
-pub struct Inclusion {}
+pub struct Inclusion {
+    pub inclusion_slot: u64,
+}
 
 impl Inclusion {
-    pub const LEN: usize = 8; // Discriminator
+    pub const LEN: usize = 8 // Discriminator
+        + 8; // Slot
 }
 
 #[account]
-pub struct SupersetInclusion {}
+pub struct SupersetInclusion {
+    pub inclusion_slot: u64,
+}
 
 impl SupersetInclusion {
-    pub const LEN: usize = 8; // Discriminator
+    pub const LEN: usize = 8 // Discriminator
+        + 8; // Slot
 }

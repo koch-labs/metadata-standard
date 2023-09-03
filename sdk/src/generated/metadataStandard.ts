@@ -560,8 +560,8 @@ export type MetadataStandard = {
             "type": "publicKey"
           },
           {
-            "name": "setVersionCounter",
-            "type": "u32"
+            "name": "creationSlot",
+            "type": "u64"
           },
           {
             "name": "data",
@@ -576,14 +576,24 @@ export type MetadataStandard = {
       "name": "inclusion",
       "type": {
         "kind": "struct",
-        "fields": []
+        "fields": [
+          {
+            "name": "inclusionSlot",
+            "type": "u64"
+          }
+        ]
       }
     },
     {
       "name": "supersetInclusion",
       "type": {
         "kind": "struct",
-        "fields": []
+        "fields": [
+          {
+            "name": "inclusionSlot",
+            "type": "u64"
+          }
+        ]
       }
     }
   ],
@@ -1361,8 +1371,8 @@ export const IDL: MetadataStandard = {
             "type": "publicKey"
           },
           {
-            "name": "setVersionCounter",
-            "type": "u32"
+            "name": "creationSlot",
+            "type": "u64"
           },
           {
             "name": "data",
@@ -1377,14 +1387,24 @@ export const IDL: MetadataStandard = {
       "name": "inclusion",
       "type": {
         "kind": "struct",
-        "fields": []
+        "fields": [
+          {
+            "name": "inclusionSlot",
+            "type": "u64"
+          }
+        ]
       }
     },
     {
       "name": "supersetInclusion",
       "type": {
         "kind": "struct",
-        "fields": []
+        "fields": [
+          {
+            "name": "inclusionSlot",
+            "type": "u64"
+          }
+        ]
       }
     }
   ],

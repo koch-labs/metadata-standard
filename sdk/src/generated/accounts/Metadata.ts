@@ -7,21 +7,21 @@ import { PROGRAM_ID } from "../programId"
 export interface MetadataFields {
   mint: PublicKey
   authoritiesGroup: PublicKey
-  setVersionCounter: number
+  creationSlot: BN
   data: types.MetadataDataKind
 }
 
 export interface MetadataJSON {
   mint: string
   authoritiesGroup: string
-  setVersionCounter: number
+  creationSlot: string
   data: types.MetadataDataJSON
 }
 
 export class Metadata {
   readonly mint: PublicKey
   readonly authoritiesGroup: PublicKey
-  readonly setVersionCounter: number
+  readonly creationSlot: BN
   readonly data: types.MetadataDataKind
 
   static readonly discriminator = Buffer.from([
@@ -31,14 +31,14 @@ export class Metadata {
   static readonly layout = borsh.struct([
     borsh.publicKey("mint"),
     borsh.publicKey("authoritiesGroup"),
-    borsh.u32("setVersionCounter"),
+    borsh.u64("creationSlot"),
     types.MetadataData.layout("data"),
   ])
 
   constructor(fields: MetadataFields) {
     this.mint = fields.mint
     this.authoritiesGroup = fields.authoritiesGroup
-    this.setVersionCounter = fields.setVersionCounter
+    this.creationSlot = fields.creationSlot
     this.data = fields.data
   }
 
@@ -88,7 +88,7 @@ export class Metadata {
     return new Metadata({
       mint: dec.mint,
       authoritiesGroup: dec.authoritiesGroup,
-      setVersionCounter: dec.setVersionCounter,
+      creationSlot: dec.creationSlot,
       data: types.MetadataData.fromDecoded(dec.data),
     })
   }
@@ -97,7 +97,7 @@ export class Metadata {
     return {
       mint: this.mint.toString(),
       authoritiesGroup: this.authoritiesGroup.toString(),
-      setVersionCounter: this.setVersionCounter,
+      creationSlot: this.creationSlot.toString(),
       data: this.data.toJSON(),
     }
   }
@@ -106,7 +106,7 @@ export class Metadata {
     return new Metadata({
       mint: new PublicKey(obj.mint),
       authoritiesGroup: new PublicKey(obj.authoritiesGroup),
-      setVersionCounter: obj.setVersionCounter,
+      creationSlot: new BN(obj.creationSlot),
       data: types.MetadataData.fromJSON(obj.data),
     })
   }

@@ -15,6 +15,9 @@ export const generateSeededKeypair = (seed: string) => {
 export const expectRevert = async (promise: Promise<any>) => {
   try {
     await promise;
-    throw new Error("Promise should have reverted");
-  } catch (err) {}
+  } catch (err) {
+    return;
+  }
+
+  throw new Error("Promise should have reverted");
 };

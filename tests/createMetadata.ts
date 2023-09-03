@@ -72,7 +72,6 @@ describe(suiteName, () => {
       expect(metadata.mint.toString()).to.equal(
         values.mintKeypair2022.publicKey.toString()
       );
-      expect(metadata.setVersionCounter).to.equal(0);
       expect(metadata.authoritiesGroup.toString()).to.equal(
         values.authoritiesGroupKey.toString()
       );
@@ -170,7 +169,6 @@ describe(suiteName, () => {
       expect(metadata.mint.toString()).to.equal(
         values.mintKeypair.publicKey.toString()
       );
-      expect(metadata.setVersionCounter).to.equal(0);
       expect(metadata.authoritiesGroup.toString()).to.equal(
         values.authoritiesGroupKey.toString()
       );

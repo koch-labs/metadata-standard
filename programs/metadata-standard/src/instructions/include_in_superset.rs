@@ -12,7 +12,7 @@ pub fn include_in_superset(ctx: Context<IncludeInSuperset>, bumps: &[u8]) -> Res
         return err!(MetadataStandardError::InvalidBumps);
     }
 
-    for i in 0..(bumps.len() - 1) {
+    for i in 0..bumps.len() {
         let parent_metadata: Account<Metadata> =
             Account::try_from_unchecked(&ctx.remaining_accounts[i]).unwrap();
         if i == 0 && parent_metadata.key() != ctx.accounts.parent_metadata.key() {
@@ -28,15 +28,13 @@ pub fn include_in_superset(ctx: Context<IncludeInSuperset>, bumps: &[u8]) -> Res
             return err!(MetadataStandardError::InvalidPathEnd);
         }
 
-        if !validate_inclusion(
-            &parent_metadata,
-            &child_metadata,
-            &inclusion.to_account_info(),
-            bumps[i],
-        ) {
+        if !validate_inclusion(&parent_metadata, &child_metadata, &inclusion, bumps[i]) {
             return err!(MetadataStandardError::InvalidPath);
         }
     }
+
+    let inclusion = &mut ctx.accounts.inclusion;
+    inclusion.inclusion_slot = Clock::get()?.slot;
 
     emit!(IncludedInSuperset {
         parent_metadata: ctx.accounts.parent_metadata.key(),

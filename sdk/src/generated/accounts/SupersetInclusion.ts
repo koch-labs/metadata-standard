@@ -4,18 +4,26 @@ import * as borsh from "@coral-xyz/borsh" // eslint-disable-line @typescript-esl
 import * as types from "../types" // eslint-disable-line @typescript-eslint/no-unused-vars
 import { PROGRAM_ID } from "../programId"
 
-export interface SupersetInclusionFields {}
+export interface SupersetInclusionFields {
+  inclusionSlot: BN
+}
 
-export interface SupersetInclusionJSON {}
+export interface SupersetInclusionJSON {
+  inclusionSlot: string
+}
 
 export class SupersetInclusion {
+  readonly inclusionSlot: BN
+
   static readonly discriminator = Buffer.from([
     184, 9, 146, 162, 166, 124, 148, 187,
   ])
 
-  static readonly layout = borsh.struct([])
+  static readonly layout = borsh.struct([borsh.u64("inclusionSlot")])
 
-  constructor(fields: SupersetInclusionFields) {}
+  constructor(fields: SupersetInclusionFields) {
+    this.inclusionSlot = fields.inclusionSlot
+  }
 
   static async fetch(
     c: Connection,
@@ -60,14 +68,20 @@ export class SupersetInclusion {
 
     const dec = SupersetInclusion.layout.decode(data.slice(8))
 
-    return new SupersetInclusion({})
+    return new SupersetInclusion({
+      inclusionSlot: dec.inclusionSlot,
+    })
   }
 
   toJSON(): SupersetInclusionJSON {
-    return {}
+    return {
+      inclusionSlot: this.inclusionSlot.toString(),
+    }
   }
 
   static fromJSON(obj: SupersetInclusionJSON): SupersetInclusion {
-    return new SupersetInclusion({})
+    return new SupersetInclusion({
+      inclusionSlot: new BN(obj.inclusionSlot),
+    })
   }
 }

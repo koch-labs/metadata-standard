@@ -7,4 +7,5 @@ export * from "./utils";
 export * from "./builders";
 export * from "./fetchers";
 export * from "./instructions";
+export * from "./generated/metadataStandard";
 export * as anchorClient from "./generated";

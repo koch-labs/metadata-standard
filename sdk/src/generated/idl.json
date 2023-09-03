@@ -560,8 +560,8 @@
             "type": "publicKey"
           },
           {
-            "name": "setVersionCounter",
-            "type": "u32"
+            "name": "creationSlot",
+            "type": "u64"
           },
           {
             "name": "data",
@@ -576,14 +576,24 @@
       "name": "Inclusion",
       "type": {
         "kind": "struct",
-        "fields": []
+        "fields": [
+          {
+            "name": "inclusionSlot",
+            "type": "u64"
+          }
+        ]
       }
     },
     {
       "name": "SupersetInclusion",
       "type": {
         "kind": "struct",
-        "fields": []
+        "fields": [
+          {
+            "name": "inclusionSlot",
+            "type": "u64"
+          }
+        ]
       }
     }
   ],
