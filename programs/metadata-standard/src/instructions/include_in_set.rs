@@ -55,7 +55,7 @@ pub struct IncludeInSet<'info> {
     pub child_metadata: Account<'info, Metadata>,
 
     #[account(
-        init,
+        init_if_needed,
         payer = payer,
         space = Inclusion::LEN,
         seeds = [
