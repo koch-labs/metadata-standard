@@ -15,4 +15,7 @@ pub enum MetadataStandardError {
 
     #[msg("The holder does not own a token")]
     NotHolder,
+
+    #[msg("Cannot close metadata with tokens left")]
+    SupplyNotZero,
 }

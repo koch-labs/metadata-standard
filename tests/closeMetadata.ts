@@ -13,6 +13,11 @@ import {
   mintNft,
   updateMetadata,
 } from "../sdk/src";
+import {
+  TOKEN_2022_PROGRAM_ID,
+  burnChecked,
+  mintToChecked,
+} from "@solana/spl-token";
 
 const suiteName = "Nft Standard: Close metadata";
 describe(suiteName, () => {
@@ -70,6 +75,41 @@ describe(suiteName, () => {
     });
 
     await expectRevert(program.account.metadata.fetch(metadataKey));
+  });
+
+  it("closes metadata when token has been burned already", async () => {
+    await burnChecked(
+      connection,
+      values.admin,
+      values.holderMintAccount2022,
+      values.mintKeypair2022.publicKey,
+      values.holder,
+      1,
+      0,
+      [],
+      undefined,
+      TOKEN_2022_PROGRAM_ID
+    );
+
+    const { metadata: metadataKey } = await closeMetadata({
+      provider,
+      mint: values.mintKeypair2022.publicKey,
+      signers: { holder: values.holder },
+      confirmOptions: { skipPreflight: true },
+    });
+
+    await expectRevert(program.account.metadata.fetch(metadataKey));
+  });
+
+  it("requires holding the token", async () => {
+    await expectRevert(
+      closeMetadata({
+        provider,
+        mint: values.mintKeypair2022.publicKey,
+        signers: { holder: values.admin },
+        confirmOptions: { skipPreflight: true },
+      })
+    );
   });
 
   it("recreates metadata", async () => {

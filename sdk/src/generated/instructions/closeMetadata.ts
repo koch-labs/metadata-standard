@@ -19,8 +19,8 @@ export function closeMetadata(
 ) {
   const keys: Array<AccountMeta> = [
     { pubkey: accounts.holder, isSigner: true, isWritable: true },
-    { pubkey: accounts.mint, isSigner: false, isWritable: false },
-    { pubkey: accounts.mintAccount, isSigner: false, isWritable: false },
+    { pubkey: accounts.mint, isSigner: false, isWritable: true },
+    { pubkey: accounts.mintAccount, isSigner: false, isWritable: true },
     { pubkey: accounts.metadata, isSigner: false, isWritable: true },
     { pubkey: accounts.tokenProgram, isSigner: false, isWritable: false },
     { pubkey: accounts.systemProgram, isSigner: false, isWritable: false },

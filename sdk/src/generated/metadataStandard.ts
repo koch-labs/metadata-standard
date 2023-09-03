@@ -317,12 +317,12 @@ export type MetadataStandard = {
         },
         {
           "name": "mint",
-          "isMut": false,
+          "isMut": true,
           "isSigner": false
         },
         {
           "name": "mintAccount",
-          "isMut": false,
+          "isMut": true,
           "isSigner": false
         },
         {
@@ -805,6 +805,11 @@ export type MetadataStandard = {
       "code": 6005,
       "name": "NotHolder",
       "msg": "The holder does not own a token"
+    },
+    {
+      "code": 6006,
+      "name": "SupplyNotZero",
+      "msg": "Cannot close metadata with tokens left"
     }
   ]
 };
@@ -1128,12 +1133,12 @@ export const IDL: MetadataStandard = {
         },
         {
           "name": "mint",
-          "isMut": false,
+          "isMut": true,
           "isSigner": false
         },
         {
           "name": "mintAccount",
-          "isMut": false,
+          "isMut": true,
           "isSigner": false
         },
         {
@@ -1616,6 +1621,11 @@ export const IDL: MetadataStandard = {
       "code": 6005,
       "name": "NotHolder",
       "msg": "The holder does not own a token"
+    },
+    {
+      "code": 6006,
+      "name": "SupplyNotZero",
+      "msg": "Cannot close metadata with tokens left"
     }
   ]
 };

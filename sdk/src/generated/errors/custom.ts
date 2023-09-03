@@ -5,6 +5,7 @@ export type CustomError =
   | InvalidPathStart
   | InvalidPathEnd
   | NotHolder
+  | SupplyNotZero
 
 export class InvalidMint extends Error {
   static readonly code = 6000
@@ -72,6 +73,17 @@ export class NotHolder extends Error {
   }
 }
 
+export class SupplyNotZero extends Error {
+  static readonly code = 6006
+  readonly code = 6006
+  readonly name = "SupplyNotZero"
+  readonly msg = "Cannot close metadata with tokens left"
+
+  constructor(readonly logs?: string[]) {
+    super("6006: Cannot close metadata with tokens left")
+  }
+}
+
 export function fromCode(code: number, logs?: string[]): CustomError | null {
   switch (code) {
     case 6000:
@@ -86,6 +98,8 @@ export function fromCode(code: number, logs?: string[]): CustomError | null {
       return new InvalidPathEnd(logs)
     case 6005:
       return new NotHolder(logs)
+    case 6006:
+      return new SupplyNotZero(logs)
   }
 
   return null

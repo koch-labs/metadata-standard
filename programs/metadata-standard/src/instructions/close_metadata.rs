@@ -1,9 +1,30 @@
 use crate::{constants::*, errors::*, events::ClosedMetadata, state::Metadata};
 use anchor_lang::prelude::*;
 use anchor_spl::associated_token::get_associated_token_address_with_program_id;
-use anchor_spl::token_interface::{Mint, TokenAccount, TokenInterface};
+use anchor_spl::token_interface::{burn, Burn, Mint, TokenAccount, TokenInterface};
 
 pub fn close_metadata(ctx: Context<CloseMetadata>) -> Result<()> {
+    let mint_account = &mut ctx.accounts.mint_account;
+
+    burn(
+        CpiContext::new(
+            ctx.accounts.token_program.to_account_info(),
+            Burn {
+                mint: ctx.accounts.mint.to_account_info(),
+                from: mint_account.to_account_info(),
+                authority: ctx.accounts.holder.to_account_info(),
+            },
+        ),
+        mint_account.amount,
+    )?;
+
+    // Supply needs to be zero before closing
+    // Also if the token are burnt separately
+    mint_account.reload()?;
+    if mint_account.amount > 0 {
+        return err!(MetadataStandardError::SupplyNotZero);
+    }
+
     emit!(ClosedMetadata {
         metadata: ctx.accounts.metadata.key()
     });
@@ -18,17 +39,18 @@ pub struct CloseMetadata<'info> {
     pub holder: Signer<'info>,
 
     #[account(
+        mut,
         mint::token_program = token_program,
     )]
     pub mint: InterfaceAccount<'info, Mint>,
 
     #[account(
+        mut,
         address = get_associated_token_address_with_program_id(
             holder.key,
             &mint.key(),
             token_program.key
         ),
-        constraint = mint_account.amount > 0 @ MetadataStandardError::NotHolder,
     )]
     pub mint_account: InterfaceAccount<'info, TokenAccount>,
 
