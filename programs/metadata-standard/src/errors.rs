@@ -4,6 +4,8 @@ use anchor_lang::prelude::*;
 pub enum MetadataStandardError {
     #[msg("Mint provided is invalid")]
     InvalidMint,
+    #[msg("Mint authority did not sign")]
+    InvalidAuthority,
     #[msg("Bumps do not match remaining accounts")]
     InvalidBumps,
     #[msg("Invalid validation path")]

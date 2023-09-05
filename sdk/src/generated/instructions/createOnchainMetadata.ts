@@ -13,6 +13,7 @@ export interface CreateOnchainMetadataArgs {
 
 export interface CreateOnchainMetadataAccounts {
   payer: PublicKey
+  admin: PublicKey
   authoritiesGroup: PublicKey
   mint: PublicKey
   metadata: PublicKey
@@ -34,6 +35,7 @@ export function createOnchainMetadata(
 ) {
   const keys: Array<AccountMeta> = [
     { pubkey: accounts.payer, isSigner: true, isWritable: true },
+    { pubkey: accounts.admin, isSigner: true, isWritable: false },
     { pubkey: accounts.authoritiesGroup, isSigner: false, isWritable: false },
     { pubkey: accounts.mint, isSigner: false, isWritable: false },
     { pubkey: accounts.metadata, isSigner: false, isWritable: true },

@@ -2,7 +2,7 @@
     "scripts": {
         "gen": "anchor-client-gen target/idl/metadata_standard.json sdk/src/generated",
         "idl": "cp target/types/metadata_standard.ts sdk/src/generated/metadataStandard.ts && cp target/idl/metadata_standard.json sdk/src/generated/idl.json",
-        "build": "yarn gen && yarn idl && cd sdk && yarn build && cd ..",
+        "build": "anchor build && yarn gen && yarn idl && cd sdk && yarn build && cd ..",
         "lint:fix": "prettier */*.js \"*/**/*{.js,.ts}\" -w",
         "lint": "prettier */*.js \"*/**/*{.js,.ts}\" --check"
     },

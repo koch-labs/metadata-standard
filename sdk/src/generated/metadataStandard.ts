@@ -114,6 +114,11 @@ export type MetadataStandard = {
           "isSigner": true
         },
         {
+          "name": "admin",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
           "name": "authoritiesGroup",
           "isMut": false,
           "isSigner": false
@@ -168,6 +173,11 @@ export type MetadataStandard = {
           "isSigner": true
         },
         {
+          "name": "admin",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
           "name": "authoritiesGroup",
           "isMut": false,
           "isSigner": false
@@ -219,6 +229,11 @@ export type MetadataStandard = {
         {
           "name": "payer",
           "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "admin",
+          "isMut": false,
           "isSigner": true
         },
         {
@@ -881,31 +896,36 @@ export type MetadataStandard = {
     },
     {
       "code": 6001,
+      "name": "InvalidAuthority",
+      "msg": "Mint authority did not sign"
+    },
+    {
+      "code": 6002,
       "name": "InvalidBumps",
       "msg": "Bumps do not match remaining accounts"
     },
     {
-      "code": 6002,
+      "code": 6003,
       "name": "InvalidPath",
       "msg": "Invalid validation path"
     },
     {
-      "code": 6003,
+      "code": 6004,
       "name": "InvalidPathStart",
       "msg": "Remaining accounts path start does not match the root"
     },
     {
-      "code": 6004,
+      "code": 6005,
       "name": "InvalidPathEnd",
       "msg": "Remaining accounts path end does not match the child"
     },
     {
-      "code": 6005,
+      "code": 6006,
       "name": "NotHolder",
       "msg": "The holder does not own a token"
     },
     {
-      "code": 6006,
+      "code": 6007,
       "name": "SupplyNotZero",
       "msg": "Cannot close metadata with tokens left"
     }
@@ -1028,6 +1048,11 @@ export const IDL: MetadataStandard = {
           "isSigner": true
         },
         {
+          "name": "admin",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
           "name": "authoritiesGroup",
           "isMut": false,
           "isSigner": false
@@ -1082,6 +1107,11 @@ export const IDL: MetadataStandard = {
           "isSigner": true
         },
         {
+          "name": "admin",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
           "name": "authoritiesGroup",
           "isMut": false,
           "isSigner": false
@@ -1133,6 +1163,11 @@ export const IDL: MetadataStandard = {
         {
           "name": "payer",
           "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "admin",
+          "isMut": false,
           "isSigner": true
         },
         {
@@ -1795,31 +1830,36 @@ export const IDL: MetadataStandard = {
     },
     {
       "code": 6001,
+      "name": "InvalidAuthority",
+      "msg": "Mint authority did not sign"
+    },
+    {
+      "code": 6002,
       "name": "InvalidBumps",
       "msg": "Bumps do not match remaining accounts"
     },
     {
-      "code": 6002,
+      "code": 6003,
       "name": "InvalidPath",
       "msg": "Invalid validation path"
     },
     {
-      "code": 6003,
+      "code": 6004,
       "name": "InvalidPathStart",
       "msg": "Remaining accounts path start does not match the root"
     },
     {
-      "code": 6004,
+      "code": 6005,
       "name": "InvalidPathEnd",
       "msg": "Remaining accounts path end does not match the child"
     },
     {
-      "code": 6005,
+      "code": 6006,
       "name": "NotHolder",
       "msg": "The holder does not own a token"
     },
     {
-      "code": 6006,
+      "code": 6007,
       "name": "SupplyNotZero",
       "msg": "Cannot close metadata with tokens left"
     }

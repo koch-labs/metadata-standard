@@ -1,7 +1,7 @@
 import * as anchor from "@coral-xyz/anchor";
 import { LAMPORTS_PER_SOL } from "@solana/web3.js";
 import { Program } from "@coral-xyz/anchor";
-import { transferChecked } from "@solana/spl-token";
+import { createMint, transferChecked } from "@solana/spl-token";
 
 import { TestValues, createValues } from "./values";
 import { MetadataStandard } from "../sdk/src/generated/metadataStandard";
@@ -12,6 +12,7 @@ import {
   getOrCreateAssociatedTokenAccount,
 } from "@solana/spl-token";
 import { createAuthoritiesGroup, mintNft } from "../sdk/src";
+import { expectRevert } from "./utils";
 
 const suiteName = "Nft Standard: Create metadata";
 describe(suiteName, () => {
@@ -148,6 +149,34 @@ describe(suiteName, () => {
       expect(tokenAccount.amount.toString()).to.equal("1");
       expect(tokenAccount.mint.toString()).to.equal(
         values.mintKeypair2022.publicKey.toString()
+      );
+    });
+
+    it("fails when not created by the mint authority", async () => {
+      await createMint(
+        connection,
+        values.admin,
+        values.inclusionAuthority.publicKey,
+        values.inclusionAuthority.publicKey,
+        0,
+        values.mintKeypair2022,
+        undefined,
+        TOKEN_2022_PROGRAM_ID
+      );
+      await expectRevert(
+        mintNft({
+          provider,
+          authoritiesGroup: values.authoritiesGroupKey,
+          name: values.metadataName,
+          data: values.metadataData,
+          mintConfig: {
+            permanentDelegate: values.admin.publicKey,
+            keypair: values.mintKeypair2022,
+            receiver: values.holder.publicKey,
+          },
+          signers: { mintAuthority: values.admin },
+          confirmOptions: { skipPreflight: true },
+        })
       );
     });
   });
