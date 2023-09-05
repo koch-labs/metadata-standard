@@ -9,10 +9,12 @@ use crate::{
 pub fn update_metadata(
     ctx: Context<UpdateMetadata>,
     name: String,
+    hash: [u8; 32],
     data: MetadataData,
 ) -> Result<()> {
     let metadata = &mut ctx.accounts.metadata;
     metadata.name = name;
+    metadata.content_hash = hash;
     metadata.data = data;
 
     emit!(UpdatedMetadata {

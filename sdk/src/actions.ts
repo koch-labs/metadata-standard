@@ -5,6 +5,7 @@ import {
   CreateAuthoritiesGroupInput,
   ExcludeFromSupersetInput,
   IncludeInSupersetInput,
+  MetadataInput,
   builders,
 } from "./builders";
 import {
@@ -13,6 +14,7 @@ import {
   getAssociatedTokenAddressSync,
 } from "@solana/spl-token";
 import { mintTokenInstructions } from "./utils";
+import { Metadata } from "./generated";
 
 export type TransactionSender = {
   confirmOptions?: ConfirmOptions;
@@ -50,11 +52,8 @@ export type MintConfig = {
   permanentDelegate?: PublicKey;
 };
 
-export type MintNftActionInput = {
+export type MintNftActionInput = MetadataInput & {
   provider: Provider;
-  authoritiesGroup: PublicKey;
-  name: string;
-  data: MetadataData;
   mintConfig?: MintConfig;
   signers?: {
     mintAuthority?: Signer;
@@ -66,6 +65,7 @@ export const mintNft = async ({
   provider,
   authoritiesGroup,
   name,
+  contentHash,
   data,
   mintConfig,
   signers,
@@ -88,6 +88,7 @@ export const mintNft = async ({
     provider,
     authoritiesGroup,
     name,
+    contentHash,
     data,
     mint: mintConfig.keypair.publicKey,
     tokenProgram,
@@ -114,10 +115,6 @@ export const mintNft = async ({
 
 export type UpdateMetadataActionInput = {
   provider: Provider;
-  authoritiesGroup: PublicKey;
-  mint: PublicKey;
-  name: string;
-  data: MetadataData;
   signers?: { metadataAuthority?: Signer };
   confirmOptions?: ConfirmOptions;
 };
@@ -126,16 +123,18 @@ export const updateMetadata = async ({
   authoritiesGroup,
   mint,
   name,
+  contentHash,
   data,
   signers,
   confirmOptions,
-}: UpdateMetadataActionInput) => {
+}: MetadataInput & UpdateMetadataActionInput) => {
   const { builder, metadata } = builders.updateMetadata({
     provider,
     authoritiesGroup,
     mint,
     name,
     data,
+    contentHash,
     metadataAuthority:
       signers?.metadataAuthority?.publicKey || provider.publicKey,
   });
@@ -237,6 +236,7 @@ export type MintSetElementInput = {
   parentMint: PublicKey;
   authoritiesGroup: PublicKey;
   name: string;
+  contentHash?: number[];
   data: MetadataData;
   mintConfig?: MintConfig;
   signers?: {
@@ -249,6 +249,7 @@ export type MintSetElementInput = {
 export const mintSetElement = async ({
   provider,
   name,
+  contentHash,
   data,
   parentMint,
   authoritiesGroup,
@@ -277,6 +278,7 @@ export const mintSetElement = async ({
     provider,
     authoritiesGroup,
     name,
+    contentHash,
     data,
     mint: mintConfig.keypair.publicKey,
     tokenProgram,

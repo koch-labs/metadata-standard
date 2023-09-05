@@ -1,4 +1,5 @@
 import { Keypair, PublicKey } from "@solana/web3.js";
+import { utils } from "@coral-xyz/anchor";
 import {
   getAuthoritiesGroupKey,
   getSupersetInclusionKey,
@@ -32,6 +33,7 @@ export interface TestValues {
   parentMintKeypair2022: Keypair;
   metadataUri: string;
   metadataName: string;
+  metadataHash: number[];
   metadataData: MetadataData;
   metadataKey: PublicKey;
   metadata2022Key: PublicKey;
@@ -64,6 +66,11 @@ export const createValues = (): TestValues => {
   const metadataName = "some name";
   const metadataUri = "some uri";
   const metadataData = createExternalMetadataData(metadataUri);
+  const metadataHash = [
+    ...utils.bytes.utf8
+      .encode("stringification of the actual metadata")
+      .values(),
+  ];
   const metadataKey = getMetadataKey(mintKeypair.publicKey);
   const metadata2022Key = getMetadataKey(mintKeypair2022.publicKey);
   const parentMetadata2022Key = getMetadataKey(parentMintKeypair2022.publicKey);
@@ -113,6 +120,7 @@ export const createValues = (): TestValues => {
     parentMintKeypair2022,
     metadataUri,
     metadataName,
+    metadataHash,
     metadataData,
     metadataKey,
     metadata2022Key,

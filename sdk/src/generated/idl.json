@@ -145,6 +145,15 @@
           "type": "string"
         },
         {
+          "name": "contentHash",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        },
+        {
           "name": "uri",
           "type": "string"
         }
@@ -188,6 +197,15 @@
         {
           "name": "name",
           "type": "string"
+        },
+        {
+          "name": "contentHash",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
         },
         {
           "name": "metadataAccount",
@@ -235,6 +253,15 @@
           "type": "string"
         },
         {
+          "name": "contentHash",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        },
+        {
           "name": "dataType",
           "type": "u8"
         },
@@ -269,6 +296,15 @@
           "type": "string"
         },
         {
+          "name": "contentHash",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        },
+        {
           "name": "uri",
           "type": "string"
         }
@@ -299,6 +335,15 @@
           "type": "string"
         },
         {
+          "name": "contentHash",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        },
+        {
           "name": "metadataAccount",
           "type": "publicKey"
         }
@@ -327,6 +372,15 @@
         {
           "name": "name",
           "type": "string"
+        },
+        {
+          "name": "contentHash",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
         },
         {
           "name": "dataType",
@@ -593,6 +647,15 @@
           {
             "name": "creationSlot",
             "type": "u64"
+          },
+          {
+            "name": "contentHash",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
           },
           {
             "name": "name",

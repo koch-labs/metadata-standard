@@ -51,28 +51,37 @@ pub mod metadata_standard {
     pub fn create_external_metadata(
         ctx: Context<CreateMetadata>,
         name: String,
+        content_hash: [u8; 32],
         uri: String,
     ) -> Result<()> {
-        instructions::create_metadata(ctx, name, MetadataData::External { uri })
+        instructions::create_metadata(ctx, name, content_hash, MetadataData::External { uri })
     }
 
     pub fn create_reference_metadata(
         ctx: Context<CreateMetadata>,
         name: String,
+        content_hash: [u8; 32],
         metadata_account: Pubkey,
     ) -> Result<()> {
-        instructions::create_metadata(ctx, name, MetadataData::Reference { metadata_account })
+        instructions::create_metadata(
+            ctx,
+            name,
+            content_hash,
+            MetadataData::Reference { metadata_account },
+        )
     }
 
     pub fn create_onchain_metadata(
         ctx: Context<CreateMetadata>,
         name: String,
+        content_hash: [u8; 32],
         data_type: u8,
         data_account: Pubkey,
     ) -> Result<()> {
         instructions::create_metadata(
             ctx,
             name,
+            content_hash,
             MetadataData::Onchain {
                 data_type: OnchainDataType::from(data_type),
                 data_account,
@@ -83,28 +92,37 @@ pub mod metadata_standard {
     pub fn update_external_metadata(
         ctx: Context<UpdateMetadata>,
         name: String,
+        content_hash: [u8; 32],
         uri: String,
     ) -> Result<()> {
-        instructions::update_metadata(ctx, name, MetadataData::External { uri })
+        instructions::update_metadata(ctx, name, content_hash, MetadataData::External { uri })
     }
 
     pub fn update_reference_metadata(
         ctx: Context<UpdateMetadata>,
         name: String,
+        content_hash: [u8; 32],
         metadata_account: Pubkey,
     ) -> Result<()> {
-        instructions::update_metadata(ctx, name, MetadataData::Reference { metadata_account })
+        instructions::update_metadata(
+            ctx,
+            name,
+            content_hash,
+            MetadataData::Reference { metadata_account },
+        )
     }
 
     pub fn update_onchain_metadata(
         ctx: Context<UpdateMetadata>,
         name: String,
+        content_hash: [u8; 32],
         data_type: u8,
         data_account: Pubkey,
     ) -> Result<()> {
         instructions::update_metadata(
             ctx,
             name,
+            content_hash,
             MetadataData::Onchain {
                 data_type: OnchainDataType::from(data_type),
                 data_account,

@@ -58,6 +58,7 @@ describe(suiteName, () => {
         provider,
         authoritiesGroup: values.authoritiesGroupKey,
         name: values.metadataName,
+        contentHash: values.metadataHash,
         data: values.metadataData,
         mintConfig: {
           keypair: values.mintKeypair2022,

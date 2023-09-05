@@ -145,6 +145,15 @@ export type MetadataStandard = {
           "type": "string"
         },
         {
+          "name": "contentHash",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        },
+        {
           "name": "uri",
           "type": "string"
         }
@@ -188,6 +197,15 @@ export type MetadataStandard = {
         {
           "name": "name",
           "type": "string"
+        },
+        {
+          "name": "contentHash",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
         },
         {
           "name": "metadataAccount",
@@ -235,6 +253,15 @@ export type MetadataStandard = {
           "type": "string"
         },
         {
+          "name": "contentHash",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        },
+        {
           "name": "dataType",
           "type": "u8"
         },
@@ -269,6 +296,15 @@ export type MetadataStandard = {
           "type": "string"
         },
         {
+          "name": "contentHash",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        },
+        {
           "name": "uri",
           "type": "string"
         }
@@ -299,6 +335,15 @@ export type MetadataStandard = {
           "type": "string"
         },
         {
+          "name": "contentHash",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        },
+        {
           "name": "metadataAccount",
           "type": "publicKey"
         }
@@ -327,6 +372,15 @@ export type MetadataStandard = {
         {
           "name": "name",
           "type": "string"
+        },
+        {
+          "name": "contentHash",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
         },
         {
           "name": "dataType",
@@ -593,6 +647,15 @@ export type MetadataStandard = {
           {
             "name": "creationSlot",
             "type": "u64"
+          },
+          {
+            "name": "contentHash",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
           },
           {
             "name": "name",
@@ -996,6 +1059,15 @@ export const IDL: MetadataStandard = {
           "type": "string"
         },
         {
+          "name": "contentHash",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        },
+        {
           "name": "uri",
           "type": "string"
         }
@@ -1039,6 +1111,15 @@ export const IDL: MetadataStandard = {
         {
           "name": "name",
           "type": "string"
+        },
+        {
+          "name": "contentHash",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
         },
         {
           "name": "metadataAccount",
@@ -1086,6 +1167,15 @@ export const IDL: MetadataStandard = {
           "type": "string"
         },
         {
+          "name": "contentHash",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        },
+        {
           "name": "dataType",
           "type": "u8"
         },
@@ -1120,6 +1210,15 @@ export const IDL: MetadataStandard = {
           "type": "string"
         },
         {
+          "name": "contentHash",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        },
+        {
           "name": "uri",
           "type": "string"
         }
@@ -1150,6 +1249,15 @@ export const IDL: MetadataStandard = {
           "type": "string"
         },
         {
+          "name": "contentHash",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        },
+        {
           "name": "metadataAccount",
           "type": "publicKey"
         }
@@ -1178,6 +1286,15 @@ export const IDL: MetadataStandard = {
         {
           "name": "name",
           "type": "string"
+        },
+        {
+          "name": "contentHash",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
         },
         {
           "name": "dataType",
@@ -1444,6 +1561,15 @@ export const IDL: MetadataStandard = {
           {
             "name": "creationSlot",
             "type": "u64"
+          },
+          {
+            "name": "contentHash",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
           },
           {
             "name": "name",

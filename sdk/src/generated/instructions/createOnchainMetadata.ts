@@ -6,6 +6,7 @@ import { PROGRAM_ID } from "../programId"
 
 export interface CreateOnchainMetadataArgs {
   name: string
+  contentHash: Array<number>
   dataType: number
   dataAccount: PublicKey
 }
@@ -21,6 +22,7 @@ export interface CreateOnchainMetadataAccounts {
 
 export const layout = borsh.struct([
   borsh.str("name"),
+  borsh.array(borsh.u8(), 32, "contentHash"),
   borsh.u8("dataType"),
   borsh.publicKey("dataAccount"),
 ])
@@ -43,6 +45,7 @@ export function createOnchainMetadata(
   const len = layout.encode(
     {
       name: args.name,
+      contentHash: args.contentHash,
       dataType: args.dataType,
       dataAccount: args.dataAccount,
     },

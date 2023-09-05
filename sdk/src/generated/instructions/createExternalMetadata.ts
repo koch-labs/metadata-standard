@@ -6,6 +6,7 @@ import { PROGRAM_ID } from "../programId"
 
 export interface CreateExternalMetadataArgs {
   name: string
+  contentHash: Array<number>
   uri: string
 }
 
@@ -18,7 +19,11 @@ export interface CreateExternalMetadataAccounts {
   systemProgram: PublicKey
 }
 
-export const layout = borsh.struct([borsh.str("name"), borsh.str("uri")])
+export const layout = borsh.struct([
+  borsh.str("name"),
+  borsh.array(borsh.u8(), 32, "contentHash"),
+  borsh.str("uri"),
+])
 
 export function createExternalMetadata(
   args: CreateExternalMetadataArgs,
@@ -38,6 +43,7 @@ export function createExternalMetadata(
   const len = layout.encode(
     {
       name: args.name,
+      contentHash: args.contentHash,
       uri: args.uri,
     },
     buffer

@@ -6,6 +6,7 @@ import { PROGRAM_ID } from "../programId"
 
 export interface UpdateExternalMetadataArgs {
   name: string
+  contentHash: Array<number>
   uri: string
 }
 
@@ -15,7 +16,11 @@ export interface UpdateExternalMetadataAccounts {
   metadata: PublicKey
 }
 
-export const layout = borsh.struct([borsh.str("name"), borsh.str("uri")])
+export const layout = borsh.struct([
+  borsh.str("name"),
+  borsh.array(borsh.u8(), 32, "contentHash"),
+  borsh.str("uri"),
+])
 
 export function updateExternalMetadata(
   args: UpdateExternalMetadataArgs,
@@ -32,6 +37,7 @@ export function updateExternalMetadata(
   const len = layout.encode(
     {
       name: args.name,
+      contentHash: args.contentHash,
       uri: args.uri,
     },
     buffer

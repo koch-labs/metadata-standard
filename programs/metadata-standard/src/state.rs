@@ -72,6 +72,8 @@ pub struct Metadata {
 
     pub creation_slot: u64,
 
+    pub content_hash: [u8; 32],
+
     pub name: String,
 
     pub data: MetadataData,
@@ -82,6 +84,7 @@ impl Metadata {
         + 32 // Mint
         + 32 // Authorities
         + 8 // Slot
+        + 32 // Hash
         + MAX_NAME_LENGTH // Name
         + MetadataData::LEN; // Metadata
 }

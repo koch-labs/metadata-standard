@@ -6,6 +6,7 @@ import { PROGRAM_ID } from "../programId"
 
 export interface CreateReferenceMetadataArgs {
   name: string
+  contentHash: Array<number>
   metadataAccount: PublicKey
 }
 
@@ -20,6 +21,7 @@ export interface CreateReferenceMetadataAccounts {
 
 export const layout = borsh.struct([
   borsh.str("name"),
+  borsh.array(borsh.u8(), 32, "contentHash"),
   borsh.publicKey("metadataAccount"),
 ])
 
@@ -41,6 +43,7 @@ export function createReferenceMetadata(
   const len = layout.encode(
     {
       name: args.name,
+      contentHash: args.contentHash,
       metadataAccount: args.metadataAccount,
     },
     buffer

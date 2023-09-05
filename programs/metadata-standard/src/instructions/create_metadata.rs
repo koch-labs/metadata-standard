@@ -11,6 +11,7 @@ use crate::{
 pub fn create_metadata(
     ctx: Context<CreateMetadata>,
     name: String,
+    hash: [u8; 32],
     data: MetadataData,
 ) -> Result<()> {
     let metadata = &mut ctx.accounts.metadata;
@@ -18,6 +19,7 @@ pub fn create_metadata(
     metadata.authorities_group = ctx.accounts.authorities_group.key();
     metadata.creation_slot = Clock::get()?.slot;
     metadata.name = name;
+    metadata.content_hash = hash;
     metadata.data = data;
 
     emit!(CreatedMetadata {

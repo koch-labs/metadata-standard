@@ -17,6 +17,13 @@ import {
 import { getPathBumpsFromMints } from "./superset";
 import { getProgram } from "./utils";
 
+export type MetadataInput = {
+  authoritiesGroup: PublicKey;
+  mint?: PublicKey;
+  name: string;
+  contentHash?: number[];
+  data: MetadataData;
+};
 export type CreateAuthoritiesGroupInput = {
   provider: Provider;
   id?: PublicKey;
@@ -29,7 +36,6 @@ export type MintNftInput = {
   authoritiesGroup: PublicKey;
   name: string;
   data: MetadataData;
-  mint: PublicKey;
   tokenProgram: PublicKey;
 };
 export type IncludeInSetInput = {
@@ -80,17 +86,18 @@ export const builders = {
     provider,
     authoritiesGroup,
     name,
+    contentHash,
     data,
     mint,
     tokenProgram = TOKEN_2022_PROGRAM_ID,
-  }: MintNftInput) => {
+  }: MetadataInput & MintNftInput) => {
     const program = getProgram(provider);
     const metadata = getMetadataKey(mint);
 
     let builder;
     if (data.external) {
       builder = program.methods
-        .createExternalMetadata(name, data.external.uri)
+        .createExternalMetadata(name, contentHash, data.external.uri)
         .accounts({
           authoritiesGroup,
           mint,
@@ -99,7 +106,11 @@ export const builders = {
         });
     } else if (data.reference) {
       builder = program.methods
-        .createReferenceMetadata(name, data.reference.metadataAccount)
+        .createReferenceMetadata(
+          name,
+          contentHash,
+          data.reference.metadataAccount
+        )
         .accounts({
           authoritiesGroup,
           mint,
@@ -116,7 +127,7 @@ export const builders = {
         t = 2;
       }
       builder = program.methods
-        .createOnchainMetadata(name, t, data.onchain.dataAccount)
+        .createOnchainMetadata(name, contentHash, t, data.onchain.dataAccount)
         .accounts({
           authoritiesGroup,
           mint,
@@ -137,13 +148,11 @@ export const builders = {
     authoritiesGroup,
     mint,
     name,
+    contentHash,
     data,
     metadataAuthority = provider.publicKey,
-  }: {
+  }: MetadataInput & {
     provider: Provider;
-    authoritiesGroup: PublicKey;
-    mint: PublicKey;
-    name: string;
     data: MetadataData;
     metadataAuthority: PublicKey;
   }) => {
@@ -153,7 +162,7 @@ export const builders = {
     let builder;
     if (data.external) {
       builder = program.methods
-        .updateExternalMetadata(name, data.external.uri)
+        .updateExternalMetadata(name, contentHash, data.external.uri)
         .accounts({
           metadataAuthority,
           authoritiesGroup,
@@ -161,7 +170,11 @@ export const builders = {
         });
     } else if (data.reference) {
       builder = program.methods
-        .updateReferenceMetadata(name, data.reference.metadataAccount)
+        .updateReferenceMetadata(
+          name,
+          contentHash,
+          data.reference.metadataAccount
+        )
         .accounts({
           metadataAuthority,
           authoritiesGroup,
@@ -177,7 +190,7 @@ export const builders = {
         t = 2;
       }
       builder = program.methods
-        .updateOnchainMetadata(name, t, data.onchain.dataAccount)
+        .updateOnchainMetadata(name, contentHash, t, data.onchain.dataAccount)
         .accounts({
           metadataAuthority,
           authoritiesGroup,
