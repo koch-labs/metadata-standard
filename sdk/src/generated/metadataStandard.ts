@@ -10,6 +10,13 @@ export type MetadataStandard = {
       "value": "200"
     },
     {
+      "name": "MAX_NAME_LENGTH",
+      "type": {
+        "defined": "usize"
+      },
+      "value": "32"
+    },
+    {
       "name": "AUTHORITIES_SEED",
       "type": "string",
       "value": "\"authorities\""
@@ -134,6 +141,10 @@ export type MetadataStandard = {
       ],
       "args": [
         {
+          "name": "name",
+          "type": "string"
+        },
+        {
           "name": "uri",
           "type": "string"
         }
@@ -174,6 +185,10 @@ export type MetadataStandard = {
         }
       ],
       "args": [
+        {
+          "name": "name",
+          "type": "string"
+        },
         {
           "name": "metadataAccount",
           "type": "publicKey"
@@ -216,6 +231,10 @@ export type MetadataStandard = {
       ],
       "args": [
         {
+          "name": "name",
+          "type": "string"
+        },
+        {
           "name": "dataType",
           "type": "u8"
         },
@@ -246,6 +265,10 @@ export type MetadataStandard = {
       ],
       "args": [
         {
+          "name": "name",
+          "type": "string"
+        },
+        {
           "name": "uri",
           "type": "string"
         }
@@ -272,6 +295,10 @@ export type MetadataStandard = {
       ],
       "args": [
         {
+          "name": "name",
+          "type": "string"
+        },
+        {
           "name": "metadataAccount",
           "type": "publicKey"
         }
@@ -297,6 +324,10 @@ export type MetadataStandard = {
         }
       ],
       "args": [
+        {
+          "name": "name",
+          "type": "string"
+        },
         {
           "name": "dataType",
           "type": "u8"
@@ -562,6 +593,10 @@ export type MetadataStandard = {
           {
             "name": "creationSlot",
             "type": "u64"
+          },
+          {
+            "name": "name",
+            "type": "string"
           },
           {
             "name": "data",
@@ -826,6 +861,13 @@ export const IDL: MetadataStandard = {
       "value": "200"
     },
     {
+      "name": "MAX_NAME_LENGTH",
+      "type": {
+        "defined": "usize"
+      },
+      "value": "32"
+    },
+    {
       "name": "AUTHORITIES_SEED",
       "type": "string",
       "value": "\"authorities\""
@@ -950,6 +992,10 @@ export const IDL: MetadataStandard = {
       ],
       "args": [
         {
+          "name": "name",
+          "type": "string"
+        },
+        {
           "name": "uri",
           "type": "string"
         }
@@ -990,6 +1036,10 @@ export const IDL: MetadataStandard = {
         }
       ],
       "args": [
+        {
+          "name": "name",
+          "type": "string"
+        },
         {
           "name": "metadataAccount",
           "type": "publicKey"
@@ -1032,6 +1082,10 @@ export const IDL: MetadataStandard = {
       ],
       "args": [
         {
+          "name": "name",
+          "type": "string"
+        },
+        {
           "name": "dataType",
           "type": "u8"
         },
@@ -1062,6 +1116,10 @@ export const IDL: MetadataStandard = {
       ],
       "args": [
         {
+          "name": "name",
+          "type": "string"
+        },
+        {
           "name": "uri",
           "type": "string"
         }
@@ -1088,6 +1146,10 @@ export const IDL: MetadataStandard = {
       ],
       "args": [
         {
+          "name": "name",
+          "type": "string"
+        },
+        {
           "name": "metadataAccount",
           "type": "publicKey"
         }
@@ -1113,6 +1175,10 @@ export const IDL: MetadataStandard = {
         }
       ],
       "args": [
+        {
+          "name": "name",
+          "type": "string"
+        },
         {
           "name": "dataType",
           "type": "u8"
@@ -1378,6 +1444,10 @@ export const IDL: MetadataStandard = {
           {
             "name": "creationSlot",
             "type": "u64"
+          },
+          {
+            "name": "name",
+            "type": "string"
           },
           {
             "name": "data",

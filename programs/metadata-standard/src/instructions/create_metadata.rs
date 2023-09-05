@@ -8,11 +8,16 @@ use crate::{
     state::{AuthoritiesGroup, Metadata, MetadataData},
 };
 
-pub fn create_metadata(ctx: Context<CreateMetadata>, data: MetadataData) -> Result<()> {
+pub fn create_metadata(
+    ctx: Context<CreateMetadata>,
+    name: String,
+    data: MetadataData,
+) -> Result<()> {
     let metadata = &mut ctx.accounts.metadata;
     metadata.mint = ctx.accounts.mint.key();
     metadata.authorities_group = ctx.accounts.authorities_group.key();
     metadata.creation_slot = Clock::get()?.slot;
+    metadata.name = name;
     metadata.data = data;
 
     emit!(CreatedMetadata {

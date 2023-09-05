@@ -52,22 +52,26 @@ describe(suiteName, () => {
     await mintNft({
       provider,
       authoritiesGroup: values.authoritiesGroupKey,
+      name: values.metadataName,
       data: values.metadataData,
       mintConfig: { keypair: values.mintKeypair2022 },
     });
   });
 
   it("update metadata", async () => {
+    const newName = "okokok";
     const { metadata: metadataKey } = await updateMetadata({
       provider,
       authoritiesGroup: values.authoritiesGroupKey,
       mint: values.mintKeypair2022.publicKey,
+      name: newName,
       data: values.metadataData,
       signers: { metadataAuthority: values.metadataAuthority },
       confirmOptions: { skipPreflight: true },
     });
 
     const metadata = await program.account.metadata.fetch(metadataKey);
+    expect(metadata.name).to.equal(newName);
     expect(metadata).not.to.be.undefined;
   });
 
@@ -76,6 +80,7 @@ describe(suiteName, () => {
       updateMetadata({
         provider,
         authoritiesGroup: values.authoritiesGroupKey,
+        name: values.metadataName,
         mint: values.mintKeypair2022.publicKey,
         data: values.metadataData,
         signers: { metadataAuthority: values.holder },

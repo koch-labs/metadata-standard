@@ -57,6 +57,7 @@ describe(suiteName, () => {
       await mintNft({
         provider,
         authoritiesGroup: values.authoritiesGroupKey,
+        name: values.metadataName,
         data: values.metadataData,
         mintConfig: {
           keypair: values.mintKeypair2022,
@@ -98,6 +99,7 @@ describe(suiteName, () => {
       await mintNft({
         provider,
         authoritiesGroup: values.authoritiesGroupKey,
+        name: values.metadataName,
         data: values.metadataData,
         mintConfig: {
           permanentDelegate: values.admin.publicKey,
@@ -156,6 +158,7 @@ describe(suiteName, () => {
       await mintNft({
         provider,
         authoritiesGroup: values.authoritiesGroupKey,
+        name: values.metadataName,
         data: values.metadataData,
         mintConfig: {
           keypair: values.mintKeypair,
@@ -172,6 +175,7 @@ describe(suiteName, () => {
       expect(metadata.authoritiesGroup.toString()).to.equal(
         values.authoritiesGroupKey.toString()
       );
+      expect(metadata.name).to.equal(values.metadataName);
       expect(metadata.data.toString()).to.equal(values.metadataData.toString());
 
       const tokenAccount = await getOrCreateAssociatedTokenAccount(

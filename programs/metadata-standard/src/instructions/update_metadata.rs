@@ -6,8 +6,13 @@ use crate::{
     state::{AuthoritiesGroup, Metadata, MetadataData},
 };
 
-pub fn update_metadata(ctx: Context<UpdateMetadata>, data: MetadataData) -> Result<()> {
+pub fn update_metadata(
+    ctx: Context<UpdateMetadata>,
+    name: String,
+    data: MetadataData,
+) -> Result<()> {
     let metadata = &mut ctx.accounts.metadata;
+    metadata.name = name;
     metadata.data = data;
 
     emit!(UpdatedMetadata {

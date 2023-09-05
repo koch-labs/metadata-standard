@@ -53,6 +53,7 @@ export type MintConfig = {
 export type MintNftActionInput = {
   provider: Provider;
   authoritiesGroup: PublicKey;
+  name: string;
   data: MetadataData;
   mintConfig?: MintConfig;
   signers?: {
@@ -64,6 +65,7 @@ export type MintNftActionInput = {
 export const mintNft = async ({
   provider,
   authoritiesGroup,
+  name,
   data,
   mintConfig,
   signers,
@@ -85,6 +87,7 @@ export const mintNft = async ({
   const { builder, mint, metadata } = builders.createMetadata({
     provider,
     authoritiesGroup,
+    name,
     data,
     mint: mintConfig.keypair.publicKey,
     tokenProgram,
@@ -113,6 +116,7 @@ export type UpdateMetadataActionInput = {
   provider: Provider;
   authoritiesGroup: PublicKey;
   mint: PublicKey;
+  name: string;
   data: MetadataData;
   signers?: { metadataAuthority?: Signer };
   confirmOptions?: ConfirmOptions;
@@ -121,6 +125,7 @@ export const updateMetadata = async ({
   provider,
   authoritiesGroup,
   mint,
+  name,
   data,
   signers,
   confirmOptions,
@@ -129,6 +134,7 @@ export const updateMetadata = async ({
     provider,
     authoritiesGroup,
     mint,
+    name,
     data,
     metadataAuthority:
       signers?.metadataAuthority?.publicKey || provider.publicKey,
@@ -230,6 +236,7 @@ export type MintSetElementInput = {
   provider: Provider;
   parentMint: PublicKey;
   authoritiesGroup: PublicKey;
+  name: string;
   data: MetadataData;
   mintConfig?: MintConfig;
   signers?: {
@@ -241,6 +248,7 @@ export type MintSetElementInput = {
 };
 export const mintSetElement = async ({
   provider,
+  name,
   data,
   parentMint,
   authoritiesGroup,
@@ -268,6 +276,7 @@ export const mintSetElement = async ({
   } = builders.createMetadata({
     provider,
     authoritiesGroup,
+    name,
     data,
     mint: mintConfig.keypair.publicKey,
     tokenProgram,

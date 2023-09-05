@@ -58,6 +58,7 @@ describe(suiteName, () => {
     await mintNft({
       provider,
       authoritiesGroup: values.authoritiesGroupKey,
+      name: values.metadataName,
       data: values.metadataData,
       mintConfig: {
         keypair: values.mintKeypair2022,
@@ -123,6 +124,7 @@ describe(suiteName, () => {
     await mintNft({
       provider,
       authoritiesGroup: values.authoritiesGroupKey,
+      name: values.metadataName,
       data: values.metadataData,
       mintConfig: {
         keypair: values.mintKeypair2022,

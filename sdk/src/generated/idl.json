@@ -10,6 +10,13 @@
       "value": "200"
     },
     {
+      "name": "MAX_NAME_LENGTH",
+      "type": {
+        "defined": "usize"
+      },
+      "value": "32"
+    },
+    {
       "name": "AUTHORITIES_SEED",
       "type": "string",
       "value": "\"authorities\""
@@ -134,6 +141,10 @@
       ],
       "args": [
         {
+          "name": "name",
+          "type": "string"
+        },
+        {
           "name": "uri",
           "type": "string"
         }
@@ -174,6 +185,10 @@
         }
       ],
       "args": [
+        {
+          "name": "name",
+          "type": "string"
+        },
         {
           "name": "metadataAccount",
           "type": "publicKey"
@@ -216,6 +231,10 @@
       ],
       "args": [
         {
+          "name": "name",
+          "type": "string"
+        },
+        {
           "name": "dataType",
           "type": "u8"
         },
@@ -246,6 +265,10 @@
       ],
       "args": [
         {
+          "name": "name",
+          "type": "string"
+        },
+        {
           "name": "uri",
           "type": "string"
         }
@@ -272,6 +295,10 @@
       ],
       "args": [
         {
+          "name": "name",
+          "type": "string"
+        },
+        {
           "name": "metadataAccount",
           "type": "publicKey"
         }
@@ -297,6 +324,10 @@
         }
       ],
       "args": [
+        {
+          "name": "name",
+          "type": "string"
+        },
         {
           "name": "dataType",
           "type": "u8"
@@ -564,6 +595,10 @@
             "type": "u64"
           },
           {
+            "name": "name",
+            "type": "string"
+          },
+          {
             "name": "data",
             "type": {
               "defined": "MetadataData"
@@ -811,8 +846,5 @@
       "name": "SupplyNotZero",
       "msg": "Cannot close metadata with tokens left"
     }
-  ],
-  "metadata": {
-    "address": "9msweUGitRR1ELUe4XZi6xhecPCko54kSqSnfWH7LLiZ"
-  }
+  ]
 }

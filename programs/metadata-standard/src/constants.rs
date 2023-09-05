@@ -4,6 +4,9 @@ use anchor_lang::prelude::*;
 pub const MAX_URI_LENGTH: usize = 200;
 
 #[constant]
+pub const MAX_NAME_LENGTH: usize = 32;
+
+#[constant]
 pub const AUTHORITIES_SEED: &str = "authorities";
 
 #[constant]

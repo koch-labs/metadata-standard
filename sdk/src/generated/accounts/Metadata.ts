@@ -8,6 +8,7 @@ export interface MetadataFields {
   mint: PublicKey
   authoritiesGroup: PublicKey
   creationSlot: BN
+  name: string
   data: types.MetadataDataKind
 }
 
@@ -15,6 +16,7 @@ export interface MetadataJSON {
   mint: string
   authoritiesGroup: string
   creationSlot: string
+  name: string
   data: types.MetadataDataJSON
 }
 
@@ -22,6 +24,7 @@ export class Metadata {
   readonly mint: PublicKey
   readonly authoritiesGroup: PublicKey
   readonly creationSlot: BN
+  readonly name: string
   readonly data: types.MetadataDataKind
 
   static readonly discriminator = Buffer.from([
@@ -32,6 +35,7 @@ export class Metadata {
     borsh.publicKey("mint"),
     borsh.publicKey("authoritiesGroup"),
     borsh.u64("creationSlot"),
+    borsh.str("name"),
     types.MetadataData.layout("data"),
   ])
 
@@ -39,6 +43,7 @@ export class Metadata {
     this.mint = fields.mint
     this.authoritiesGroup = fields.authoritiesGroup
     this.creationSlot = fields.creationSlot
+    this.name = fields.name
     this.data = fields.data
   }
 
@@ -89,6 +94,7 @@ export class Metadata {
       mint: dec.mint,
       authoritiesGroup: dec.authoritiesGroup,
       creationSlot: dec.creationSlot,
+      name: dec.name,
       data: types.MetadataData.fromDecoded(dec.data),
     })
   }
@@ -98,6 +104,7 @@ export class Metadata {
       mint: this.mint.toString(),
       authoritiesGroup: this.authoritiesGroup.toString(),
       creationSlot: this.creationSlot.toString(),
+      name: this.name,
       data: this.data.toJSON(),
     }
   }
@@ -107,6 +114,7 @@ export class Metadata {
       mint: new PublicKey(obj.mint),
       authoritiesGroup: new PublicKey(obj.authoritiesGroup),
       creationSlot: new BN(obj.creationSlot),
+      name: obj.name,
       data: types.MetadataData.fromJSON(obj.data),
     })
   }

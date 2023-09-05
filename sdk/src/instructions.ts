@@ -43,6 +43,7 @@ export const instructions = {
   createMetadata: ({
     payer,
     authoritiesGroup,
+    name,
     data,
     mint,
     tokenProgram = TOKEN_2022_PROGRAM_ID,
@@ -50,6 +51,7 @@ export const instructions = {
     payer: PublicKey;
     authoritiesGroup: PublicKey;
     data: MetadataData;
+    name: string;
     mint: PublicKey;
     tokenProgram: PublicKey;
   }) => {
@@ -67,14 +69,14 @@ export const instructions = {
     if (data.external) {
       ixs.push(
         anchorClient.createExternalMetadata(
-          { uri: data.external.uri },
+          { name, uri: data.external.uri },
           accounts
         )
       );
     } else if (data.reference) {
       ixs.push(
         anchorClient.createReferenceMetadata(
-          { metadataAccount: data.reference.metadataAccount },
+          { name, metadataAccount: data.reference.metadataAccount },
           accounts
         )
       );
@@ -89,7 +91,7 @@ export const instructions = {
       }
       ixs.push(
         anchorClient.createOnchainMetadata(
-          { dataType: t, dataAccount: data.onchain.dataAccount },
+          { name, dataType: t, dataAccount: data.onchain.dataAccount },
           accounts
         )
       );

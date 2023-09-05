@@ -5,6 +5,7 @@ import * as types from "../types" // eslint-disable-line @typescript-eslint/no-u
 import { PROGRAM_ID } from "../programId"
 
 export interface CreateExternalMetadataArgs {
+  name: string
   uri: string
 }
 
@@ -17,7 +18,7 @@ export interface CreateExternalMetadataAccounts {
   systemProgram: PublicKey
 }
 
-export const layout = borsh.struct([borsh.str("uri")])
+export const layout = borsh.struct([borsh.str("name"), borsh.str("uri")])
 
 export function createExternalMetadata(
   args: CreateExternalMetadataArgs,
@@ -36,6 +37,7 @@ export function createExternalMetadata(
   const buffer = Buffer.alloc(1000)
   const len = layout.encode(
     {
+      name: args.name,
       uri: args.uri,
     },
     buffer

@@ -31,6 +31,7 @@ export interface TestValues {
   mintKeypair2022: Keypair;
   parentMintKeypair2022: Keypair;
   metadataUri: string;
+  metadataName: string;
   metadataData: MetadataData;
   metadataKey: PublicKey;
   metadata2022Key: PublicKey;
@@ -60,8 +61,9 @@ export const createValues = (): TestValues => {
   const mintKeypair = Keypair.generate();
   const mintKeypair2022 = Keypair.generate();
   const parentMintKeypair2022 = Keypair.generate();
+  const metadataName = "some name";
   const metadataUri = "some uri";
-  const metadataData = createExternalMetadataData("some uri");
+  const metadataData = createExternalMetadataData(metadataUri);
   const metadataKey = getMetadataKey(mintKeypair.publicKey);
   const metadata2022Key = getMetadataKey(mintKeypair2022.publicKey);
   const parentMetadata2022Key = getMetadataKey(parentMintKeypair2022.publicKey);
@@ -110,6 +112,7 @@ export const createValues = (): TestValues => {
     mintKeypair2022,
     parentMintKeypair2022,
     metadataUri,
+    metadataName,
     metadataData,
     metadataKey,
     metadata2022Key,

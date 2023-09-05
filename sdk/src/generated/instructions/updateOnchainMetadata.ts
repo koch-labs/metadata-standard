@@ -5,6 +5,7 @@ import * as types from "../types" // eslint-disable-line @typescript-eslint/no-u
 import { PROGRAM_ID } from "../programId"
 
 export interface UpdateOnchainMetadataArgs {
+  name: string
   dataType: number
   dataAccount: PublicKey
 }
@@ -16,6 +17,7 @@ export interface UpdateOnchainMetadataAccounts {
 }
 
 export const layout = borsh.struct([
+  borsh.str("name"),
   borsh.u8("dataType"),
   borsh.publicKey("dataAccount"),
 ])
@@ -34,6 +36,7 @@ export function updateOnchainMetadata(
   const buffer = Buffer.alloc(1000)
   const len = layout.encode(
     {
+      name: args.name,
       dataType: args.dataType,
       dataAccount: args.dataAccount,
     },

@@ -1,6 +1,6 @@
 use anchor_lang::prelude::*;
 
-use crate::constants::{INCLUSION_SEED, MAX_URI_LENGTH};
+use crate::constants::{INCLUSION_SEED, MAX_NAME_LENGTH, MAX_URI_LENGTH};
 
 #[account]
 pub struct AuthoritiesGroup {
@@ -59,7 +59,9 @@ pub enum MetadataData {
 }
 
 impl MetadataData {
-    pub const LEN: usize = 1 + MAX_URI_LENGTH;
+    pub const LEN: usize = 1 // Enum 
+        + 4 // String
+        + MAX_URI_LENGTH; // Length
 }
 
 #[account]
@@ -70,6 +72,8 @@ pub struct Metadata {
 
     pub creation_slot: u64,
 
+    pub name: String,
+
     pub data: MetadataData,
 }
 
@@ -78,6 +82,7 @@ impl Metadata {
         + 32 // Mint
         + 32 // Authorities
         + 8 // Slot
+        + MAX_NAME_LENGTH // Name
         + MetadataData::LEN; // Metadata
 }
 

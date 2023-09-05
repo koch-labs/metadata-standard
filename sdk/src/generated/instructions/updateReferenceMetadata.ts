@@ -5,6 +5,7 @@ import * as types from "../types" // eslint-disable-line @typescript-eslint/no-u
 import { PROGRAM_ID } from "../programId"
 
 export interface UpdateReferenceMetadataArgs {
+  name: string
   metadataAccount: PublicKey
 }
 
@@ -14,7 +15,10 @@ export interface UpdateReferenceMetadataAccounts {
   metadata: PublicKey
 }
 
-export const layout = borsh.struct([borsh.publicKey("metadataAccount")])
+export const layout = borsh.struct([
+  borsh.str("name"),
+  borsh.publicKey("metadataAccount"),
+])
 
 export function updateReferenceMetadata(
   args: UpdateReferenceMetadataArgs,
@@ -30,6 +34,7 @@ export function updateReferenceMetadata(
   const buffer = Buffer.alloc(1000)
   const len = layout.encode(
     {
+      name: args.name,
       metadataAccount: args.metadataAccount,
     },
     buffer

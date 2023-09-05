@@ -27,6 +27,7 @@ export type CreateAuthoritiesGroupInput = {
 export type MintNftInput = {
   provider: Provider;
   authoritiesGroup: PublicKey;
+  name: string;
   data: MetadataData;
   mint: PublicKey;
   tokenProgram: PublicKey;
@@ -78,6 +79,7 @@ export const builders = {
   createMetadata: ({
     provider,
     authoritiesGroup,
+    name,
     data,
     mint,
     tokenProgram = TOKEN_2022_PROGRAM_ID,
@@ -88,7 +90,7 @@ export const builders = {
     let builder;
     if (data.external) {
       builder = program.methods
-        .createExternalMetadata(data.external.uri)
+        .createExternalMetadata(name, data.external.uri)
         .accounts({
           authoritiesGroup,
           mint,
@@ -97,7 +99,7 @@ export const builders = {
         });
     } else if (data.reference) {
       builder = program.methods
-        .createReferenceMetadata(data.reference.metadataAccount)
+        .createReferenceMetadata(name, data.reference.metadataAccount)
         .accounts({
           authoritiesGroup,
           mint,
@@ -114,7 +116,7 @@ export const builders = {
         t = 2;
       }
       builder = program.methods
-        .createOnchainMetadata(t, data.onchain.dataAccount)
+        .createOnchainMetadata(name, t, data.onchain.dataAccount)
         .accounts({
           authoritiesGroup,
           mint,
@@ -134,12 +136,14 @@ export const builders = {
     provider,
     authoritiesGroup,
     mint,
+    name,
     data,
     metadataAuthority = provider.publicKey,
   }: {
     provider: Provider;
     authoritiesGroup: PublicKey;
     mint: PublicKey;
+    name: string;
     data: MetadataData;
     metadataAuthority: PublicKey;
   }) => {
@@ -149,7 +153,7 @@ export const builders = {
     let builder;
     if (data.external) {
       builder = program.methods
-        .updateExternalMetadata(data.external.uri)
+        .updateExternalMetadata(name, data.external.uri)
         .accounts({
           metadataAuthority,
           authoritiesGroup,
@@ -157,7 +161,7 @@ export const builders = {
         });
     } else if (data.reference) {
       builder = program.methods
-        .updateReferenceMetadata(data.reference.metadataAccount)
+        .updateReferenceMetadata(name, data.reference.metadataAccount)
         .accounts({
           metadataAuthority,
           authoritiesGroup,
@@ -173,7 +177,7 @@ export const builders = {
         t = 2;
       }
       builder = program.methods
-        .updateOnchainMetadata(t, data.onchain.dataAccount)
+        .updateOnchainMetadata(name, t, data.onchain.dataAccount)
         .accounts({
           metadataAuthority,
           authoritiesGroup,
