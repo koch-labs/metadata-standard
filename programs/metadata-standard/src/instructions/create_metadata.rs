@@ -47,7 +47,6 @@ pub struct CreateMetadata<'info> {
 
     #[account(
         mint::token_program = token_program,
-        constraint = mint.decimals == 0 @ MetadataStandardError::InvalidMint,
         constraint = mint.mint_authority == Some(admin.key()).into() @ MetadataStandardError::InvalidAuthority,
     )]
     pub mint: InterfaceAccount<'info, Mint>,

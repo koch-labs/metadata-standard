@@ -891,41 +891,36 @@ export type MetadataStandard = {
   "errors": [
     {
       "code": 6000,
-      "name": "InvalidMint",
-      "msg": "Mint provided is invalid"
-    },
-    {
-      "code": 6001,
       "name": "InvalidAuthority",
       "msg": "Mint authority did not sign"
     },
     {
-      "code": 6002,
+      "code": 6001,
       "name": "InvalidBumps",
       "msg": "Bumps do not match remaining accounts"
     },
     {
-      "code": 6003,
+      "code": 6002,
       "name": "InvalidPath",
       "msg": "Invalid validation path"
     },
     {
-      "code": 6004,
+      "code": 6003,
       "name": "InvalidPathStart",
       "msg": "Remaining accounts path start does not match the root"
     },
     {
-      "code": 6005,
+      "code": 6004,
       "name": "InvalidPathEnd",
       "msg": "Remaining accounts path end does not match the child"
     },
     {
-      "code": 6006,
+      "code": 6005,
       "name": "NotHolder",
       "msg": "The holder does not own a token"
     },
     {
-      "code": 6007,
+      "code": 6006,
       "name": "SupplyNotZero",
       "msg": "Cannot close metadata with tokens left"
     }
@@ -1825,41 +1820,36 @@ export const IDL: MetadataStandard = {
   "errors": [
     {
       "code": 6000,
-      "name": "InvalidMint",
-      "msg": "Mint provided is invalid"
-    },
-    {
-      "code": 6001,
       "name": "InvalidAuthority",
       "msg": "Mint authority did not sign"
     },
     {
-      "code": 6002,
+      "code": 6001,
       "name": "InvalidBumps",
       "msg": "Bumps do not match remaining accounts"
     },
     {
-      "code": 6003,
+      "code": 6002,
       "name": "InvalidPath",
       "msg": "Invalid validation path"
     },
     {
-      "code": 6004,
+      "code": 6003,
       "name": "InvalidPathStart",
       "msg": "Remaining accounts path start does not match the root"
     },
     {
-      "code": 6005,
+      "code": 6004,
       "name": "InvalidPathEnd",
       "msg": "Remaining accounts path end does not match the child"
     },
     {
-      "code": 6006,
+      "code": 6005,
       "name": "NotHolder",
       "msg": "The holder does not own a token"
     },
     {
-      "code": 6007,
+      "code": 6006,
       "name": "SupplyNotZero",
       "msg": "Cannot close metadata with tokens left"
     }

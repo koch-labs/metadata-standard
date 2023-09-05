@@ -58,7 +58,6 @@ pub struct ExcludeFromSuperset<'info> {
     pub inclusion: Account<'info, SupersetInclusion>,
 
     #[account(
-        mint::decimals = 0,
         mint::token_program = token_program,
     )]
     pub mint: InterfaceAccount<'info, Mint>,
@@ -70,7 +69,7 @@ pub struct ExcludeFromSuperset<'info> {
             &mint.key(),
             &token_program.key(),
         ),
-        constraint = token_account.amount == 1 @ MetadataStandardError::NotHolder,
+        constraint = token_account.amount > 0 @ MetadataStandardError::NotHolder,
     )]
     pub token_account: InterfaceAccount<'info, TokenAccount>,
 
