@@ -114,7 +114,7 @@ export type MetadataStandard = {
           "isSigner": true
         },
         {
-          "name": "admin",
+          "name": "mintAuthority",
           "isMut": false,
           "isSigner": true
         },
@@ -173,7 +173,7 @@ export type MetadataStandard = {
           "isSigner": true
         },
         {
-          "name": "admin",
+          "name": "mintAuthority",
           "isMut": false,
           "isSigner": true
         },
@@ -232,7 +232,7 @@ export type MetadataStandard = {
           "isSigner": true
         },
         {
-          "name": "admin",
+          "name": "mintAuthority",
           "isMut": false,
           "isSigner": true
         },
@@ -1043,7 +1043,7 @@ export const IDL: MetadataStandard = {
           "isSigner": true
         },
         {
-          "name": "admin",
+          "name": "mintAuthority",
           "isMut": false,
           "isSigner": true
         },
@@ -1102,7 +1102,7 @@ export const IDL: MetadataStandard = {
           "isSigner": true
         },
         {
-          "name": "admin",
+          "name": "mintAuthority",
           "isMut": false,
           "isSigner": true
         },
@@ -1161,7 +1161,7 @@ export const IDL: MetadataStandard = {
           "isSigner": true
         },
         {
-          "name": "admin",
+          "name": "mintAuthority",
           "isMut": false,
           "isSigner": true
         },

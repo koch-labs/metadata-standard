@@ -42,7 +42,7 @@ export const instructions = {
   },
   createMetadata: ({
     payer,
-    admin,
+    mintAuthority,
     authoritiesGroup,
     name,
     contentHash,
@@ -51,7 +51,7 @@ export const instructions = {
     tokenProgram = TOKEN_2022_PROGRAM_ID,
   }: {
     payer: PublicKey;
-    admin: PublicKey;
+    mintAuthority: PublicKey;
     authoritiesGroup: PublicKey;
     data: MetadataData;
     contentHash: number[];
@@ -62,7 +62,7 @@ export const instructions = {
     const metadata = getMetadataKey(mint);
     const accounts = {
       payer,
-      admin,
+      mintAuthority,
       authoritiesGroup,
       mint,
       metadata,

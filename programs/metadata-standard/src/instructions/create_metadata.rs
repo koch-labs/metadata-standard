@@ -34,7 +34,7 @@ pub struct CreateMetadata<'info> {
     #[account(mut)]
     pub payer: Signer<'info>,
 
-    pub admin: Signer<'info>,
+    pub mint_authority: Signer<'info>,
 
     #[account(
         seeds = [
@@ -47,7 +47,7 @@ pub struct CreateMetadata<'info> {
 
     #[account(
         mint::token_program = token_program,
-        constraint = mint.mint_authority == Some(admin.key()).into() @ MetadataStandardError::InvalidAuthority,
+        constraint = mint.mint_authority == Some(mint_authority.key()).into() @ MetadataStandardError::InvalidAuthority,
     )]
     pub mint: InterfaceAccount<'info, Mint>,
 

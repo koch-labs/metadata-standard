@@ -34,6 +34,7 @@ export type CreateAuthoritiesGroupInput = {
 export type MintNftInput = {
   provider: Provider;
   authoritiesGroup: PublicKey;
+  mintAuthority: PublicKey;
   name: string;
   data: MetadataData;
   tokenProgram: PublicKey;
@@ -84,6 +85,7 @@ export const builders = {
   },
   createMetadata: ({
     provider,
+    mintAuthority,
     authoritiesGroup,
     name,
     contentHash,
@@ -100,6 +102,7 @@ export const builders = {
         .createExternalMetadata(name, contentHash, data.external.uri)
         .accounts({
           authoritiesGroup,
+          mintAuthority,
           mint,
           metadata,
           tokenProgram: tokenProgram || TOKEN_2022_PROGRAM_ID,

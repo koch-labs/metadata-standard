@@ -114,7 +114,7 @@
           "isSigner": true
         },
         {
-          "name": "admin",
+          "name": "mintAuthority",
           "isMut": false,
           "isSigner": true
         },
@@ -173,7 +173,7 @@
           "isSigner": true
         },
         {
-          "name": "admin",
+          "name": "mintAuthority",
           "isMut": false,
           "isSigner": true
         },
@@ -232,7 +232,7 @@
           "isSigner": true
         },
         {
-          "name": "admin",
+          "name": "mintAuthority",
           "isMut": false,
           "isSigner": true
         },

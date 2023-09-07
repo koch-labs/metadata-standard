@@ -86,6 +86,7 @@ export const mintNft = async ({
   };
   const { builder, mint, metadata } = builders.createMetadata({
     provider,
+    mintAuthority: mintConfig.mintAuthority,
     authoritiesGroup,
     name,
     contentHash,
@@ -276,6 +277,7 @@ export const mintSetElement = async ({
     metadata,
   } = builders.createMetadata({
     provider,
+    mintAuthority: mintConfig.mintAuthority,
     authoritiesGroup,
     name,
     contentHash,
