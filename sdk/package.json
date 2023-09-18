@@ -1,6 +1,6 @@
 {
   "name": "@koch-labs/metadata-standard",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "main": "build/index.js",
   "license": "MIT",
   "scripts": {
@@ -11,7 +11,8 @@
   },
   "dependencies": {
     "@coral-xyz/anchor": "0.28.1-beta.2",
+    "@coral-xyz/borsh": "^0.28.0",
     "@solana/spl-token": "^0.3.8",
-    "@solana/web3.js": "^1.78.4"
+    "@solana/web3.js": "1.78.4"
   }
 }
